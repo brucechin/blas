@@ -1,10 +1,12 @@
 #include<iostream>
-#include<sys/time.h>
-#include<cblas.h>
+//#include<sys/time.h>
+//#include<cblas.h>
 #include<vector>
-#include<unistd.h>
 #include<cstdlib>
 #include<string>
+#include<ctime>
+
+using namespace std;
 
 class Matrix{
 
@@ -16,77 +18,75 @@ private:
 public:
 
     Matrix(){
-        this.nrow = 0;
-        this.ncol = 0;
-        this.value = new double[0][0];
+        nrow = 0;
+        ncol = 0;
+        value = new double[0];
     }
 
     Matrix(int n, int m){
-        this.nrow = n;
-        this.ncol = m;
-        this.value = new double[n][m];
+        nrow = n;
+        ncol = m;
+        value = new double[n * m];
     }
 
     //TODO : how to input a 2-D array as parameter
     Matrix(double* mat){
-        if(mat)
+        
     }
 
     //copy constructor
-    Matrix(Matrix mat){
-        this = mat.getMatrix();
+    Matrix(Matrix& mat){
+        
     }
 
     void clear(){
-        this.nrow = 0;
-        this.ncol = 0;
-        delete[] this.value;
+        nrow = 0;
+        ncol = 0;
+        delete[] value;
     }
 
     int getNRow(){
-        return this.nrow;
+        return nrow;
     }
 
     int getNCol(){
-        return this.ncol;
+        return ncol;
     }
 
     //return the start pointer of the matrix????
     double* getMatrix(){
-        return this.value;
+        return value;
     }
 
     double getElement(int i, int j){
-        return this.value[i][j];
+        return value[i * ncol + j];
     }
 
     void setElement(int i, int j, double x){
-        this.value[i][j] = x;
+        value[i * ncol + j] = x;
     }
 
     void setValue(double x){
         //can be optimized using OpenBLAS
-        for(int i = 0; i < this.nrow; i++){
-            for(int j = 0; j < this.ncol; j++){
-                this.value[i][j]= x;
+        for(int i = 0; i < nrow; i++){
+            for(int j = 0; j < ncol; j++){
+                value[i * ncol + j]= x;
             }
         }
     }
 
     double* getRowVector(int i){
-        int ncol = this.getNCol(); 
         double* res = new double[ncol];
         for(int j = 0; j < ncol; j++){
-            res[j] = this.getElement(i,j);
+            res[j] = getElement(i,j);
         }
         return res;
     }
 
-    double getColVector(int j){
-        int nrow = this.getNRow();
+    double* getColVector(int j){
         double* res = new double[nrow];
-        for(int i = 0; i > nrow; i++){
-            res[i] = this.getElement(i,j);
+        for(int i = 0; i < nrow; i++){
+            res[i] = getElement(i,j);
         }        
         return res;
     }
@@ -97,24 +97,24 @@ public:
     }
 
     void copyTo(Matrix mat){
-        return 0;
+        return ;
     }
 
     void copyToUpperLeft(Matrix mat){
-        return 0;
+        return ;
     }
 
     void copyToLowerRight(Matrix mat){
-        return 0;
+        return ;
     }
 
     void saveMatrix(string filename){
-        return 0;
+        return ;
     }
 
 
     void readMatrix(string filename){
-        return 0;
+        return ;
     }
 
-}
+};
