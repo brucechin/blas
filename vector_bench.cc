@@ -22,17 +22,17 @@ void RandomFill(std::vector<T>& numbers, size_t size){
     }
 }
 
-template<class T>
-void MatrixRandomFill(std::vector<std::vector<T> >& numbers, size_t cols, size_t rows){
-    vector<T> tmp(cols);
-    numbers.resize(rows, tmp);
-    for(size_t i = 0; i != rows; i++){
-        for(size_t j = 0; j != cols; j++){
-            numbers[i][j] = static_cast<T>(rand() % 5000);
-            numbers[i][j] *= 0.1;
-        }
-    }
-}
+// template<class T>
+// void MatrixRandomFill(std::vector<std::vector<T> >& numbers, size_t cols, size_t rows){
+//     vector<T> tmp(cols);
+//     numbers.resize(rows, tmp);
+//     for(size_t i = 0; i != rows; i++){
+//         for(size_t j = 0; j != cols; j++){
+//             numbers[i][j] = static_cast<T>(rand() % 5000);
+//             numbers[i][j] *= 0.1;
+//         }
+//     }
+// }
 
 
 template<class T>
@@ -151,37 +151,9 @@ void Level1Test(int tests, int size)
     }    
 }
 
-template<class T>
-void MatrixPrint(vector< vector<T> > a, size_t cols, size_t rows){
-    for(int i = 0; i < rows; i++){
-        for(int j = 0; j < cols; j++){
-            cout << a[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
 
 
-template<class T>
-T* MatrixDot(T a[MAX][MAX], T b[MAX][MAX], T res[MAX][MAX], const size_t H, const size_t J,const size_t K){
-    //matrix multiply matrix
-    //matrix a size is h*j, matrix b size is j*k
 
-    T tmp = 0.0;
-
-    for(int h = 0; h < H; h++){
-
-        for(int k = 0; k < K; k++){
-            for(int j  = 0; j < J; j++){
-                tmp += a[h][j] * b[j][k];
-            }
-            res[h][k] = tmp;
-        }
-
-    }
-
-    return res;
-}
 
 void Level2Test(int tests, size_t cols, size_t rows, size_t t){
     //matrix multiply vector test

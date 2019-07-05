@@ -15,7 +15,18 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 
 1. 观察到vector size从2K->100K变化过程中计算耗时随size线性增长，详细数据不再列出
 2. dsdot和sdsdot相对较慢怀疑是float转double的过程额外耗时较多
+3. 一般情况下openblas版本要比自己实现的baseline快10-20倍
 
 **level2 vector * matrix**
 
 **level3 matrix * matrix**
+
+直接测的matrix*matrix
+
+| 测试函数\矩阵规模                    | 512*512（耗时单位s） |
+| ------------------------------------ | -------------------- |
+| 自己实现的未优化版本double精度矩阵乘 | 44.53                |
+| cblas_dgemm(输入double，输入double)  | 0.72                 |
+
+1. 没测单精度下的结果，预计类似，耗时与矩阵规模的三次方成正比，具体数据不再上传
+2. openblas版本比自己实现的baseline快20-80倍
