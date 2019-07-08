@@ -30,3 +30,20 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 
 1. 没测单精度下的结果，预计类似，耗时与矩阵规模的三次方成正比，具体数据不再上传
 2. openblas版本比自己实现的baseline快20-80倍
+
+### 第二日
+
+看完了matrix.java的几个类，用C写了Matrix.h, LogicMatrix.h, matrixFactory.h.
+
+存在疑虑是，在基础类中是否可以用到OpenBLAS库来优化？类似for循环遍历getElement/setElement的操作会很慢的吧？
+
+### 第三日
+
+看了一下[blislab](https://github.com/flame/blislab)优化矩阵计算的一些trick，包括：
+
+> 1. cache friendly pointer access
+> 2. loop unrolling
+> 3. register variable
+> 4. parallelizing with OpenMP
+
+有一个设计上的疑虑在于，矩阵的data是用row-major还是column-major来存？？

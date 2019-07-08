@@ -1,3 +1,11 @@
+/*
+ * @Author: lianke.qin@gmail.com 
+ * @Date: 2019-07-08 10:53:02 
+ * @Last Modified by: lianke.qin@gmail.com
+ * @Last Modified time: 2019-07-08 16:29:50
+ */
+
+
 #include<iostream>
 //#include<sys/time.h>
 //#include<cblas.h>
@@ -36,7 +44,9 @@ public:
 
     //copy constructor
     Matrix(Matrix& mat){
-        
+        nrow = mat.nrow;
+        ncol = mat.ncol;
+        value = mat.value;
     }
 
     void clear(){
@@ -66,11 +76,14 @@ public:
         value[i * ncol + j] = x;
     }
 
+
+    //loop unrolling trick is not used here.
     void setValue(double x){
         //can be optimized using OpenBLAS
         for(int i = 0; i < nrow; i++){
+            double *cp = &value[i * ncol];
             for(int j = 0; j < ncol; j++){
-                value[i * ncol + j]= x;
+                *cp++ = x;
             }
         }
     }
@@ -96,6 +109,8 @@ public:
         printf("print called\n");
     }
 
+    //add a row/column copy function
+    
     void copyTo(Matrix mat){
         return ;
     }
