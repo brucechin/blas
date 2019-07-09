@@ -1,16 +1,15 @@
 /*
  * @Author: lianke.qin@gmail.com 
  * @Date: 2019-07-08 10:52:55 
- * @Last Modified by:   lianke.qin@gmail.com 
- * @Last Modified time: 2019-07-08 10:52:55 
+ * @Last Modified by: lianke.qin@gmail.com
+ * @Last Modified time: 2019-07-09 11:24:28
  */
 
 
 #include<iostream>
-#include<sys/time.h>
 #include<cblas.h>
 #include<vector>
-#include<unistd.h>
+//#include<unistd.h>
 #include<cstdlib>
 #include<string>
 

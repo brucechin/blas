@@ -2,7 +2,7 @@
  * @Author: lianke.qin@gmail.com 
  * @Date: 2019-07-08 10:53:02 
  * @Last Modified by: lianke.qin@gmail.com
- * @Last Modified time: 2019-07-08 16:29:50
+ * @Last Modified time: 2019-07-09 11:41:38
  */
 
 
@@ -21,9 +21,10 @@ class Matrix{
 private:
     int nrow;
     int ncol;
-    double* value;
+    
 
 public:
+    double* value;//public attribute for easier access during calculation
 
     Matrix(){
         nrow = 0;

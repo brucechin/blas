@@ -46,4 +46,15 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 > 3. register variable
 > 4. parallelizing with OpenMP
 
-有一个设计上的疑虑在于，矩阵的data是用row-major还是column-major来存？？
+有一个设计上的疑虑在于，矩阵的data是用row-major还是column-major来存？？Eigen有以下的回答：
+
+> which storage order should you use in your program? There is no simple answer to this question; it depends on your application. Here are some points to keep in mind:
+>
+> - Your users may expect you to use a specific storage order. Alternatively, you may use other libraries than [Eigen](https://eigen.tuxfamily.org/dox-devel/namespaceEigen.html), and these other libraries may expect a certain storage order. In these cases it may be easiest and fastest to use this storage order in your whole program.
+> - Algorithms that traverse a matrix row by row will go faster when the matrix is stored in row-major order because of better data locality. Similarly, column-by-column traversal is faster for column-major matrices. It may be worthwhile to experiment a bit to find out what is faster for your particular application.
+> - The default in [Eigen](https://eigen.tuxfamily.org/dox-devel/namespaceEigen.html) is column-major. Naturally, most of the development and testing of the [Eigen](https://eigen.tuxfamily.org/dox-devel/namespaceEigen.html) library is thus done with column-major matrices. This means that, even though we aim to support column-major and row-major storage orders transparently, the [Eigen](https://eigen.tuxfamily.org/dox-devel/namespaceEigen.html) library may well work best with column-major matrices.
+
+最后跟mentor聊了一下，定的是row-major。
+
+### 第四日
+
