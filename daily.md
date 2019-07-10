@@ -65,9 +65,19 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 下午实现了如下接口：
 
 - [x] add, sub, div, mul, matrixMul
-- [ ] max, min, bigger, smaller, equal, between
-- [ ] and, or, not, condition
-- [ ] rank, round, floor, abs, minus, sqrt, log, exp, sign, inverse, signedpow
+
+### 第五日
+
+今日确定了一些设计上的问题：
+
+1. value设为protected属性，只能由MatrixCalculator类访问
+2. elementwise操作时不用get/setElement接口，直接指针访存
+
+今日实现了以下接口：
+
+- [x] max, min, bigger, smaller, equal, between
+- [x] and, or, not, condition
+- [x] rank, round, floor, abs, minus, sqrt, log, exp, sign, inverse, signedpow
 - [ ] shift, delay, delta, ratio, sum, product
 - [ ] tsMax, tsMin, tsArgmax/min, tsRank, tsMean, tsStd, tsSkewness, tsKurtosis, tsCov, tsCorr, tsCountNaN, tsCountTrue
 - [ ] decayLinear, decayExponential, smoothByDecayLinear

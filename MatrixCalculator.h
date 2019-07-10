@@ -18,17 +18,35 @@
 class MatrixCalculator{
 private:
 
-    static double doubleIntAr[];
+    static double doubleIntArr[];
     static double doubleIntDivideArr[][];
 
     static double int2Double(int n);
     static double intDoubleDivide(int a, int  b);
-    MatrixCalculator(){}
+    
 
 public:
+    static{
+        doubleIntArr = new double[1000];
+        for(int i = 0; i < 1000; i++){
+            doubleIntArr[i] = (double)i;
+        }
+        doubleIntDivideArr = new double[100][100];
+        for(int i = 0; i < 100; i++){
+            for(int j = 0; j < 100; j++){
+                if(i == 0){
+                    doubleIntDivideArr[i][j] = 0.0;
+                }else{
+                    doubleIntDivideArr[i][j] = (double)j / (double)i;
+                }
+            }
+        }
+    }
     const static double VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     const static int MAX_HISTORY_LENGTH = 90;
-
+    MatrixCalculator(){}
+    static double int2Double(int n);
+    static double intDoubleDivide(int a, int b);
     static Matrix* add(Matrix mat1, Matrix mat2);
     static Matrix* add(Matrix mat1, Matrix mat2, int num);
     static Matrix* sub(Matrix mat1, Matrix mat2);
@@ -75,95 +93,95 @@ public:
     static LogicMatrix* not(LogicMatrix mat1, int num);
 
     static Matrix* condition(LogicMatrix mat1, Matrix mat2, Matrix mat3);
-    static Matrix8 condition(LogicMatrix mat1, Matrix mat2, Matrix mat3. int num);
+    static Matrix* condition(LogicMatrix mat1, Matrix mat2, Matrix mat3. int num);
 
     static double rankFirst(const double* vec, int highIndex, int lowIndex);
     static double* rank(const double* vec);
     static Matrix* rank(Matrix mat);
     static Matrix* rank(Matrix mat, int num);
     
-    static Matrix round(Matrix mat);
-    static Matrix round(Matrix mat, int num);
-    static Matrix floor(Matrix mat);
-    static Matrix floor(Matrix mat, int num);
-    static Matrix abs(Matrix mat);
-    static Matrix abs(Matrix mat, int num);
-    static Matrix minus(Matrix mat);
-    static Matrix minus(Matrix mat, int num);
+    static Matrix* round(Matrix mat);
+    static Matrix* round(Matrix mat, int num);
+    static Matrix* floor(Matrix mat);
+    static Matrix* floor(Matrix mat, int num);
+    static Matrix* abs(Matrix mat);
+    static Matrix* abs(Matrix mat, int num);
+    static Matrix* minus(Matrix mat);
+    static Matrix* minus(Matrix mat, int num);
     static double* minus(double* vec);
-    static Matrix sqrt(Matrix mat);
-    static Matrix sqrt(Matrix mat, int num);
-    static Matrix log(Matrix mat);
-    static Matrix log(Matrix mat, int num);
-    static Matrix exp(Matrix mat);
-    static Matrix exp(Matrix mat, int num);
-    static Matrix sign(Matrix mat);
-    static Matrix sign(Matrix mat, int num);
-    static Matrix inverse(Matrix mat);
-    static Matrix inverse(Matrix mat, int num);
-    static Matric signedpow(Matrix mat, double index);
-    static Matrix signedpow(Matrix mat, double index, int num);
+    static Matrix* sqrt(Matrix mat);
+    static Matrix* sqrt(Matrix mat, int num);
+    static Matrix* log(Matrix mat);
+    static Matrix* log(Matrix mat, int num);
+    static Matrix* exp(Matrix mat);
+    static Matrix* exp(Matrix mat, int num);
+    static Matrix* sign(Matrix mat);
+    static Matrix* sign(Matrix mat, int num);
+    static Matrix* inverse(Matrix mat);
+    static Matrix* inverse(Matrix mat, int num);
+    static Matrix* signedpow(Matrix mat, double index);
+    static Matrix* signedpow(Matrix mat, double index, int num);
 
-    static Matrix shift(Matrix mat, int n);
-    static Matrix delay(Matrix mat, int n);
-    static Matrix delay(Matrix mat, int n, int num);
-    static Matrix delta(Matrix mat, int n);
-    static Matrix delta(Matrix mat, int n, int num);
-    static Matrix ratio(Matrix mat, int n);
-    static Matrix ratio(Matrix mat, int n, int num);
-    static Matrix sum(Matrix mat, int n);
-    static Matrix sum(Matrix mat, int n, int num);
-    static Matrix product(Matrix mat, int n);
-    static Matrix product(Matrix mat, int n, int num);
+    static Matrix* shift(Matrix mat, int n);
+    static Matrix* delay(Matrix mat, int n);
+    static Matrix* delay(Matrix mat, int n, int num);
+    static Matrix* delta(Matrix mat, int n);
+    static Matrix* delta(Matrix mat, int n, int num);
+    static Matrix* ratio(Matrix mat, int n);
+    static Matrix* ratio(Matrix mat, int n, int num);
+    static Matrix* sum(Matrix mat, int n);
+    static Matrix* sum(Matrix mat, int n, int num);
+    static Matrix* product(Matrix mat, int n);
+    static Matrix* product(Matrix mat, int n, int num);
     
 
-    static Matrix tsMax(Matrix mat, int n);
-    static Matrix tsMax(Matrix mat, int n, int num);
-    static Matrix tsMin(Matrix mat, int n);
-    static Matrix tsMin(Matrix mat, int n, int num);
-    static Matrix tsArgmax(Matrix mat, int n);
-    static Matrix tsArgmax(Matrix mat, int n, int num);
-    static Matrix tsArgmin(Matrix mat, int n);
-    static Matrix tsArgmin(Matrix mat, int n, int num);
-    static Matrix tsRank(Matrix mat, int n);
-    static Matrix tsRank(Matrix mat, int n, int num);
-    static Matrix tsMean(Matrix mat, int n);
-    static Matrix tsMean(Matrix mat, int n, int num);
-    static Matrix tsStd(Matrix mat, int n);
-    static Matrix tsStd(Matrix mat, int n, int num);
-    static Matrix tsSkewness(Matrix mat, int n);
-    static Matrix tsSkewness(Matrix mat, int n, int num);
-    static Matrix tsKurtosis(Matrix mat, int n);
-    static Matrix tsKurtosis(Matrix mat, int n, int num);
-    static Matrix tsCov(Matrix mat1, Matrix mat2, int n);
-    static Matrix tsCov(Matrix mat1, Matrix mat2, int n, int num);
-    static Matrix tsCorr(Matrix mat1, Matrix mat2, int n);
-    static Matrix tsCorr(Matrix mat1, Matrix mat2, int n, int num);
-    static Matrix tsCountNaN(Matrix mat, int n);
-    static Matrix tsCountNaN(Matrix mat, int n, int num);
-    static Matrix tsCountTrue(LogicMatrix mat, int n);
-    static Matrix tsCountTrue(LogicMatrix mat, int n, int num);
-    static Matrix tsCountConsecutiveTrue(LogicMatrix mat, int n);
-    static Matrix tsCountConsecutiveTrue(LogicMatrix mat, int n, int num);
+    static Matrix* tsMax(Matrix mat, int n);
+    static Matrix* tsMax(Matrix mat, int n, int num);
+    static Matrix* tsMin(Matrix mat, int n);
+    static Matrix* tsMin(Matrix mat, int n, int num);
+    static Matrix* tsArgmax(Matrix mat, int n);
+    static Matrix* tsArgmax(Matrix mat, int n, int num);
+    static Matrix* tsArgmin(Matrix mat, int n);
+    static Matrix* tsArgmin(Matrix mat, int n, int num);
+    static Matrix* tsRank(Matrix mat, int n);
+    static Matrix* tsRank(Matrix mat, int n, int num);
+    static Matrix* tsMean(Matrix mat, int n);
+    static Matrix* tsMean(Matrix mat, int n, int num);
+    static Matrix* tsStd(Matrix mat, int n);
+    static Matrix* tsStd(Matrix mat, int n, int num);
+    static Matrix* tsSkewness(Matrix mat, int n);
+    static Matrix* tsSkewness(Matrix mat, int n, int num);
+    static Matrix* tsKurtosis(Matrix mat, int n);
+    static Matrix* tsKurtosis(Matrix mat, int n, int num);
+    static Matrix* tsCov(Matrix mat1, Matrix mat2, int n);
+    static Matrix* tsCov(Matrix mat1, Matrix mat2, int n, int num);
+    static Matrix* tsCorr(Matrix mat1, Matrix mat2, int n);
+    static Matrix* tsCorr(Matrix mat1, Matrix mat2, int n, int num);
+    static Matrix* tsCountNaN(Matrix mat, int n);
+    static Matrix* tsCountNaN(Matrix mat, int n, int num);
+    static Matrix* tsCountTrue(LogicMatrix mat, int n);
+    static Matrix* tsCountTrue(LogicMatrix mat, int n, int num);
+    static Matrix* tsCountConsecutiveTrue(LogicMatrix mat, int n);
+    static Matrix* tsCountConsecutiveTrue(LogicMatrix mat, int n, int num);
 
-    static Matrix decayLinear(Matrix mat, int n);
-    static Matrix decayLinear(Matrix mat, int n, int num);
-    static Matrix decayExponential(Matrix mat, int n);
-    static Matrix decayExponential(Matrix mat, int n, int num);
+    static Matrix* decayLinear(Matrix mat, int n);
+    static Matrix* decayLinear(Matrix mat, int n, int num);
+    static Matrix* decayExponential(Matrix mat, int n);
+    static Matrix* decayExponential(Matrix mat, int n, int num);
     static void smoothByDecayLinear(Matrix mat, int n);
     static void inputNaN(Matrix mat, double val);
 
 
     static void activate(Matrix mat, double threshold);
-    static Matrix normalize(Matrix mat, double scale, double mean, double bound);
-    static Matrix normalize(Matrix mat, double scale, double mean, double bound, int num);
+    static Matrix* normalize(Matrix mat, double scale, double mean, double bound);
+    static Matrix* normalize(Matrix mat, double scale, double mean, double bound, int num);
     static void normalizeBySpec(Matrix mat, double scale, double mean, double bound);
-    static Matrix neutralize(Matrix mat);
-    static Matrix neutralize(Matrix mat, int num);
-    static Matrix mean(Matrix mat);
-    static Matrix unify(Matrix mat);
-    static Matrix unify(Matrix mat, int num);
-    static Matrix unifyByL2(Matrix mat);
+    static Matrix* neutralize(Matrix mat);
+    static Matrix* neutralize(Matrix mat, int num);
+    static Matrix* mean(Matrix mat);
+    static Matrix* unify(Matrix mat);
+    static Matrix* unify(Matrix mat, int num);
+    static Matrix* unifyByL2(Matrix mat);
     static double* evalValidPct(Matrix alpha);
     static double* evalAbsSum(Matrix alpha);
     static double* evalMean(Matrix alpha);
@@ -175,7 +193,7 @@ public:
 
     static double Det(double* mat, int N);
     static double Inverse(double* mat1, int N, double* mat3);
-    static Matrix inv(Matrix mat);
+    static Matrix* inv(Matrix mat);
     static double treat(Matrix mat);
     static double* diag(Matrix mat);
     static double* inverseDiag(Matrix mat);

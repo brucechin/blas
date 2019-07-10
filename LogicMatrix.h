@@ -22,10 +22,11 @@ private:
 
     int nrow;
     int ncol;
-    bool* value;
+    
 
 public:
-
+    bool* value;
+    
     LogicMatrix(){
         nrow = 0;
         ncol = 0;

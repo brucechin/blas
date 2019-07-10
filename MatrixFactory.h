@@ -6,10 +6,8 @@
  */
 
 #include<iostream>
-#include<sys/time.h>
 #include<cblas.h>
 #include<vector>
-#include<unistd.h>
 #include<cstdlib>
 #include<string>
 #include"Matrix.h"
@@ -17,17 +15,17 @@
 #include<cmath>
 
 class MatrixFactory{
-    static Matrix emptyMatrix = new Matrix(0,0);
+    static Matrix* emptyMatrix = new Matrix(0,0);
     static double* emptyVector = new double[0];
 
 
     MatrixFactory(){}
 
-    static Matrix getInstanceOfEmptyMatrix(){
+    static Matrix* getInstanceOfEmptyMatrix(){
         return emptyMatrix;
     }
 
-    static Matrix getInstanceOfEyeMatrix(int n){
+    static Matrix* getInstanceOfEyeMatrix(int n){
         Matrix res new Matrix(n, n);
         for(int i = 0; i < n; i++){
             res.setElement(i, i, 1.0);
@@ -35,27 +33,27 @@ class MatrixFactory{
         return res;
     }
 
-    static Matrix getInstanceOfZeroMatrix(int n){
+    static Matrix* getInstanceOfZeroMatrix(int n){
         Matrix res = new Matrix(n, n);
         return res;
     }
 
-    static Matrix getInstanceOfZeroMatrix(Matrix mat){
+    static Matrix* getInstanceOfZeroMatrix(Matrix mat){
         Matrix res = new Matrix(mat.getNRow(), mat.getNCol());
         return res;
     }
 
-    static Matrix getInstanceOfNaNMatrix(int n){
+    static Matrix* getInstanceOfNaNMatrix(int n){
         Matrix res = new Matrix(n, n);
         res.setValue(NAN);
     }
 
-    static Matrix getInstanceOfNaNMatrix(int n, int m){
+    static Matrix* getInstanceOfNaNMatrix(int n, int m){
         Matrix res = new Matrix(n, m);
         res.setValue(NAN);
     }
 
-    static Matrix getExpandingColumnInstanceOfMatrix(Matrix mat, int n){
+    static Matrix* getExpandingColumnInstanceOfMatrix(Matrix mat, int n){
         int nrow = mat.getNRow();
         int ncol = mat.getNCol();
 
@@ -69,7 +67,7 @@ class MatrixFactory{
         return res;
     }
 
-    static Matrix getInstanceOfDiagMatrix(double* diag){
+    static Matrix* getInstanceOfDiagMatrix(double* diag){
         int n = sizeof(diag) / sizeof(double);
         Matrix res = getInstanceOfZeroMatrix(n);
 
@@ -81,7 +79,7 @@ class MatrixFactory{
 
     }
 
-    static Matrix getInstanceOfRowMatrix(double* vec){
+    static Matrix* getInstanceOfRowMatrix(double* vec){
         int n = sizeof(vec) / sizeof(double);
         Matrix res = new Matrix(1, n);
         for(int i = 0; i < n; i++){
@@ -92,7 +90,7 @@ class MatrixFactory{
     }
 
     //TODO : slow implementation, how to accelarate it using BLAS??? mat.value should be set as public attribute?
-    static Matrix mergeMatrixHorizon(Matrix mat1, Matrix mat2){
+    static Matrix* mergeMatrixHorizon(Matrix mat1, Matrix mat2){
         int nrow = mat1.getNRow();
         int ncol1 = mat1.getNCol();
         int ncol2 = mat2.getNCol();
@@ -112,7 +110,7 @@ class MatrixFactory{
         return res;
     }
 
-    static Matrix mergeMatrixVertical(Matrix mat1, Matrix mat2){
+    static Matrix* mergeMatrixVertical(Matrix mat1, Matrix mat2){
         int ncol = mat1.getNCol();
         int nrow1 = mat1.getNRow();
         int nrow2 = mat2.getNRow();
@@ -136,7 +134,7 @@ class MatrixFactory{
         
     }
 
-    static Matrix subMatrixHorizonByPeriod(Matrix mat1, int period){
+    static Matrix* subMatrixHorizonByPeriod(Matrix mat1, int period){
         int nrow = mat1.getNRow();
         int ncol = mat1.getNCol();
 
@@ -154,7 +152,7 @@ class MatrixFactory{
         return res;
     }
 
-    static Matrix subMatrixHorizonByPeriodAndTruncate(Matrix mat1, int period, int num){
+    static Matrix* subMatrixHorizonByPeriodAndTruncate(Matrix mat1, int period, int num){
         int nrow = mat1.getNRow();
         int ncol = mat1.getNCol();
 
@@ -173,7 +171,7 @@ class MatrixFactory{
         return res;
     }
 
-    static LogicMatrix replicateMatrixVertical(bool* logic, int nrow){
+    static LogicMatrix* replicateMatrixVertical(bool* logic, int nrow){
         int ncol = sizeof(logic) / sizeof(bool);
         LogicMatrix res = new LogicMatrix(nrow, ncol);
    
@@ -188,7 +186,7 @@ class MatrixFactory{
         
     }
 
-    static LogicMatrix replicateMatrixHorizon(bool* logic, int ncol){
+    static LogicMatrix* replicateMatrixHorizon(bool* logic, int ncol){
         int nrow = sizeof(logic) / sizeof(bool);
         LogicMatrix res = new LogicMatrix(nrow, ncol);
 
@@ -202,7 +200,7 @@ class MatrixFactory{
         return res;
     }
 
-    static LogicMatrix subMatrixHorizonByPeriod(LogicMatrix mat1, int period){
+    static LogicMatrix* subMatrixHorizonByPeriod(LogicMatrix mat1, int period){
         int nrow = mat1.getNRow();
         int ncol = mat1.getNCol();
         int colnum = (int) ncol / period;
@@ -221,7 +219,7 @@ class MatrixFactory{
         return res;
     }
 
-    static LogicMatrix subMatrixHorizonByPeriodAndTruncate(LogicMatrix mat1, int period, int num){
+    static LogicMatrix* subMatrixHorizonByPeriodAndTruncate(LogicMatrix mat1, int period, int num){
         int nrow = mat1.getNRow();
         int ncol = mat1.getNCol();
         int colnum = min(num, (int) ncol / period);
@@ -240,7 +238,7 @@ class MatrixFactory{
         return res;
     }
 
-    static Matrix subMatrixHorizon(Matrix mat1, int colStart, int colEnd){
+    static Matrix* subMatrixHorizon(Matrix mat1, int colStart, int colEnd){
         int nrow = mat1.getNRow();
         Matrix res = new Matrix(nrow, colEnd - colStart + 1);
         for(int i = 0; i < nrow; i++){
