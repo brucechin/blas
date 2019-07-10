@@ -29,58 +29,58 @@ public:
     const static double VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     const static int MAX_HISTORY_LENGTH = 90;
 
-    static Matrix add(Matrix mat1, Matrix mat2);
-    static Matrix add(Matrix mat1, Matrix mat2, int num);
-    static Matrix sub(Matrix mat1, Matrix mat2);
-    static Matrix sub(Matrix mat1, Matrix mat2, int num);
-    static Matrix div(Matrix mat1, Matrix mat2);    
-    static Matrix div(Matrix mat1, Matrix mat2, int num);   
-    static Matrix mul(Matrix mat1, Matrix mat2);    
-    static Matrix mul(Matrix mat1, Matrix mat2, int num); 
-    static Matrix mul(double val1, Matrix mat2);
-    static Matrix mul(double val1, Matrix mat2, int num);
+    static Matrix* add(Matrix mat1, Matrix mat2);
+    static Matrix* add(Matrix mat1, Matrix mat2, int num);
+    static Matrix* sub(Matrix mat1, Matrix mat2);
+    static Matrix* sub(Matrix mat1, Matrix mat2, int num);
+    static Matrix* div(Matrix mat1, Matrix mat2);    
+    static Matrix* div(Matrix mat1, Matrix mat2, int num);   
+    static Matrix* mul(Matrix mat1, Matrix mat2);    
+    static Matrix* mul(Matrix mat1, Matrix mat2, int num); 
+    static Matrix* mul(double val1, Matrix mat2);
+    static Matrix* mul(double val1, Matrix mat2, int num);
     static double* mul(double val1, double* vec2);
-    static Matrix matrixMul(double* vec1, Matrix mat2);
-    static Matrix matrixMul(Matrix mat1, double* vec2);
-    static Matrix matrixMul(Matrix mat1, Matrix mat2);
+    static Matrix* matrixMul(double* vec1, Matrix mat2);
+    static Matrix* matrixMul(Matrix mat1, double* vec2);
+    static Matrix* matrixMul(Matrix mat1, Matrix mat2);
 
 
-    static max(Matrix mat1, Matrix mat2);
-    static max(Matrix mat1, Matrix mat2, int num);
-    static min(Matrix mat1, Matrix mat2);
-    static min(Matrix mat1, Matrix mat2, int num);
+    static Matrix* max(Matrix mat1, Matrix mat2);
+    static Matrix* max(Matrix mat1, Matrix mat2, int num);
+    static Matrix* min(Matrix mat1, Matrix mat2);
+    static Matrix* min(Matrix mat1, Matrix mat2, int num);
 
-    static LogicMatrix bigger(Matrix mat1, Matrix mat2);
-    static LogicMatrix bigger(Matrix mat1, Matrix mat2, int num);
-    static LogicMatrix bigger(Matrix mat1, double val);
-    static LogicMatrix bigger(Matrix mat1, double val, int num);
+    static LogicMatrix* bigger(Matrix mat1, Matrix mat2);
+    static LogicMatrix* bigger(Matrix mat1, Matrix mat2, int num);
+    static LogicMatrix* bigger(Matrix mat1, double val);
+    static LogicMatrix* bigger(Matrix mat1, double val, int num);
 
-    static LogicMatrix smaller(Matrix mat1, Matrix mat2);
-    static LogicMatrix smaller(Matrix mat1, Matrix mat2, int num);
-    static LogicMatrix smaller(Matrix mat1, double val);
-    static LogicMatrix smaller(Matrix mat1, double val, int num);
+    static LogicMatrix* smaller(Matrix mat1, Matrix mat2);
+    static LogicMatrix* smaller(Matrix mat1, Matrix mat2, int num);
+    static LogicMatrix* smaller(Matrix mat1, double val);
+    static LogicMatrix* smaller(Matrix mat1, double val, int num);
 
-    static LogicMatrix equal(Matrix mat1, Matrix mat2);
-    static LogicMatrix equal(Matrix mat1, Matrix mat2, int num);
-    static LogicMatrix equal(Matrix mat1, double val);
-    static LogicMatrix equal(Matrix mat1, double val, int num);
+    static LogicMatrix* equal(Matrix mat1, Matrix mat2);
+    static LogicMatrix* equal(Matrix mat1, Matrix mat2, int num);
+    static LogicMatrix* equal(Matrix mat1, double val);
+    static LogicMatrix* equal(Matrix mat1, double val, int num);
 
-    static LogicMatrix between(Matrix mat1, double lowerbound, double upperbound);
-    static Matrix betweenValue(Matrix mat1, double lowerbound, double upperbound);
-    static LogicMatrix and(LogicMatrix mat1, LogicMatrix mat2);
-    static LogicMatrix and(LogicMatrix mat1, LogicMatrix mat2, int num);
-    static LogicMatrix or(LogicMatrix mat1, LogicMatrix mat2);
-    static LogicMatrix or(LogicMatrix mat1, LogicMatrix mat2, int num);
-    static LogicMatrix not(LogicMatrix mat1);
-    static LogicMatrix not(LogicMatrix mat1, int num);
+    static LogicMatrix* between(Matrix mat1, double lowerbound, double upperbound);
+    static Matrix* betweenValue(Matrix mat1, double lowerbound, double upperbound);
+    static LogicMatrix* and(LogicMatrix mat1, LogicMatrix mat2);
+    static LogicMatrix* and(LogicMatrix mat1, LogicMatrix mat2, int num);
+    static LogicMatrix* or(LogicMatrix mat1, LogicMatrix mat2);
+    static LogicMatrix* or(LogicMatrix mat1, LogicMatrix mat2, int num);
+    static LogicMatrix* not(LogicMatrix mat1);
+    static LogicMatrix* not(LogicMatrix mat1, int num);
 
-    static Matrix condition(LogicMatrix mat1, Matrix mat2, Matrix mat3);
-    static Matrix condition(LogicMatrix mat1, Matrix mat2, Matrix mat3. int num);
+    static Matrix* condition(LogicMatrix mat1, Matrix mat2, Matrix mat3);
+    static Matrix8 condition(LogicMatrix mat1, Matrix mat2, Matrix mat3. int num);
 
     static double rankFirst(const double* vec, int highIndex, int lowIndex);
     static double* rank(const double* vec);
-    static Matrix rank(Matrix mat);
-    static Matrix rank(Matrix mat, int num);
+    static Matrix* rank(Matrix mat);
+    static Matrix* rank(Matrix mat, int num);
     
     static Matrix round(Matrix mat);
     static Matrix round(Matrix mat, int num);
@@ -169,7 +169,7 @@ public:
     static double* evalMean(Matrix alpha);
     static double* evalVariance(Matrix alpha);
     static double* evalInnerProduction(Matrix alpha, Matrix target);
-    static double* evalCovriance(Matrix alpha, Matrix target);
+    static double* evalCovariance(Matrix alpha, Matrix target);
     static double* evalCorrelation(Matrix alpha, Matrix target);
 
 

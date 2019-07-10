@@ -58,3 +58,19 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 
 ### 第四日
 
+上午编译了openblas在Windows平台上，但只能编译出lib文件，dll文件出不来很奇怪，后来找了编译好的直接用。。
+
+发现openblas缺乏elementwise操作的各种接口，如两个矩阵每个元素一一比较，round，floor，sqrt，pow等等，但考虑到Intel MKL和openblas接口基本是完全相同的（要符合BLAS约定？），不可能两个库同时使用，暂考虑使用性能稍差一些的Intel MKL
+
+下午实现了如下接口：
+
+- [x] add, sub, div, mul, matrixMul
+- [ ] max, min, bigger, smaller, equal, between
+- [ ] and, or, not, condition
+- [ ] rank, round, floor, abs, minus, sqrt, log, exp, sign, inverse, signedpow
+- [ ] shift, delay, delta, ratio, sum, product
+- [ ] tsMax, tsMin, tsArgmax/min, tsRank, tsMean, tsStd, tsSkewness, tsKurtosis, tsCov, tsCorr, tsCountNaN, tsCountTrue
+- [ ] decayLinear, decayExponential, smoothByDecayLinear
+- [ ] activate, normalize, neutralize, unify, evalValidPct, evalAbsSum, evalMean, evalVariance, evalCorr, evalCovariance
+- [ ] Det, Inverse, inv, treat, diag, inverseDiag, evalBeta
+- [ ] summaryMean/Variance/Skewness/Kurtosis/Covariance/Corr/Sum/Gini

@@ -2,7 +2,7 @@
  * @Author: lianke.qin@gmail.com 
  * @Date: 2019-07-08 10:53:02 
  * @Last Modified by: lianke.qin@gmail.com
- * @Last Modified time: 2019-07-09 11:41:38
+ * @Last Modified time: 2019-07-09 15:25:58
  */
 
 
@@ -36,19 +36,26 @@ public:
         nrow = n;
         ncol = m;
         value = new double[n * m];
+        //memset
     }
 
     //TODO : how to input a 2-D array as parameter
-    Matrix(double* mat){
-        
+    Matrix(int n, int m, double* vec){
+        nrow = n;
+        ncol = m;
+        value = new double[n * m];
+        memcpy(value, vec, nrow * ncol * sizeof(double));
     }
 
     //copy constructor
     Matrix(Matrix& mat){
         nrow = mat.nrow;
         ncol = mat.ncol;
-        value = mat.value;
+        value = new double[nrow * ncol];
+        memcpy(value, mat.value, nrow * ncol * sizeof(double));
     }
+
+    //copy some rows or columns usingg memcpy
 
     void clear(){
         nrow = 0;
