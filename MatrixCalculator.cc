@@ -9,7 +9,8 @@
 #include"MatrixCalculator.h"
 #include"Matrix.h"
 #include"MatrixFactory.h"
-
+#include<algorithm>
+#include<list>
 
 static double MatrixCalculator::int2Double(int n){
     return doubleIntArr[n];
@@ -385,7 +386,7 @@ static Matrix* MatrixCalculator::condition(LogicMatrix mat1, Matrix mat2, Matrix
 
 }
 
-static double MatrixCalculator::rankFirst(const double* vec, int highIndex, int lowIndex){
+static double MatrixCalculator::rankFirst(double* vec, int highIndex, int lowIndex){
     int len = highIndex - lowIndex;
     double first = vec[0];
     int biggerCount = 0;
@@ -409,7 +410,7 @@ static double MatrixCalculator::rankFirst(const double* vec, int highIndex, int 
 
     return res;
 }
-static double* MatrixCalculator::rank(const double* vec){
+static double* MatrixCalculator::rank(double* vec){
     int n = sizeof(vec) / sizeof(double);
     double* res = MatrixFactory.getInstanceOfNaNVector(n);
     //TODO
@@ -686,67 +687,382 @@ static Matrix MatrixCalculator::product(Matrix mat, int n, int num){
 }
 
 static Matrix* MatrixCalculator::tsMax(Matrix mat, int n){
-    
+    int nrow = mat.getNRow();
+    int ncol = mat.getNCol();
+    Matrix* res = new Matrix(nrow, ncol);
+
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            double max = NAN;
+            bool maxIsNaN = true;
+            int count = 0;
+            for(int k = 0; k < n && k <= j; k++){
+                double val = mat.value[i * ncol + j - k];
+                if(!isnan(val)){
+                    max = val;
+                    maxIsNaN = false;
+                }else{
+                    max = max(max, val);
+                }
+                count++;
+            }
+
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                res->value[i * ncol + j] = max;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
+        }
+    }
+    return res;
 }
 static Matrix* MatrixCalculator::tsMax(Matrix mat, int n, int num){
 
 }
 static Matrix* MatrixCalculator::tsMin(Matrix mat, int n){
+    int nrow = mat.getNRow();
+    int ncol = mat.getNCol();
+    Matrix* res = new Matrix(nrow, ncol);
 
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            double min = NAN;
+            bool minIsNaN = true;
+            int count = 0;
+            for(int k = 0; k < n && k <= j; k++){
+                double val = mat.value[i * ncol + j - k];
+                if(!isnan(val)){
+                    min = val;
+                    minIsNaN = false;
+                }else{
+                    min = min(min, val);
+                }
+                count++;
+            }
+
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                res->value[i * ncol + j] = min;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
+        }
+    }
+    return res;
 }
 static Matrix* MatrixCalculator::tsMin(Matrix mat, int n, int num){
 
 }
 static Matrix* MatrixCalculator::tsArgmax(Matrix mat, int n){
+    int nrow = mat.getNRow();
+    int ncol = mat.getNCol();
+    Matrix* res = new Matrix(nrow, ncol);
 
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            double idmax = NAN;
+            double max = NAN;
+            bool maxIsNaN = true;
+            int count = 0;
+            for(int k = 0; k < n && k <= j; k++){
+                double val = mat.value[i * ncol + j - k];
+                if(!isnan(val)){
+                    if(maxIsNaN){
+                        max = val;
+                        maxIsNaN = false;
+                        idmax = k;
+                    }
+                    
+                }else{
+                    if(val > max){
+                        max = val;
+                        idmax = k;
+                    }
+                }
+                count++;
+            }
+
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                res->value[i * ncol + j] = idmax;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
+        }
+    }
+    return res;
 }
 static Matrix* MatrixCalculator::tsArgmax(Matrix mat, int n, int num){
 
 }
 static Matrix* MatrixCalculator::tsArgmin(Matrix mat, int n){
+    int nrow = mat.getNRow();
+    int ncol = mat.getNCol();
+    Matrix* res = new Matrix(nrow, ncol);
 
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            double idmin = NAN;
+            double min = NAN;
+            bool minIsNaN = true;
+            int count = 0;
+            for(int k = 0; k < n && k <= j; k++){
+                double val = mat.value[i * ncol + j - k];
+                if(!isnan(val)){
+                    if(minIsNaN){
+                        min = val;
+                        minIsNaN = false;
+                        idmin = k;
+                    }
+                    
+                }else{
+                    if(val < min){
+                        min = val;
+                        idmin = k;
+                    }
+                }
+                count++;
+            }
+
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                res->value[i * ncol + j] = idmin;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
+        }
+    }
+    return res;
 }
 static Matrix* MatrixCalculator::tsArgmin(Matrix mat, int n, int num){
 
 }
 static Matrix* MatrixCalculator::tsRank(Matrix mat, int n){
+    int nrow = mat.getNRow();
+    int ncol = mat.getNCol();
+    Matrix* res = new Matrix(nrow, ncol);
+    bool* notNanArr = new bool[ncol];
+    for(int i = 0; i < nrow; i++){
+        Matrix* rowRefa = mat.getRowVector(i);
+        for(int j = 0; j < ncol; j++){
+            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+        }
+        for(int j = 0; j < ncol; j++){
+            int count = 0;
+            int upperBound = min(j + 1, n);
+            int lowestIndex = j + 1 - upperBound;
+            for(int k = 0; k < upperBound; k++){
+                if(notNanArr[j - k]){
+                    count++;
+                }
+            }
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double val = rankfirst(rowRefa->value, j, lowestIndex);
+                res->value[i * ncol + j] = val;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
 
+        }
+    }
+    return res;
 }
 static Matrix* MatrixCalculator::tsRank(Matrix mat, int n, int num){
 
 }
 static Matrix* MatrixCalculator::tsMean(Matrix mat, int n){
+    int nrow = mat.getNRow();
+    int ncol = mat.getNCol();
+    Matrix* res = new Matrix(nrow, ncol);
+    bool* notNanArr = new bool[ncol];
+    for(int i = 0; i < nrow; i++){
+        Matrix* rowRefa = mat.getRowVector(i);
+        for(int j = 0; j < ncol; j++){
+            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+        }
+        for(int j = 0; j < ncol; j++){
+            int count = 0;
+            int upperBound = min(j + 1, n);
+            int lowestIndex = j + 1 - upperBound;
+            for(int k = 0; k < upperBound; k++){
+                if(notNanArr[j - k]){
+                    count++;
+                }
+            }
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double val = summaryMean(rowRefa, j, lowestIndex);
+                res->value[i * ncol + j] = val;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
 
+        }
+    }
+    return res;
 }
 static Matrix* MatrixCalculator::tsMean(Matrix mat, int n, int num){
 
 }
 static Matrix* MatrixCalculator::tsStd(Matrix mat, int n){
+    int nrow = mat.getNRow();
+    int ncol = mat.getNCol();
+    Matrix* res = new Matrix(nrow, ncol);
+    bool* notNanArr = new bool[ncol];
+    for(int i = 0; i < nrow; i++){
+        Matrix* rowRefa = mat.getRowVector(i);
+        for(int j = 0; j < ncol; j++){
+            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+        }
+        for(int j = 0; j < ncol; j++){
+            int count = 0;
+            int upperBound = min(j + 1, n);
+            int lowestIndex = j + 1 - upperBound;
+            for(int k = 0; k < upperBound; k++){
+                if(notNanArr[j - k]){
+                    count++;
+                }
+            }
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double val = sqrt(summaryVariance(rowRefa, j, lowestIndex));
+                res->value[i * ncol + j] = val;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
 
+        }
+    }
+    return res;
 }
 static Matrix* MatrixCalculator::tsStd(Matrix mat, int n, int num){
 
 }
 static Matrix* MatrixCalculator::tsSkewness(Matrix mat, int n){
+    int nrow = mat.getNRow();
+    int ncol = mat.getNCol();
+    Matrix* res = new Matrix(nrow, ncol);
+    bool* notNanArr = new bool[ncol];
+    for(int i = 0; i < nrow; i++){
+        Matrix* rowRefa = mat.getRowVector(i);
+        for(int j = 0; j < ncol; j++){
+            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+        }
+        for(int j = 0; j < ncol; j++){
+            int count = 0;
+            int upperBound = min(j + 1, n);
+            int lowestIndex = j + 1 - upperBound;
+            for(int k = 0; k < upperBound; k++){
+                if(notNanArr[j - k]){
+                    count++;
+                }
+            }
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double val = summarySkewness(rowRefa, j, lowestIndex);
+                res->value[i * ncol + j] = val;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
 
+        }
+    }
+    return res;
 }
 static Matrix* MatrixCalculator::tsSkewness(Matrix mat, int n, int num){
 
 }
 static Matrix* MatrixCalculator::tsKurtosis(Matrix mat, int n){
+    int nrow = mat.getNRow();
+    int ncol = mat.getNCol();
+    Matrix* res = new Matrix(nrow, ncol);
+    bool* notNanArr = new bool[ncol];
+    for(int i = 0; i < nrow; i++){
+        Matrix* rowRefa = mat.getRowVector(i);
+        for(int j = 0; j < ncol; j++){
+            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+        }
+        for(int j = 0; j < ncol; j++){
+            int count = 0;
+            int upperBound = min(j + 1, n);
+            int lowestIndex = j + 1 - upperBound;
+            for(int k = 0; k < upperBound; k++){
+                if(notNanArr[j - k]){
+                    count++;
+                }
+            }
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double val = summaryKurtosis(rowRefa, j, lowestIndex);
+                res->value[i * ncol + j] = val;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
 
+        }
+    }
+    return res;
 }
 static Matrix* MatrixCalculator::tsKurtosis(Matrix mat, int n, int num){
 
 }
 static Matrix* MatrixCalculator::tsCov(Matrix mat1, Matrix mat2, int n){
+    int nrow = mat.getNRow();
+    int ncol = mat.getNCol();
+    Matrix* res = new Matrix(nrow, ncol);
+    bool* notNanArr = new bool[ncol];
+    for(int i = 0; i < nrow; i++){
+        Matrix* rowRefa = mat1.getRowVector(i);
+        Matrix* rowRefb = mat2.getRowVector(i);
+        for(int j = 0; j < ncol; j++){
+            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+        }
+        for(int j = 0; j < ncol; j++){
+            int count = 0;
+            int upperBound = min(j + 1, n);
+            int lowestIndex = j + 1 - upperBound;
+            for(int k = 0; k < upperBound; k++){
+                if(notNanArr[j - k]){
+                    count++;
+                }
+            }
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double val = summaryCovariance(rowRefa, rowRefb, j, lowestIndex);
+                res->value[i * ncol + j] = val;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
 
+        }
+    }
+    return res;
 }
 static Matrix* MatrixCalculator::tsCov(Matrix mat1, Matrix mat2, int n, int num){
 
 }
 static Matrix* MatrixCalculator::tsCorr(Matrix mat1, Matrix mat2, int n){
+    int nrow = mat.getNRow();
+    int ncol = mat.getNCol();
+    Matrix* res = new Matrix(nrow, ncol);
+    bool* notNanArr = new bool[ncol];
+    for(int i = 0; i < nrow; i++){
+        Matrix* rowRefa = mat1.getRowVector(i);
+        Matrix* rowRefb = mat2.getRowVector(i);
+        for(int j = 0; j < ncol; j++){
+            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+        }
+        for(int j = 0; j < ncol; j++){
+            int count = 0;
+            int upperBound = min(j + 1, n);
+            int lowestIndex = j + 1 - upperBound;
+            for(int k = 0; k < upperBound; k++){
+                if(notNanArr[j - k]){
+                    count++;
+                }
+            }
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double val = summaryCorrelation(rowRefa, rowRefb, j, lowestIndex);
+                res->value[i * ncol + j] = val;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
 
+        }
+    }
+    return res;
 }
 static Matrix* MatrixCalculator::tsCorr(Matrix mat1, Matrix mat2, int n, int num){
 
@@ -767,5 +1083,436 @@ static Matrix* MatrixCalculator::tsCountConsecutiveTrue(LogicMatrix mat, int n){
 
 }
 static Matrix* MatrixCalculator::tsCountConsecutiveTrue(LogicMatrix mat, int n, int num){
+
+}
+
+static Matrix* MatrixCalculator::decayLinear(Matrix mat, int n){}
+static Matrix* MatrixCalculator::decayLinear(Matrix mat, int n, int num){}
+static Matrix* MatrixCalculator::decayExponential(Matrix mat, int n){}
+static Matrix* MatrixCalculator::decayExponential(Matrix mat, int n, int num){}
+static void MatrixCalculator::smoothByDecayLinear(Matrix mat, int n){}
+static void MatrixCalculator::inputNaN(Matrix mat, double val){}
+
+
+static void MatrixCalculator::activate(Matrix mat, double threshold){}
+static Matrix* MatrixCalculator::normalize(Matrix mat, double scale, double mean, double bound){}
+static Matrix* MatrixCalculator::normalize(Matrix mat, double scale, double mean, double bound, int num){}
+static void MatrixCalculator::normalizeBySpec(Matrix mat, double scale, double mean, double bound){}
+static Matrix* MatrixCalculator::neutralize(Matrix mat){}
+static Matrix* MatrixCalculator::neutralize(Matrix mat, int num){}
+static Matrix* MatrixCalculator::mean(Matrix mat){}
+static Matrix* MatrixCalculator::unify(Matrix mat){}
+static Matrix* MatrixCalculator::unify(Matrix mat, int num){}
+static Matrix* MatrixCalculator::unifyByL2(Matrix mat){}
+static double* MatrixCalculator::evalValidPct(Matrix alpha){}
+static double* MatrixCalculator::evalAbsSum(Matrix alpha){}
+static double* MatrixCalculator::evalMean(Matrix alpha){}
+static double* MatrixCalculator::evalVariance(Matrix alpha){}
+static double* MatrixCalculator::evalInnerProduction(Matrix alpha, Matrix target){}
+static double* MatrixCalculator::evalCovariance(Matrix alpha, Matrix target){}
+static double* MatrixCalculator::evalCorrelation(Matrix alpha, Matrix target){}
+
+
+
+
+static double  MatrixCalculator::Det(Matrix mat, int N){}
+static double  MatrixCalculator::Inverse(Matrix* mat1, int N, Matrix* mat3){}
+static Matrix* MatrixCalculator::inv(Matrix mat){}
+static double  MatrixCalculator::treat(Matrix mat){}
+static double* MatrixCalculator::diag(Matrix mat){
+    int n = mat.getNCol();
+    double* res = new double[n];
+    for(int i = 0; i < n; i++){
+        res[i] = mat.value[i * n + i];
+    }
+    return res;
+}
+static double* MatrixCalculator::inverseDiag(Matrix mat){
+    int n = mat.getNCol();
+    double* res = new double[n];
+    for(int i = 0; i < n; i++){
+        res[i] = 1.0 / mat.value[i * n + i];
+    }
+    return res;
+}
+static double  MatrixCalculator::evalInnerProductionByLongVector(Matrix alpha, Matrix target){}
+static double  MatrixCalculator::evalCorrelationByLongVector(Matrix alpha, Matrix target){}
+static double* MatrixCalculator::evalBeta(Matrix alpha, Matrix target){}
+static double  MatrixCalculator::evalBetaByLongVector(Matrix alpha, Matrix target){}
+
+
+
+static double* MatrixCalculator::cumSum(Matrix ts){
+    int len = ts.getNCol();
+    double* res = MatrixFactory.getInstanceOfZeroVector(len);
+    double cumsum = 0;
+    for(int i = 0; i < len; i++){
+        double val = ts.value[i];
+        cumsum += isnan(val) ? 0.0 : val;
+        res[i] = cumsum;
+    }
+    return res;
+}
+static double  MatrixCalculator::summaryMean(Matrix ts, int highIndex, int lowIndex){
+    //ts is 1D matrix
+    int len = highIndex - lowIndex + 1;
+    double x, sumx;
+    sumx = 0;
+    int n = 0;
+    double mean = NAN;
+    for(int k = highIndex; k >= lowIndex; k--){
+        x = ts.value[k];
+        if(!isnan(x) && !isinf(x)){
+            n++;
+            sumx += x;
+        }
+    }
+    double f_n = int2Double(n);
+    if(f_n > int2Double(len) * VALIDITY_PERCENTAGE_REQUIREMENT){
+        double meanx = sumx / f_n;
+        mean = meanx;
+        mean = (isnan(mean) || isinf(mean)) ? 0 : mean ;
+    }
+    return mean;
+}
+static double  MatrixCalculator::summaryVariance(Matrix ts, int highIndex, int lowIndex){
+    //ts is 1D matrix
+    int len = highIndex - lowIndex + 1;
+    double x, sumx, sumxx;
+    sumx = 0;
+    sumxx = 0;
+    int n = 0;
+    double var = NAN;
+    for(int k = highIndex; k >= lowIndex; k--){
+        x = ts.value[k];
+        if(!isnan(x) && !isinf(x)){
+            n++;
+            sumx += x;
+            sumxx += x * x;
+        }
+    }
+    double f_n = int2Double(n);
+    if(f_n > int2Double(len) * VALIDITY_PERCENTAGE_REQUIREMENT){
+        double varx = (sumxx - sumx * sumx /f_n) / f_n;
+        var = varx;
+        var = (isnan(var) || isinf(var)) ? 0 : var;
+    }
+    return var;
+
+}
+static double  MatrixCalculator::summarySkewness(Matrix ts, int highIndex, int lowIndex){
+    //ts is 1D matrix
+    int len = highIndex - lowIndex + 1;
+    double x, sumx, sumxx, sumxxx;
+    sumx = 0;
+    sumxx = 0;
+    sumxxx = 0;
+    int n = 0;
+    double skewness = NAN;
+    for(int k = highIndex; k >= lowIndex; k--){
+        x = ts.value[k];
+        if(!isnan(x) && !isinf(x)){
+            n++;
+            sumx += x;
+            sumxx += x * x;
+            sumxxx += x * x * x;
+        }
+    }
+    double f_n = int2Double(n);
+    if(f_n > int2Double(len) * VALIDITY_PERCENTAGE_REQUIREMENT){
+        double u = sumx / f_n;
+        double sigma - sqrt(sumxx / f_n - u * u);
+        double ex3 = sumxxx / f_n;
+        skewness = (ex3 = 3 * u * sigma * sigma - u * u * u) / (sigma * sigma * sigma);
+        skewness = (isnan(skewness) || isinf(skewness)) ? 0 : skewness;
+    }
+    return skewness;
+}
+static double  MatrixCalculator::summaryKurtosis(Matrix ts, int highIndex, int lowIndex){
+    //ts is 1D matrix
+    int len = highIndex - lowIndex + 1;
+    double x, sumx, sumxx, sumxxx;
+    sumx = 0;
+    sumxx = 0;
+    sumxxx = 0;
+    sumxxxx = 0;
+    int n = 0;
+    double kurtosis = NAN;
+    for(int k = highIndex; k >= lowIndex; k--){
+        x = ts.value[k];
+        if(!isnan(x) && !isinf(x)){
+            n++;
+            sumx += x;
+            sumxx += x * x;
+            sumxxx += x * x * x;
+            sumxxxx += x * x * x * x;
+        }
+    }
+    double f_n = int2Double(n);
+    if(f_n > int2Double(len) * VALIDITY_PERCENTAGE_REQUIREMENT){
+        double ex1 = sumx / f_n;
+        double ex2 = sumxx / f_n;
+        double ex3 = sumxxx / f_n;
+        double ex4 = sumxxxx / f_n;
+        double sigm2 = ex2 - ex1 * ex1;
+        kurtosis = (ex4 - 4 * ex1 * ex3 + 6 * ex1 * ex1 * ex2 - 3 * ex1 * ex1 *ex1 * ex1) / (sigma2 * sigma2) - 3.0;
+        kurtosis = (isnan(kurtosis) || isinf(kurtosis)) ? 0 : kurtosis;
+    }
+    return kurtosis;
+}
+static double  MatrixCalculator::summaryCovariance(Matrix ts1, Matrix ts2, int highIndex, int lowIndex){
+    //ts is 1D matrix
+    int len = highIndex - lowIndex + 1;
+    double x, sumx, sumy, sumxy;
+    sumx = 0;
+    sumy = 0;
+    sumxy = 0;
+    int n = 0;
+    double cov = NAN;
+    for(int k = 0; k < len; k++){
+        x = ts1.value[k];
+        y = ts2.value[k];
+        if(!isnan(x) && !isinf(x)){
+            y = (isnan(y) || isinf(y)) ? 0 : y;
+            n++;
+            sumx += x;
+            sumy += y;
+            sumxy += x * y;
+        }
+    }
+    double f_n = int2Double(n);
+    if(n > (double)len * VALIDITY_PERCENTAGE_REQUIREMENT){
+        cov = (sumxy - sumx * sumy / f_n) / f_n;
+        cov = (isnan(cov) || isinf(cov)) ? 0 : cov;
+    }
+    return cov;
+
+}
+static double  MatrixCalculator::summaryCorrelation(Matrix ts1, Matrix ts2, int highIndex, int lowIndex){
+    double x, y, sumx, sumy, sumxx, sumyy, sumxy, n;
+    sumx = 0;
+    sumxx = 0;
+    sumy = 0;
+    sumyy = 0;
+    sumxy = 0;
+    n = 0;
+    double corr = NAN;
+    int len = highIndex - lowIndex + 1;
+    for(int k = 0; k < len; k++){
+        x = ts1.value[k];
+        y = ts2.value[k];
+        if(!isnan(x) && !isinf(x)){
+            y = (isnan(y) || isinf(y)) ? 0 : y;
+            n++;
+            sumx += x;
+            sumx += x * x;
+            sumy += y;
+            sumyy += y * y;
+            sumxy += x * y;
+        }
+    }
+
+    if(n > (double)len * VALIDITY_PERCENTAGE_REQUIREMENT){
+        double varx = (sumxx - sumx * sumx / n) / n;
+        double vary = (sumyy - sumy * sumy / n) / n;
+        double cov = (sumxy - sumx * sumy / n) / n;
+        corr = cov / sqrt(varx * vary);
+        corr = isnan(corr) ? 0 : corr;
+        corr = (corr > 1) ? 1 : corr;
+        corr = (corr < -1) ? -1 : corr;
+    }
+    return corr;
+}
+static double  MatrixCalculator::summarySum(Matrix ts){
+    int len = ts.getNCol();
+    double x, sumx, n;
+    sumx = 0;
+    n = 0;
+    double sum = NAN;
+    for(int k = 0; k < len; k++){
+        x = ts.value[k];
+        if(!isnan(x) && !isinf(x)){
+            n++;
+            sumx += x;
+        }
+    }
+
+    if(n > (double)len * VALIDITY_PERCENTAGE_REQUIREMENT){
+        sum = isnan(sumx) ? 0 : sumx;
+        sum = isinf(sum) ? 0 : sum;
+    }
+    return sum;
+}
+static double  MatrixCalculator::summaryMean(Matrix ts){
+    int len = ts.getNCol();
+    double x, sumx;
+    sumx = 0;
+    int n = 0;
+    double mean = NAN;
+    for(int k = highIndex; k >= lowIndex; k--){
+        x = ts.value[k];
+        if(!isnan(x) && !isinf(x)){
+            n++;
+            sumx += x;
+        }
+    }
+    double f_n = int2Double(n);
+    if(f_n > int2Double(len) * VALIDITY_PERCENTAGE_REQUIREMENT){
+        double meanx = sumx / f_n;
+        mean = meanx;
+        mean = (isnan(mean) || isinf(mean)) ? 0 : mean ;
+    }
+    return mean;
+}
+static double  MatrixCalculator::summaryVariance(Matrix ts){
+    int len = ts.getNCol();
+    double x, sumx, sumxx;
+    sumx = 0;
+    sumxx = 0;
+    int n = 0;
+    double var = NAN;
+    for(int k = highIndex; k >= lowIndex; k--){
+        x = ts.value[k];
+        if(!isnan(x) && !isinf(x)){
+            n++;
+            sumx += x;
+            sumxx += x * x;
+        }
+    }
+    double f_n = int2Double(n);
+    if(f_n > int2Double(len) * VALIDITY_PERCENTAGE_REQUIREMENT){
+        double varx = (sumxx - sumx * sumx /f_n) / f_n;
+        var = varx;
+        var = (isnan(var) || isinf(var)) ? 0 : var;
+    }
+    return var;
+}
+static double  MatrixCalculator::summarySkewness(Matrix ts){
+    int len = ts.getNCol();
+    double x, sumx, sumxx, sumxxx;
+    sumx = 0;
+    sumxx = 0;
+    sumxxx = 0;
+    int n = 0;
+    double skewness = NAN;
+    for(int k = highIndex; k >= lowIndex; k--){
+        x = ts.value[k];
+        if(!isnan(x) && !isinf(x)){
+            n++;
+            sumx += x;
+            sumxx += x * x;
+            sumxxx += x * x * x;
+        }
+    }
+    double f_n = int2Double(n);
+    if(f_n > int2Double(len) * VALIDITY_PERCENTAGE_REQUIREMENT){
+        double u = sumx / f_n;
+        double sigma - sqrt(sumxx / f_n - u * u);
+        double ex3 = sumxxx / f_n;
+        skewness = (ex3 = 3 * u * sigma * sigma - u * u * u) / (sigma * sigma * sigma);
+        skewness = (isnan(skewness) || isinf(skewness)) ? 0 : skewness;
+    }
+    return skewness;
+}
+static double  MatrixCalculator::summaryKurtosis(Matrix ts){
+    int len = ts.getNCol();
+    double x, sumx, sumxx, sumxxx;
+    sumx = 0;
+    sumxx = 0;
+    sumxxx = 0;
+    sumxxxx = 0;
+    int n = 0;
+    double kurtosis = NAN;
+    for(int k = highIndex; k >= lowIndex; k--){
+        x = ts.value[k];
+        if(!isnan(x) && !isinf(x)){
+            n++;
+            sumx += x;
+            sumxx += x * x;
+            sumxxx += x * x * x;
+            sumxxxx += x * x * x * x;
+        }
+    }
+    double f_n = int2Double(n);
+    if(f_n > int2Double(len) * VALIDITY_PERCENTAGE_REQUIREMENT){
+        double ex1 = sumx / f_n;
+        double ex2 = sumxx / f_n;
+        double ex3 = sumxxx / f_n;
+        double ex4 = sumxxxx / f_n;
+        double sigm2 = ex2 - ex1 * ex1;
+        kurtosis = (ex4 - 4 * ex1 * ex3 + 6 * ex1 * ex1 * ex2 - 3 * ex1 * ex1 *ex1 * ex1) / (sigma2 * sigma2) - 3.0;
+        kurtosis = (isnan(kurtosis) || isinf(kurtosis)) ? 0 : kurtosis;
+    }
+    return kurtosis;
+}
+static double  MatrixCalculator::summaryCorrelation(Matrix ts1, Matrix ts2){
+    double x, y, sumx, sumy, sumxx, sumyy, sumxy, n;
+    sumx = 0;
+    sumxx = 0;
+    sumy = 0;
+    sumyy = 0;
+    sumxy = 0;
+    n = 0;
+    double corr = NAN;
+    int len = ts1.getNCol();
+    for(int k = 0; k < len; k++){
+        x = ts1.value[k];
+        y = ts2.value[k];
+        if(!isnan(x) && !isinf(x)){
+            y = (isnan(y) || isinf(y)) ? 0 : y;
+            n++;
+            sumx += x;
+            sumx += x * x;
+            sumy += y;
+            sumyy += y * y;
+            sumxy += x * y;
+        }
+    }
+
+    if(n > (double)len * VALIDITY_PERCENTAGE_REQUIREMENT){
+        double varx = (sumxx - sumx * sumx / n) / n;
+        double vary = (sumyy - sumy * sumy / n) / n;
+        double cov = (sumxy - sumx * sumy / n) / n;
+        corr = cov / sqrt(varx * vary);
+        corr = isnan(corr) ? 0 : corr;
+        corr = (corr > 1) ? 1 : corr;
+        corr = (corr < -1) ? -1 : corr;
+    }
+    return corr;
+}
+static double  MatrixCalculator::summaryMaxDrawDown(Matrix ts){
+    int len = ts.getNCol();
+    double x, peak, drawdown, n;
+    peak = 0;
+    drawdown = 0;
+    n = 0;
+    double drawdownRatio = NAN;
+    for(int k = 0; k < len; k++){
+        x = ts.value[k];
+        if(!isnan(x) && !isinf(x)){
+            n++;
+            peak = max(x, peak);
+            drawdown = max(peak - x, drawdown);
+        }
+    }
+
+    if(n > (double)len * VALIDITY_PERCENTAGE_REQUIREMENT){
+        drawdownRatio = drawdown / max(peak, 0.0);
+    }
+    return drawdownRatio;
+}
+static double  MatrixCalculator::summaryGini(Matrix ts, int ngroup){
+    int len = ts.getNCol();
+    double* sumArray = new double[ngroup];
+    for(int i = 0; i < len; i++){
+        double val = ts.value[i];
+        int idgroup = (i * ngroup) / len;
+        sumArray[idgroup] += val;
+    }
+    list<double> sumList = new list<double>();
+    for(int i = 0; i < ngroup; i++){
+        sumList.
+    }
+    //TODO
 
 }

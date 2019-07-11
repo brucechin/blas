@@ -96,18 +96,18 @@ public:
         }
     }
 
-    double* getRowVector(int i){
-        double* res = new double[ncol];
+    Matrix* getRowVector(int i){
+        Matrix* res = new Matrix(1, ncol);
         for(int j = 0; j < ncol; j++){
-            res[j] = getElement(i,j);
+            res->value[j] = value[i * ncol + j];
         }
         return res;
     }
 
-    double* getColVector(int j){
-        double* res = new double[nrow];
+    Matrix* getColVector(int j){
+        Matrix res = new Matrix(nrow, 1);
         for(int i = 0; i < nrow; i++){
-            res[i] = getElement(i,j);
+            res->value[i] = value[i * ncol + j];
         }        
         return res;
     }

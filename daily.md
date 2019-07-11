@@ -78,9 +78,16 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 - [x] max, min, bigger, smaller, equal, between
 - [x] and, or, not, condition
 - [x] rank, round, floor, abs, minus, sqrt, log, exp, sign, inverse, signedpow
-- [ ] shift, delay, delta, ratio, sum, product
+
+### 第六日
+
+讨论了时序数据处理的一些接口中传入参数的形式，java代码中是传入一个一维数组，我最开始在C中实现的是传一个double指针，但是发现难以获取指针指向内存空间的大小，后来把传入参数统一为Matrix，时序数据这些接口传入一维的Matrix
+
+今日实现以下接口
+
+- [x] shift, delay, delta, ratio, sum, product
 - [ ] tsMax, tsMin, tsArgmax/min, tsRank, tsMean, tsStd, tsSkewness, tsKurtosis, tsCov, tsCorr, tsCountNaN, tsCountTrue
 - [ ] decayLinear, decayExponential, smoothByDecayLinear
 - [ ] activate, normalize, neutralize, unify, evalValidPct, evalAbsSum, evalMean, evalVariance, evalCorr, evalCovariance
 - [ ] Det, Inverse, inv, treat, diag, inverseDiag, evalBeta
-- [ ] summaryMean/Variance/Skewness/Kurtosis/Covariance/Corr/Sum/Gini
+- [x] summaryMean/Variance/Skewness/Kurtosis/Covariance/Corr/Sum/Gini

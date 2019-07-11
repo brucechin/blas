@@ -191,8 +191,8 @@ public:
     static double* evalCorrelation(Matrix alpha, Matrix target);
 
 
-    static double Det(double* mat, int N);
-    static double Inverse(double* mat1, int N, double* mat3);
+    static double Det(Matrix mat, int N);
+    static double Inverse(Matrix mat1, int N, Matrix mat3);
     static Matrix* inv(Matrix mat);
     static double treat(Matrix mat);
     static double* diag(Matrix mat);
@@ -201,20 +201,20 @@ public:
     static double evalCorrelationByLongVector(Matrix alpha, Matrix target);
     static double* evalBeta(Matrix alpha, Matrix target);
     static double evalBetaByLongVector(Matrix alpha, Matrix target);
-    static double* cumSum(double* ts);
-    static double summaryMean(double* ts, int highIndex, int lowIndex);
-    static double summaryVariance(double* ts, int highIndex, int lowIndex);
-    static double summarySkewness(double* ts, int highIndex, int lowIndex);
-    static double summaryKurtosis(double* ts, int highIndex, int lowIndex);
-    static double summaryCovariance(double* ts, int highIndex, int lowIndex);
-    static double summaryCorrelation(double* ts1, double* ts2, int highIndex, int lowIndex);
-    static double summarySum(double* ts);
-    static double summaryMean(double* ts);
-    static double summaryVariance(double* ts);
-    static double summarySkewness(double* ts);
-    static double summaryKurtosis(double* ts);
-    static double summaryCorrelation(double* ts1, double* ts2);
-    static double summaryMaxDrawDown(doubel* ts);
-    static double summaryGini(double* ts, int ngroup);
+    static double* cumSum(Matrix ts);
+    static double summaryMean(Matrix ts, int highIndex, int lowIndex);
+    static double summaryVariance(Matrix ts, int highIndex, int lowIndex);
+    static double summarySkewness(Matrix ts, int highIndex, int lowIndex);
+    static double summaryKurtosis(Matrix ts, int highIndex, int lowIndex);
+    static double summaryCovariance(Matrix ts1, Matrix ts2, int highIndex, int lowIndex);
+    static double summaryCorrelation(Matrix ts1, Matrix ts2, int highIndex, int lowIndex);
+    static double summarySum(Matrix ts);
+    static double summaryMean(Matrix ts);
+    static double summaryVariance(Matrix ts);
+    static double summarySkewness(Matrix ts);
+    static double summaryKurtosis(Matrix ts);
+    static double summaryCorrelation(Matrix ts1, Matrix ts2);
+    static double summaryMaxDrawDown(Matrix ts);
+    static double summaryGini(Matrix ts, int ngroup);
 
 }
