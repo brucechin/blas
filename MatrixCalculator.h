@@ -182,26 +182,26 @@ public:
     static Matrix* unify(Matrix mat);
     static Matrix* unify(Matrix mat, int num);
     static Matrix* unifyByL2(Matrix mat);
-    static double* evalValidPct(Matrix alpha);
-    static double* evalAbsSum(Matrix alpha);
-    static double* evalMean(Matrix alpha);
-    static double* evalVariance(Matrix alpha);
-    static double* evalInnerProduction(Matrix alpha, Matrix target);
-    static double* evalCovariance(Matrix alpha, Matrix target);
-    static double* evalCorrelation(Matrix alpha, Matrix target);
+    static Matrix* evalValidPct(Matrix alpha);
+    static Matrix* evalAbsSum(Matrix alpha);
+    static Matrix* evalMean(Matrix alpha);
+    static Matrix* evalVariance(Matrix alpha);
+    static Matrix* evalInnerProduction(Matrix alpha, Matrix target);
+    static Matrix* evalCovariance(Matrix alpha, Matrix target);
+    static Matrix* evalCorrelation(Matrix alpha, Matrix target);
 
 
     static double Det(Matrix mat, int N);
     static double Inverse(Matrix mat1, int N, Matrix mat3);
     static Matrix* inv(Matrix mat);
     static double treat(Matrix mat);
-    static double* diag(Matrix mat);
-    static double* inverseDiag(Matrix mat);
+    static Matrix* diag(Matrix mat);
+    static Matrix* inverseDiag(Matrix mat);
     static double evalInnerProductionByLongVector(Matrix alpha, Matrix target);
     static double evalCorrelationByLongVector(Matrix alpha, Matrix target);
-    static double* evalBeta(Matrix alpha, Matrix target);
+    static Matrix* evalBeta(Matrix alpha, Matrix target);
     static double evalBetaByLongVector(Matrix alpha, Matrix target);
-    static double* cumSum(Matrix ts);
+    static Matrix* cumSum(Matrix ts);
     static double summaryMean(Matrix ts, int highIndex, int lowIndex);
     static double summaryVariance(Matrix ts, int highIndex, int lowIndex);
     static double summarySkewness(Matrix ts, int highIndex, int lowIndex);
