@@ -91,3 +91,10 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 - [ ] activate, normalize, neutralize, unify, evalValidPct, evalAbsSum, evalMean, evalVariance, evalCorr, evalCovariance
 - [ ] Det, Inverse, inv, treat, diag, inverseDiag, evalBeta
 - [x] summaryMean/Variance/Skewness/Kurtosis/Covariance/Corr/Sum/Gini
+
+### 7.15
+
+1. 已基本实现所有接口，但超过一半的是没有调用外部库实现的，可能效率不高？
+2. 不改变输入参数Matrix的时候是pass by value，为了降低调用开销是否改成pass by reference to const?(不用调用Matrix的拷贝构造和析构函数等)
+3. 开始准备写测试代码，原java文件竟然没有配套测试代码？？？？
+
