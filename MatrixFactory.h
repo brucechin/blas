@@ -13,6 +13,8 @@
 #include"Matrix.h"
 #include"LogicMatrix.h"
 #include<cmath>
+#include<random>
+#include<time.h>
 
 class MatrixFactory{
     static Matrix* emptyMatrix = new Matrix(0,0);
@@ -267,7 +269,7 @@ class MatrixFactory{
 
     static double* getInstanceOfNaNVector(int n){
         double * res = new double[n];
-        for(iint i = 0; i < n; i++){
+        for(int i = 0; i < n; i++){
             res[i] = NAN;
         }
         return res;
@@ -275,8 +277,28 @@ class MatrixFactory{
 
     static double* getInstanceOfUnitVector(int n){
         double * res = new double[n];
-        for(iint i = 0; i < n; i++){
+        for(int i = 0; i < n; i++){
             res[i] = 1.0;
+        }
+        return res;
+    }
+
+    double getRandDouble(int min, int max){
+        double m1 = (double)(rand()%101)/101.0;
+        min++;
+        double m2 = (double)(rand()%(max - min + 1) + min);
+        m2 -= 1;
+        return m1 + m2;
+    }
+
+    static Matrix* getInstanceOfRandomMatrix(int n, int m, int min, int max){
+        srand((unsigned)time(NULL));
+        Matrix* res = new Matrix(n, m);
+        double* p = &res->value[0];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                (*p++) = getRandDouble(min, max);
+            }
         }
         return res;
     }

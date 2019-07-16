@@ -202,6 +202,7 @@ public:
     static Matrix* evalBeta(Matrix alpha, Matrix target);
     static double evalBetaByLongVector(Matrix alpha, Matrix target);
     static Matrix* cumSum(Matrix ts);
+    //static Matrix* cumProd(Matrix ts);
     static double summaryMean(Matrix ts, int highIndex, int lowIndex);
     static double summaryVariance(Matrix ts, int highIndex, int lowIndex);
     static double summarySkewness(Matrix ts, int highIndex, int lowIndex);
@@ -217,4 +218,6 @@ public:
     static double summaryMaxDrawDown(Matrix ts);
     static double summaryGini(Matrix ts, int ngroup);
 
+
+    //TODO:reshape, SVD, QR factorization, transpose, egienvalue, trace, 
 }
