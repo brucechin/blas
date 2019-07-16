@@ -11,9 +11,26 @@
 
 using namespace std;
 
+Matrix* getInstanceOfRandomMatrix(int n, int m, int min, int max){
+        srand((unsigned)time(NULL));
+        Matrix* res = new Matrix(n, m);
+        double* p = &res->value[0];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                double m1 = (double)(rand()%101)/101.0;
+                min++;
+                double m2 = (double)(rand()%(max - min + 1) + min);
+                m2 -= 1;
+                (*p++) = m1 + m2;
+            }
+        }
+        return res;
+    }
+
 int main(){
-    Matrix a = new Matrix(1000, 1000, -1000, 1000);
-    Matrix b = new Matrix(1000, 1000, -1000, 1000);
+
+    Matrix* a = getInstanceOfRandomMatrix(1000, 1000, -1000, 1000);
+    Matrix* b = getInstanceOfRandomMatrix(1000, 1000, -1000, 1000);
     ofstream f1, f2;
     f1.open("1k-a.txt",ios::binary);
     f1.write((char *)&a, sizeof(a));

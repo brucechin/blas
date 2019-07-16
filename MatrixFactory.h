@@ -6,7 +6,7 @@
  */
 
 #include<iostream>
-#include<cblas.h>
+#include"cblas.h"
 #include<vector>
 #include<cstdlib>
 #include<string>
@@ -17,53 +17,50 @@
 #include<time.h>
 
 class MatrixFactory{
-    static Matrix* emptyMatrix = new Matrix(0,0);
-    static double* emptyVector = new double[0];
-
 
     MatrixFactory(){}
-
+public:
     static Matrix* getInstanceOfEmptyMatrix(){
-        return emptyMatrix;
+        return new Matrix(0, 0);
     }
 
     static Matrix* getInstanceOfEyeMatrix(int n){
-        Matrix res new Matrix(n, n);
+        Matrix* res = new Matrix(n, n);
         for(int i = 0; i < n; i++){
-            res.setElement(i, i, 1.0);
+            res->value[i * n + i] = 1.0;
         }
         return res;
     }
 
     static Matrix* getInstanceOfZeroMatrix(int n){
-        Matrix res = new Matrix(n, n);
+        Matrix* res = new Matrix(n, n);
         return res;
     }
 
     static Matrix* getInstanceOfZeroMatrix(Matrix mat){
-        Matrix res = new Matrix(mat.getNRow(), mat.getNCol());
+        Matrix* res = new Matrix(mat.getNRow(), mat.getNCol());
         return res;
     }
 
     static Matrix* getInstanceOfNaNMatrix(int n){
-        Matrix res = new Matrix(n, n);
-        res.setValue(NAN);
+        Matrix* res = new Matrix(n, n);
+        res->setValue(NAN);
     }
 
     static Matrix* getInstanceOfNaNMatrix(int n, int m){
-        Matrix res = new Matrix(n, m);
-        res.setValue(NAN);
+        Matrix* res = new Matrix(n, m);
+        res->setValue(NAN);
     }
 
     static Matrix* getExpandingColumnInstanceOfMatrix(Matrix mat, int n){
         int nrow = mat.getNRow();
         int ncol = mat.getNCol();
 
-        Matrix res = new Matrix(nrow, ncol + n);
+        Matrix* res = new Matrix(nrow, ncol + n);
         for(int i = 0; i < nrow; i++){
             for(int j = 0; j < ncol; j++){
                 double val = mat.getElement(i, j);
-                res.setElement(i, j, val);
+                res->value[i * ncol + j] = val;
             }
         }
         return res;
@@ -71,11 +68,11 @@ class MatrixFactory{
 
     static Matrix* getInstanceOfDiagMatrix(double* diag){
         int n = sizeof(diag) / sizeof(double);
-        Matrix res = getInstanceOfZeroMatrix(n);
+        Matrix* res = getInstanceOfZeroMatrix(n);
 
         for(int i = 0; i < n; i++){
             double val = diag[i];
-            res.setElement(i, i, val);
+            res->value[i * n + i] = val;
         }
         return res;
 
@@ -83,10 +80,10 @@ class MatrixFactory{
 
     static Matrix* getInstanceOfRowMatrix(double* vec){
         int n = sizeof(vec) / sizeof(double);
-        Matrix res = new Matrix(1, n);
+        Matrix* res = new Matrix(1, n);
         for(int i = 0; i < n; i++){
             double val = vec[i];
-            res.setElement(0, i, val);
+            res->value[0 * n + i] = val;
         }        
         return res;
     }
@@ -97,16 +94,16 @@ class MatrixFactory{
         int ncol1 = mat1.getNCol();
         int ncol2 = mat2.getNCol();
 
-        Matrix res = new Matrix(nrow, ncol1 + ncol2);
+        Matrix* res = new Matrix(nrow, ncol1 + ncol2);
         for(int i = 0; i < nrow; i++){
-            for(int j = 0; j < ncol1, j++){
+            for(int j = 0; j < ncol1; j++){
                 double val = mat1.getElement(i, j);
-                res.setElement(i, j, val);
+                res->setElement(i, j, val);
             }
 
-            for(int j = 0; j < ncol2, j++){
+            for(int j = 0; j < ncol2; j++){
                 double val = mat2.getElement(i, j);
-                res.setElement(i, j + ncol1, val);
+                res->setElement(i, j + ncol1, val);
             }
         }
         return res;
@@ -117,20 +114,20 @@ class MatrixFactory{
         int nrow1 = mat1.getNRow();
         int nrow2 = mat2.getNRow();
 
-        Matrix res = new Matrix(nrow1 + nrow2, ncol);
+        Matrix* res = new Matrix(nrow1 + nrow2, ncol);
         
         //for better cache locality
         for(int i = 0; i < nrow1; i++){
             for(int j = 0; j < ncol; j++){
                 double val = mat1.getElement(i, j);
-                res.setElement(i, j, val);
+                res->value[i * ncol + j] = val;
             }
         }
 
         for(int i = 0; i < nrow2; i++){
             for(int j = 0; j < ncol; j++){
                 double val = mat1.getElement(i, j);
-                res.setElement(i + nrow1, j, val);
+                res->value[(i + nrow1) * ncol + j] = val;
             }
         }
         
@@ -141,13 +138,13 @@ class MatrixFactory{
         int ncol = mat1.getNCol();
 
         int colnum = (int) ncol / period;
-        Matrix res = new Matrix(nrow, ncol);
+        Matrix* res = new Matrix(nrow, ncol);
         for(int i = 0; i < nrow; i++){
             int colid = 0;
             for(int j = ncol - 1; j >= 0 && colid < colnum; j -= period){
-                currid = colnum - colid - 1;
+                int currid = colnum - colid - 1;
                 double val = mat1.getElement(i, j);
-                res.setElement(i, currid, val);
+                res->value[i * ncol + currid] = val;
                 colid++;
             }
         }
@@ -159,14 +156,14 @@ class MatrixFactory{
         int ncol = mat1.getNCol();
 
         int colnum = min(num, (int) ncol / period);
-        Matrix res = new Matrix(nrow, colnum);
+        Matrix* res = new Matrix(nrow, colnum);
 
         for(int i = 0; i < nrow; i++){
             int colid = 0;
             for(int j = ncol - 1; j >= 0 && colid < colnum; j -= period){
-                int currid colnum - colid - 1;
-                double val = mat1.getElement(i, j);
-                res.setElement(i, currid, val);
+                int currid = colnum - colid - 1;
+                double val = mat1.value[i * ncol + j];
+                res->value[i * ncol + currid] = val;
                 colid++;
             }
         }
@@ -175,12 +172,12 @@ class MatrixFactory{
 
     static LogicMatrix* replicateMatrixVertical(bool* logic, int nrow){
         int ncol = sizeof(logic) / sizeof(bool);
-        LogicMatrix res = new LogicMatrix(nrow, ncol);
+        LogicMatrix* res = new LogicMatrix(nrow, ncol);
    
         for(int i = 0; i < nrow; i++){
             for(int j = 0; j < ncol; j++){
                 bool val = logic[j];//for better cache locality and less memory access
-                res.setElement(i, j, val);
+                res->value[i * ncol + j] = val;
             }
         }
     
@@ -190,12 +187,12 @@ class MatrixFactory{
 
     static LogicMatrix* replicateMatrixHorizon(bool* logic, int ncol){
         int nrow = sizeof(logic) / sizeof(bool);
-        LogicMatrix res = new LogicMatrix(nrow, ncol);
+        LogicMatrix* res = new LogicMatrix(nrow, ncol);
 
         for(int i = 0; i < nrow; i++){
             bool val = logic[i];
             for(int j = 0; j < ncol; j++){
-                res.setElement(i, j, val);
+                res->value[i * ncol + j] = val;
             }
         }
 
@@ -206,14 +203,14 @@ class MatrixFactory{
         int nrow = mat1.getNRow();
         int ncol = mat1.getNCol();
         int colnum = (int) ncol / period;
-        LogicMatrix res = new LogicMatrix(nrow, colnum);
+        LogicMatrix* res = new LogicMatrix(nrow, colnum);
 
         for(int i = 0; i < nrow; i++){
             int colid = 0;
             for(int j = ncol - 1; j >= 0 && colid < colnum; j -= period){
                 int currid = colnum - colid - 1;
                 bool val = mat1.getElement(i, j);
-                res.setElement(i, currid, val);
+                res->value[i * ncol + currid] = val;
                 colid++;
             }
         }
@@ -225,14 +222,14 @@ class MatrixFactory{
         int nrow = mat1.getNRow();
         int ncol = mat1.getNCol();
         int colnum = min(num, (int) ncol / period);
-        LogicMatrix res = new LogicMatrix(nrow, colnum);
+        LogicMatrix* res = new LogicMatrix(nrow, colnum);
 
         for(int i = 0; i < nrow; i++){
             int colid = 0;
             for(int j = ncol - 1; j >= 0 && colid < colnum; j -= period){
                 int currid = colnum - colid - 1;
                 bool val = mat1.getElement(i, j);
-                res.setElement(i, currid, val);
+                res->value[i * ncol + currid] = val;
                 colid++;
             }
         }
@@ -242,11 +239,12 @@ class MatrixFactory{
 
     static Matrix* subMatrixHorizon(Matrix mat1, int colStart, int colEnd){
         int nrow = mat1.getNRow();
-        Matrix res = new Matrix(nrow, colEnd - colStart + 1);
+        Matrix* res = new Matrix(nrow, colEnd - colStart + 1);
         for(int i = 0; i < nrow; i++){
             for(int j = colStart; j <= colEnd; j++){
                 double val = mat1.getElement(i, j);
-                res.setElement(i, j - colStart, val);
+                res->setElement(i, j - colStart, val);
+                
             }
         }
         return res;
@@ -260,7 +258,7 @@ class MatrixFactory{
     }
 
     static double* getInstanceOfEmptyVector(){
-        return emptyVector;
+        return new double[0];
     }
 
     static double* getInstanceOfZeroVector(int n){
@@ -297,7 +295,11 @@ class MatrixFactory{
         double* p = &res->value[0];
         for(int i = 0; i < n; i++){
             for(int j = 0; j < m; j++){
-                (*p++) = getRandDouble(min, max);
+                double m1 = (double)(rand()%101)/101.0;
+                min++;
+                double m2 = (double)(rand()%(max - min + 1) + min);
+                m2 -= 1;
+                (*p++) = m1 + m2;
             }
         }
         return res;
