@@ -6,7 +6,7 @@
  */
 
 #include<iostream>
-#include"cblas.h"
+#include "include/cblas.h"
 #include<vector>
 #include<cstdlib>
 #include<string>
@@ -37,8 +37,8 @@ public:
         return res;
     }
 
-    static Matrix* getInstanceOfZeroMatrix(Matrix mat){
-        Matrix* res = new Matrix(mat.getNRow(), mat.getNCol());
+    static Matrix* getInstanceOfZeroMatrix(Matrix* mat){
+        Matrix* res = new Matrix(mat->getNRow(), mat->getNCol());
         return res;
     }
 
@@ -52,14 +52,14 @@ public:
         res->setValue(NAN);
     }
 
-    static Matrix* getExpandingColumnInstanceOfMatrix(Matrix mat, int n){
-        int nrow = mat.getNRow();
-        int ncol = mat.getNCol();
+    static Matrix* getExpandingColumnInstanceOfMatrix(Matrix* mat, int n){
+        int nrow = mat->getNRow();
+        int ncol = mat->getNCol();
 
         Matrix* res = new Matrix(nrow, ncol + n);
         for(int i = 0; i < nrow; i++){
             for(int j = 0; j < ncol; j++){
-                double val = mat.getElement(i, j);
+                double val = mat->value[i * ncol + j];
                 res->value[i * ncol + j] = val;
             }
         }
@@ -89,53 +89,50 @@ public:
     }
 
     //TODO : slow implementation, how to accelarate it using BLAS??? mat.value should be set as public attribute?
-    static Matrix* mergeMatrixHorizon(Matrix mat1, Matrix mat2){
-        int nrow = mat1.getNRow();
-        int ncol1 = mat1.getNCol();
-        int ncol2 = mat2.getNCol();
+    static Matrix* mergeMatrixHorizon(Matrix* mat1, Matrix* mat2){
+        int nrow = mat1->getNRow();
+        int ncol1 = mat1->getNCol();
+        int ncol2 = mat2->getNCol();
 
         Matrix* res = new Matrix(nrow, ncol1 + ncol2);
+        int ncol = ncol1 + ncol2;
         for(int i = 0; i < nrow; i++){
             for(int j = 0; j < ncol1; j++){
-                double val = mat1.getElement(i, j);
-                res->setElement(i, j, val);
+                res->value[i * ncol + j] = mat1->value[i * ncol1 + j];  
             }
 
             for(int j = 0; j < ncol2; j++){
-                double val = mat2.getElement(i, j);
-                res->setElement(i, j + ncol1, val);
+                res->value[i * ncol + j + ncol1] = mat1->value[i * ncol2 + j];  
             }
         }
         return res;
     }
 
-    static Matrix* mergeMatrixVertical(Matrix mat1, Matrix mat2){
-        int ncol = mat1.getNCol();
-        int nrow1 = mat1.getNRow();
-        int nrow2 = mat2.getNRow();
+    static Matrix* mergeMatrixVertical(Matrix* mat1, Matrix* mat2){
+        int ncol = mat1->getNCol();
+        int nrow1 = mat1->getNRow();
+        int nrow2 = mat2->getNRow();
 
         Matrix* res = new Matrix(nrow1 + nrow2, ncol);
         
         //for better cache locality
         for(int i = 0; i < nrow1; i++){
             for(int j = 0; j < ncol; j++){
-                double val = mat1.getElement(i, j);
-                res->value[i * ncol + j] = val;
+                res->value[i * ncol + j] = mat1->value[i * ncol + j];
             }
         }
 
         for(int i = 0; i < nrow2; i++){
             for(int j = 0; j < ncol; j++){
-                double val = mat1.getElement(i, j);
-                res->value[(i + nrow1) * ncol + j] = val;
+                res->value[(i + nrow1) * ncol + j] = mat1->value[i * ncol + j];
             }
         }
         
     }
 
-    static Matrix* subMatrixHorizonByPeriod(Matrix mat1, int period){
-        int nrow = mat1.getNRow();
-        int ncol = mat1.getNCol();
+    static Matrix* subMatrixHorizonByPeriod(Matrix* mat1, int period){
+        int nrow = mat1->getNRow();
+        int ncol = mat1->getNCol();
 
         int colnum = (int) ncol / period;
         Matrix* res = new Matrix(nrow, ncol);
@@ -143,17 +140,16 @@ public:
             int colid = 0;
             for(int j = ncol - 1; j >= 0 && colid < colnum; j -= period){
                 int currid = colnum - colid - 1;
-                double val = mat1.getElement(i, j);
-                res->value[i * ncol + currid] = val;
+                res->value[i * ncol + currid] = mat1->value[i * ncol + j];
                 colid++;
             }
         }
         return res;
     }
 
-    static Matrix* subMatrixHorizonByPeriodAndTruncate(Matrix mat1, int period, int num){
-        int nrow = mat1.getNRow();
-        int ncol = mat1.getNCol();
+    static Matrix* subMatrixHorizonByPeriodAndTruncate(Matrix* mat1, int period, int num){
+        int nrow = mat1->getNRow();
+        int ncol = mat1->getNCol();
 
         int colnum = min(num, (int) ncol / period);
         Matrix* res = new Matrix(nrow, colnum);
@@ -162,8 +158,7 @@ public:
             int colid = 0;
             for(int j = ncol - 1; j >= 0 && colid < colnum; j -= period){
                 int currid = colnum - colid - 1;
-                double val = mat1.value[i * ncol + j];
-                res->value[i * ncol + currid] = val;
+                res->value[i * ncol + currid] = mat1->value[i * ncol + j];
                 colid++;
             }
         }
@@ -173,7 +168,6 @@ public:
     static LogicMatrix* replicateMatrixVertical(bool* logic, int nrow){
         int ncol = sizeof(logic) / sizeof(bool);
         LogicMatrix* res = new LogicMatrix(nrow, ncol);
-   
         for(int i = 0; i < nrow; i++){
             for(int j = 0; j < ncol; j++){
                 bool val = logic[j];//for better cache locality and less memory access
@@ -199,9 +193,9 @@ public:
         return res;
     }
 
-    static LogicMatrix* subMatrixHorizonByPeriod(LogicMatrix mat1, int period){
-        int nrow = mat1.getNRow();
-        int ncol = mat1.getNCol();
+    static LogicMatrix* subMatrixHorizonByPeriod(LogicMatrix* mat1, int period){
+        int nrow = mat1->getNRow();
+        int ncol = mat1->getNCol();
         int colnum = (int) ncol / period;
         LogicMatrix* res = new LogicMatrix(nrow, colnum);
 
@@ -209,8 +203,7 @@ public:
             int colid = 0;
             for(int j = ncol - 1; j >= 0 && colid < colnum; j -= period){
                 int currid = colnum - colid - 1;
-                bool val = mat1.getElement(i, j);
-                res->value[i * ncol + currid] = val;
+                res->value[i * ncol + currid] = mat1->value[i * ncol + j];
                 colid++;
             }
         }
@@ -218,9 +211,9 @@ public:
         return res;
     }
 
-    static LogicMatrix* subMatrixHorizonByPeriodAndTruncate(LogicMatrix mat1, int period, int num){
-        int nrow = mat1.getNRow();
-        int ncol = mat1.getNCol();
+    static LogicMatrix* subMatrixHorizonByPeriodAndTruncate(LogicMatrix* mat1, int period, int num){
+        int nrow = mat1->getNRow();
+        int ncol = mat1->getNCol();
         int colnum = min(num, (int) ncol / period);
         LogicMatrix* res = new LogicMatrix(nrow, colnum);
 
@@ -228,8 +221,7 @@ public:
             int colid = 0;
             for(int j = ncol - 1; j >= 0 && colid < colnum; j -= period){
                 int currid = colnum - colid - 1;
-                bool val = mat1.getElement(i, j);
-                res->value[i * ncol + currid] = val;
+                res->value[i * ncol + currid] = mat1->value[i * ncol + j];
                 colid++;
             }
         }
@@ -237,14 +229,14 @@ public:
         return res;
     }
 
-    static Matrix* subMatrixHorizon(Matrix mat1, int colStart, int colEnd){
-        int nrow = mat1.getNRow();
+    static Matrix* subMatrixHorizon(Matrix* mat1, int colStart, int colEnd){
+        int nrow = mat1->getNRow();
+        int ncol = mat1->getNCol();
         Matrix* res = new Matrix(nrow, colEnd - colStart + 1);
         for(int i = 0; i < nrow; i++){
             for(int j = colStart; j <= colEnd; j++){
-                double val = mat1.getElement(i, j);
+                double val = mat1->value[i * ncol + j];
                 res->setElement(i, j - colStart, val);
-                
             }
         }
         return res;
@@ -342,12 +334,12 @@ public:
         return res;
     }
 
-    static LogicMatrix getInstanceOfRowLogicMatrix(bool* vec){
+    static LogicMatrix* getInstanceOfRowLogicMatrix(bool* vec){
         int n = sizeof(vec) / sizeof(bool);
-        LogicMatrix res = new LogicMatrix(1, n);
+        LogicMatrix* res = new LogicMatrix(1, n);
         for(int i = 0; i < n; i++){
             bool val = vec[1];
-            res.setElement(0, i, val);
+            res->value[0 * n + i] = val;
         }
         return res;
     }
@@ -370,4 +362,4 @@ public:
 
 
 
-}
+};

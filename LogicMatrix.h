@@ -7,7 +7,7 @@
 
 
 #include<iostream>
-#include<cblas.h>
+#include "include/cblas.h"
 #include<vector>
 //#include<unistd.h>
 #include<cstdlib>
@@ -43,28 +43,28 @@ public:
         //may not apply here
     }
 
-    LogicMatrix(LogicMatrix logic){
+    LogicMatrix(LogicMatrix& logic){
         //TODO
     }
 
     int getNRow(){
-        return this.nrow;
+        return nrow;
     }
 
     int getNCol(){
-        return this.ncol;
+        return ncol;
     }
 
     bool* getLogicMatrix(){
-        return this.value
+        return value;
     }
 
     bool getElement(int i, int j){
-        return this.value[i][j];
+        return value[i * ncol + j];
     }
 
     bool getRowVector(int i){
-        bool res = new bool[ncol];
+        bool* res = new bool[ncol];
         for(int j = 0; j < ncol; j++){
             res[j] = getElement(i, j);
         }
@@ -72,12 +72,11 @@ public:
         return res;
     }
 
-    double getRowVectorAsDouble(int i){
-        bool res = new bool[ncol];
+    double* getRowVectorAsDouble(int i){
+        double* res = new double[ncol];
         for(int j = 0; j < ncol; j++){
-            res[j] = getElement(i, j)? 1.0 : 0.0;
+            res[j] = value[i * ncol + j]? 1.0 : 0.0;
         }
-
         return res;
     }
 
@@ -90,7 +89,7 @@ public:
     void setValue(bool x){
         for(int i = 0; i < nrow; i++){
             for(int j = 0; j < ncol; j++){
-                value[i][j] = x;
+                value[i * ncol + j] = x;
             }
         }
     }
@@ -101,10 +100,10 @@ public:
         mat.value = new bool[nrow * ncol];
         for(int i = 0; i < nrow; i++){
             for(int j = 0; j < ncol; j++){
-                mat.value[i][j] = value[i][j];
+                mat.value[i * ncol + j] = value[i * ncol + j];
             }
         }
     }
 
 
-}
+};

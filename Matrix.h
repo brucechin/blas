@@ -8,7 +8,7 @@
 
 #include<iostream>
 //#include<sys/time.h>
-#include<cblas.h>
+#include "include/cblas.h"
 #include<vector>
 #include<cstdlib>
 #include<string>
@@ -105,7 +105,7 @@ public:
     }
 
     Matrix* getColVector(int j){
-        Matrix res = new Matrix(nrow, 1);
+        Matrix* res = new Matrix(nrow, 1);
         for(int i = 0; i < nrow; i++){
             res->value[i] = value[i * ncol + j];
         }        

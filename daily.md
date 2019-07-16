@@ -98,3 +98,20 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 2. 不改变输入参数Matrix的时候是pass by value，为了降低调用开销是否改成pass by reference to const?(不用调用Matrix的拷贝构造和析构函数等)
 3. 开始准备写测试代码，原java文件竟然没有配套测试代码？？？？
 
+### 7.16
+
+1. 测试需要生成size不同的matrix然后把整个对象以二进制存为文件，记得一些corner case的生成
+
+2. openblas windows安装遇到的坑：
+   1. mingw32下编译会报缺少某obj文件的error
+   2. mingw64下编译一切顺利，之前用visual studio编译cmake生成的项目没有生成libopenblas
+   
+3. vscode c++ compile and run配置好了，但是有些时候不能自动跳转错误对应行。
+
+4. debug遇到的坑：
+
+   1. ###### Static function: a storage class may not be specified here，static的函数在头文件里声明了之后，在cpp文件里不需要了。
+   
+   2. 因为类里重载过max min floor abs round，在类里使用std的这些函数的时候没加std::导致找不到对应的函数了。。
+   
+   3. 把所有的函数参数都变成matrix的指针了，传值的话拷贝构造额外开销怕是要崩
