@@ -1,10 +1,3 @@
-/*
- * @Author: lianke.qin@gmail.com 
- * @Date: 2019-07-16 11:03:57 
- * @Goal: matrix computation speed test
- * @Last Modified by: lianke.qin@gmail.com
- * @Last Modified time: 2019-07-16 11:31:15
- */
 
 
 #include "../LogicMatrix.h"
@@ -28,5 +21,5 @@ int main(){
     f2.write((char *)&b, sizeof(b));
     f1.close();
     f2.close();
-    
+
 }
