@@ -115,3 +115,5 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
    2. 因为类里重载过max min floor abs round，在类里使用std的这些函数的时候没加std::导致找不到对应的函数了。。
    
    3. 把所有的函数参数都变成matrix的指针了，传值的话拷贝构造额外开销怕是要崩
+   
+   4. const static成员变量不能in class initialized

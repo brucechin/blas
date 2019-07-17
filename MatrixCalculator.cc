@@ -18,7 +18,8 @@ int signum(T val)
     return (T(0) < val) - (val < T(0));
 }
 
-using namespace std;
+const int MatrixCalculator::MAX_HISTORY_LENGTH = 90;
+const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 
  double MatrixCalculator::int2Double(int n)
 {
@@ -29,7 +30,7 @@ using namespace std;
 {
     if (a < 100 && b < 100 && a >= 0 && b >= 0)
     {
-        return doubleIntDivideArr[b][a];
+        return doubleIntDivideArr[b * 100 + a];
     }
     else
     {
@@ -44,7 +45,7 @@ using namespace std;
     int ncol = mat1->getNCol();
     Matrix *res = new Matrix(*mat2);
 
-    cblas_daxpy(nrow * ncol, 1.0, mat1.value, 1, res->value, 1);
+    cblas_daxpy(nrow * ncol, 1.0, mat1->value, 1, res->value, 1);
 
     return res;
 }
@@ -146,7 +147,7 @@ using namespace std;
     int nrow = mat2->getNRow();
     int ncol = mat2->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    //TODO vmMul(nrow * ncol, mat1.value, mat.value, res->value);
+    //TODO vmMul(nrow * ncol, mat1->value, mat->value, res->value);
     return res;
 }
 
@@ -228,7 +229,7 @@ using namespace std;
     int ncol2 = mat2->getNCol();
     Matrix *res = new Matrix(nrow1, ncol2);
 
-    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, nrow1, ncol1, ncol2, 1.0, mat1.value, ncol1, mat2.value, ncol2, 0.0, res->value, ncol2);
+    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, nrow1, ncol1, ncol2, 1.0, mat1->value, ncol1, mat2->value, ncol2, 0.0, res->value, ncol2);
     return res;
 }
 
@@ -237,7 +238,7 @@ using namespace std;
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    //TODO vdFmax(nrow * ncol, mat1.value, mat2.value, res->value);
+    //TODO vdFmax(nrow * ncol, mat1->value, mat2->value, res->value);
     return res;
 }
 
@@ -266,7 +267,7 @@ using namespace std;
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    //TODO vdFmin(nrow * ncol, mat1.value, mat2.value, res->value);
+    //TODO vdFmin(nrow * ncol, mat1->value, mat2->value, res->value);
     return res;
 }
 
@@ -296,9 +297,9 @@ using namespace std;
     int ncol = mat1->getNCol();
     int len = nrow * ncol;
     LogicMatrix *res = new LogicMatrix(nrow, ncol);
-    bool *r = &res->value[0];
-    double *v1 = &mat1.value[0];
-    double *v2 = &mat2.value[0];
+    bool *r = res->value;
+    double *v1 = mat1->value;
+    double *v2 = mat2->value;
     for (int i = 0; i < len; i++)
     {
         *r++ = (*v1++) > (*v2++) ? true : false;
@@ -330,8 +331,8 @@ using namespace std;
     int ncol = mat1->getNCol();
     int len = nrow * ncol;
     LogicMatrix *res = new LogicMatrix(nrow, ncol);
-    bool *r = &res->value[0];
-    double *v1 = &mat1.value[0];
+    bool *r = res->value;
+    double *v1 = mat1->value;
     for (int i = 0; i < len; i++)
     {
         *r++ = (*v1++) > val ? true : false;
@@ -364,9 +365,9 @@ using namespace std;
     int ncol = mat1->getNCol();
     int len = nrow * ncol;
     LogicMatrix *res = new LogicMatrix(nrow, ncol);
-    bool *r = &res->value[0];
-    double *v1 = &mat1.value[0];
-    double *v2 = &mat2.value[0];
+    bool *r = res->value;
+    double *v1 = mat1->value;
+    double *v2 = mat2->value;
     for (int i = 0; i < len; i++)
     {
         *r++ = (*v1++) < (*v2++) ? true : false;
@@ -398,8 +399,8 @@ using namespace std;
     int ncol = mat1->getNCol();
     int len = nrow * ncol;
     LogicMatrix *res = new LogicMatrix(nrow, ncol);
-    bool *r = &res->value[0];
-    double *v1 = &mat1.value[0];
+    bool *r = res->value;
+    double *v1 = mat1->value;
     for (int i = 0; i < len; i++)
     {
         *r++ = (*v1++) < val;
@@ -432,9 +433,9 @@ using namespace std;
     int ncol = mat1->getNCol();
     int len = nrow * ncol;
     LogicMatrix *res = new LogicMatrix(nrow, ncol);
-    bool *r = &res->value[0];
-    double *v1 = &mat1.value[0];
-    double *v2 = &mat2.value[0];
+    bool *r = res->value;
+    double *v1 = mat1->value;
+    double *v2 = mat2->value;
     for (int i = 0; i < len; i++)
     {
         *r++ = (*v1++) == (*v2++);
@@ -466,8 +467,8 @@ using namespace std;
     int ncol = mat1->getNCol();
     int len = nrow * ncol;
     LogicMatrix *res = new LogicMatrix(nrow, ncol);
-    bool *r = &res->value[0];
-    double *v1 = &mat1.value[0];
+    bool *r = res->value;
+    double *v1 = mat1->value;
     for (int i = 0; i < len; i++)
     {
         *r++ = (*v1++) == val;
@@ -499,8 +500,8 @@ using namespace std;
     int ncol = mat1->getNCol();
     int len = nrow * ncol;
     LogicMatrix *res = new LogicMatrix(nrow, ncol);
-    bool *r = &res->value[0];
-    double *v1 = &mat1.value[0];
+    bool *r = res->value;
+    double *v1 = mat1->value;
     for (int i = 0; i < len; i++)
     {
         *r++ = ((*v1) > lowerbound) && ((*v1++) <= upperbound);
@@ -511,7 +512,7 @@ using namespace std;
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
-    Matrix *res = MatrixFactory.getInstanceOfNaNMatrix(nrow, ncol);
+    Matrix *res = MatrixFactory::getInstanceOfNaNMatrix(nrow, ncol);
     for (int i = 0; i < nrow; i++)
     {
         for (int j = 0; j < ncol; j++)
@@ -531,9 +532,9 @@ using namespace std;
     int ncol = mat1->getNCol();
     int len = nrow * ncol;
     LogicMatrix *res = new LogicMatrix(nrow, ncol);
-    bool *r = &res->value[0];
-    bool *v1 = &mat1.value[0];
-    bool *v2 = &mat2.value[0];
+    bool *r = res->value;
+    bool *v1 = mat1->value;
+    bool *v2 = mat2->value;
     for (int i = 0; i < len; i++)
     {
         *r++ = (*v1++) && (*v2++);
@@ -564,9 +565,9 @@ using namespace std;
     int ncol = mat1->getNCol();
     int len = nrow * ncol;
     LogicMatrix *res = new LogicMatrix(nrow, ncol);
-    bool *r = &res->value[0];
-    bool *v1 = &mat1.value[0];
-    bool *v2 = &mat2.value[0];
+    bool *r = res->value;
+    bool *v1 = mat1->value;
+    bool *v2 = mat2->value;
     for (int i = 0; i < len; i++)
     {
         *r++ = (*v1++) || (*v2++);
@@ -597,8 +598,8 @@ using namespace std;
     int ncol = mat1->getNCol();
     int len = nrow * ncol;
     LogicMatrix *res = new LogicMatrix(nrow, ncol);
-    bool *r = &res->value[0];
-    bool *v1 = &mat1.value[0];
+    bool *r = res->value;
+    bool *v1 = mat1->value;
     for (int i = 0; i < len; i++)
     {
         *r++ = !(*v1++);
@@ -630,10 +631,10 @@ using namespace std;
     int ncol = mat1->getNCol();
     int len = nrow * ncol;
     Matrix *res = new Matrix(nrow, ncol);
-    double *r = &res->value[0];
-    bool *v1 = &mat1.value[0];
-    double *v2 = &mat2.value[0];
-    double *v3 = &mat3.value[0];
+    double *r = res->value;
+    bool *v1 = mat1->value;
+    double *v2 = mat2->value;
+    double *v3 = mat3->value;
     for (int i = 0; i < len; i++)
     {
         double left = *v2++;
@@ -655,7 +656,7 @@ using namespace std;
         for (int j = colStart; j < ncol; j++)
         {
             int pos = i * ncol + j;
-            double val = (!mat1.value[pos]) ? mat2.value[pos] : mat3.value[pos];
+            double val = (!mat1->value[pos]) ? mat2->value[pos] : mat3->value[pos];
             res->value[i * ncol + colid] = val;
             colid++;
         }
@@ -663,11 +664,11 @@ using namespace std;
     return res;
 }
 
- double MatrixCalculator::rankFirst(double *vec, int highIndex, int lowIndex)
+ double MatrixCalculator::rankFirst(Matrix *vec, int highIndex, int lowIndex)
 {
-    //TODO need debug 
+    //here vec is a 1D matrix
     int len = highIndex - lowIndex;
-    double first = vec[0];
+    double first = vec->value[0];
     int biggerCount = 0;
     int count = 0;
     double res = NAN;
@@ -675,7 +676,7 @@ using namespace std;
     {
         for (int i = highIndex; i >= lowIndex; i--)
         {
-            double val = vec[i];
+            double val = vec->value[i];
             if (!isnan(val))
             {
                 if (val > first)
@@ -696,13 +697,13 @@ using namespace std;
  double *MatrixCalculator::rank(double *vec)
 {
     int n = sizeof(vec) / sizeof(double);
-    double *res = MatrixFactory.getInstanceOfNaNVector(n);
+    double *res = MatrixFactory::getInstanceOfNaNVector(n);
     //TODO
 }
  Matrix *MatrixCalculator::rank(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int j = 0; j < ncol; j++)
@@ -710,7 +711,7 @@ using namespace std;
         double *vec = new double[nrow];
         for (int i = 0; i < nrow; i++)
         {
-            vec[i] = mat.value[i * ncol + j];
+            vec[i] = mat->value[i * ncol + j];
         }
         double *curResult = rank(vec);
         for (int i = 0; i < nrow; i++)
@@ -722,8 +723,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::rank(Matrix* mat, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -733,7 +734,7 @@ using namespace std;
         double *vec = new double[nrow];
         for (int i = 0; i < nrow; i++)
         {
-            vec[i] = mat.value[i * ncol + j];
+            vec[i] = mat->value[i * ncol + j];
         }
         double *curResult = rank(vec);
         for (int i = 0; i < nrow; i++)
@@ -747,16 +748,16 @@ using namespace std;
 
  Matrix* MatrixCalculator::round(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    //TODO vdRound(nrow * ncol, mat.value, res->value);
+    //TODO vdRound(nrow * ncol, mat->value, res->value);
     return res;
 }
  Matrix* MatrixCalculator::round(Matrix* mat, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -765,7 +766,7 @@ using namespace std;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::round(mat.value[i * ncol + j]);
+            res->value[i * ncol + colid] = std::round(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -773,16 +774,16 @@ using namespace std;
 }
  Matrix* MatrixCalculator::floor(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    //TODO vdFloor(nrow * ncol, mat.value, res->value);
+    //TODO vdFloor(nrow * ncol, mat->value, res->value);
     return res;
 }
  Matrix* MatrixCalculator::floor(Matrix* mat, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -791,7 +792,7 @@ using namespace std;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::floor(mat.value[i * ncol + j]);
+            res->value[i * ncol + colid] = std::floor(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -799,16 +800,16 @@ using namespace std;
 }
  Matrix* MatrixCalculator::abs(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    //TODO vdAbs(nrow * ncol, mat.value, res->value);
+    //TODO vdAbs(nrow * ncol, mat->value, res->value);
     return res;
 }
  Matrix* MatrixCalculator::abs(Matrix* mat, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -817,7 +818,7 @@ using namespace std;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::abs(mat.value[i * ncol + j]);
+            res->value[i * ncol + colid] = std::abs(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -825,17 +826,17 @@ using namespace std;
 }
  Matrix* MatrixCalculator::minus(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    Matrix *zero = MatrixFactory.getInstanceOfZeroMatrix(mat);
-    //TODO vdSub(nrow * ncol, zero->value, mat.value, res->value);
+    Matrix *zero = MatrixFactory::getInstanceOfZeroMatrix(mat);
+    //TODO vdSub(nrow * ncol, zero->value, mat->value, res->value);
     return res;
 }
  Matrix* MatrixCalculator::minus(Matrix* mat, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -844,7 +845,7 @@ using namespace std;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = -mat.value[i * ncol + j];
+            res->value[i * ncol + colid] = -mat->value[i * ncol + j];
             colid++;
         }
     }
@@ -854,22 +855,22 @@ using namespace std;
 {
     int len = sizeof(vec) / sizeof(double);
     double *res = new double[len];
-    double *zero = MatrixFactory.getInstanceOfZeroVector(len);
+    double *zero = MatrixFactory::getInstanceOfZeroVector(len);
     //TODO vdSub(nrow * ncol, zero, vec, res);
     return res;
 }
  Matrix* MatrixCalculator::sqrt(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    //TODO vdSqrt(nrow * ncol, mat.value, res->value);
+    //TODO vdSqrt(nrow * ncol, mat->value, res->value);
     return res;
 }
  Matrix* MatrixCalculator::sqrt(Matrix* mat, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -878,7 +879,7 @@ using namespace std;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::sqrt(mat.value[i * ncol + j]);
+            res->value[i * ncol + colid] = std::sqrt(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -886,16 +887,16 @@ using namespace std;
 }
  Matrix* MatrixCalculator::log(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    //TODO vdLn(nrow * ncol, mat.value, res->value); //base is e
+    //TODO vdLn(nrow * ncol, mat->value, res->value); //base is e
     return res;
 }
  Matrix* MatrixCalculator::log(Matrix* mat, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -904,7 +905,7 @@ using namespace std;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::log(mat.value[i * ncol + j]);
+            res->value[i * ncol + colid] = std::log(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -912,16 +913,16 @@ using namespace std;
 }
  Matrix* MatrixCalculator::exp(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    //TODO vdExp(nrow * ncol, mat.value, res->value);
+    //TODO vdExp(nrow * ncol, mat->value, res->value);
     return res;
 }
  Matrix* MatrixCalculator::exp(Matrix* mat, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -930,7 +931,7 @@ using namespace std;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::exp(mat.value[i * ncol + j]);
+            res->value[i * ncol + colid] = std::exp(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -938,12 +939,12 @@ using namespace std;
 }
  Matrix* MatrixCalculator::sign(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int len = nrow * ncol;
     Matrix *res = new Matrix(nrow, ncol);
-    double *r = &res->value[0];
-    double *v1 = &mat.value[0];
+    double *r = res->value;
+    double *v1 = mat->value;
     for (int i = 0; i < len; i++)
     {
         *r++ = signum(*v1++);
@@ -952,8 +953,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::sign(Matrix* mat, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -962,7 +963,7 @@ using namespace std;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = signum(mat.value[i * ncol + j]);
+            res->value[i * ncol + colid] = signum(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -970,16 +971,16 @@ using namespace std;
 }
  Matrix* MatrixCalculator::inverse(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    //TODO vdInv(nrow * ncol, mat.value, res->value);
+    //TODO vdInv(nrow * ncol, mat->value, res->value);
     return res;
 }
  Matrix* MatrixCalculator::inverse(Matrix* mat, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -988,7 +989,7 @@ using namespace std;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = 1 / (mat.value[i * ncol + j]);
+            res->value[i * ncol + colid] = 1 / (mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -996,12 +997,12 @@ using namespace std;
 }
  Matrix* MatrixCalculator::signedpow(Matrix* mat, double index)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int len = nrow * ncol;
     Matrix *res = new Matrix(nrow, ncol);
-    double *r = &res->value[0];
-    double *v1 = &mat.value[0];
+    double *r = res->value;
+    double *v1 = mat->value;
     for (int i = 0; i < len; i++)
     {
         double val = *v1++;
@@ -1011,8 +1012,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::signedpow(Matrix* mat, double index, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -1021,7 +1022,7 @@ using namespace std;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            double val = mat.value[i * ncol + j];
+            double val = mat->value[i * ncol + j];
             res->value[i * ncol + colid] = signum(val) * pow(std::abs(val), index);
             colid++;
         }
@@ -1032,8 +1033,8 @@ using namespace std;
 //move matrix value n units left
  Matrix* MatrixCalculator::shift(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     for (int i = 0; i < nrow; i++)
     {
@@ -1045,7 +1046,7 @@ using namespace std;
             }
             else
             {
-                res->value[i * ncol + j] = mat.value[i * ncol + j + n];
+                res->value[i * ncol + j] = mat->value[i * ncol + j + n];
             }
         }
     }
@@ -1053,8 +1054,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::delay(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     for (int i = 0; i < nrow; i++)
     {
@@ -1066,7 +1067,7 @@ using namespace std;
             }
             else
             {
-                res->value[i * ncol + j] = mat.value[i * ncol + j - n];
+                res->value[i * ncol + j] = mat->value[i * ncol + j - n];
             }
         }
     }
@@ -1074,8 +1075,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::delay(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -1090,7 +1091,7 @@ using namespace std;
             }
             else
             {
-                res->value[i * ncol + colid] = mat.value[i * ncol + j - n];
+                res->value[i * ncol + colid] = mat->value[i * ncol + j - n];
             }
             colid++;
         }
@@ -1099,8 +1100,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::delta(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     for (int i = 0; i < nrow; i++)
     {
@@ -1112,7 +1113,7 @@ using namespace std;
             }
             else
             {
-                res->value[i * ncol + j] = mat.value[i * ncol + j] - mat.value[i * ncol + j - n];
+                res->value[i * ncol + j] = mat->value[i * ncol + j] - mat->value[i * ncol + j - n];
             }
         }
     }
@@ -1120,8 +1121,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::delta(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -1136,7 +1137,7 @@ using namespace std;
             }
             else
             {
-                res->value[i * ncol + colid] = mat.value[i * ncol + j] - mat.value[i * ncol + j - n];
+                res->value[i * ncol + colid] = mat->value[i * ncol + j] - mat->value[i * ncol + j - n];
             }
             colid++;
         }
@@ -1145,8 +1146,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::ratio(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     for (int i = 0; i < nrow; i++)
     {
@@ -1158,7 +1159,7 @@ using namespace std;
             }
             else
             {
-                res->value[i * ncol + j] = mat.value[i * ncol + j] / mat.value[i * ncol + j - n];
+                res->value[i * ncol + j] = mat->value[i * ncol + j] / mat->value[i * ncol + j - n];
             }
         }
     }
@@ -1166,8 +1167,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::ratio(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -1182,7 +1183,7 @@ using namespace std;
             }
             else
             {
-                res->value[i * ncol + colid] = mat.value[i * ncol + j] / mat.value[i * ncol + j - n];
+                res->value[i * ncol + colid] = mat->value[i * ncol + j] / mat->value[i * ncol + j - n];
             }
             colid++;
         }
@@ -1191,8 +1192,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::sum(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int i = 0; i < nrow; i++)
@@ -1203,7 +1204,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (!isnan(val))
                 {
                     sum += val;
@@ -1226,8 +1227,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::sum(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -1240,7 +1241,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (!isnan(val))
                 {
                     sum += val;
@@ -1263,8 +1264,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::product(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int i = 0; i < nrow; i++)
@@ -1275,7 +1276,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (!isnan(val))
                 {
                     prod *= val;
@@ -1297,8 +1298,8 @@ using namespace std;
 }
  Matrix* MatrixCalculator::product(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -1311,7 +1312,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (!isnan(val))
                 {
                     prod *= val;
@@ -1335,8 +1336,8 @@ using namespace std;
 
  Matrix *MatrixCalculator::tsMax(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int i = 0; i < nrow; i++)
@@ -1348,7 +1349,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (!isnan(val))
                 {
                     max = val;
@@ -1375,8 +1376,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsMax(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -1387,7 +1388,7 @@ using namespace std;
     {
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1398,7 +1399,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (notNanArr[j - k])
                 {
                     max = val;
@@ -1426,8 +1427,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsMin(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int i = 0; i < nrow; i++)
@@ -1439,7 +1440,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (!isnan(val))
                 {
                     min = val;
@@ -1466,8 +1467,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsMin(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -1478,7 +1479,7 @@ using namespace std;
     {
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1489,7 +1490,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (notNanArr[j - k])
                 {
                     min = val;
@@ -1517,8 +1518,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsArgmax(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int i = 0; i < nrow; i++)
@@ -1531,7 +1532,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (!isnan(val))
                 {
                     if (maxIsNaN)
@@ -1566,8 +1567,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsArgmax(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -1578,7 +1579,7 @@ using namespace std;
     {
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1590,7 +1591,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (notNanArr[j - k])
                 {
                     if (maxIsNaN)
@@ -1626,8 +1627,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsArgmin(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int i = 0; i < nrow; i++)
@@ -1640,7 +1641,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (!isnan(val))
                 {
                     if (minIsNaN)
@@ -1675,8 +1676,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsArgmin(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -1687,7 +1688,7 @@ using namespace std;
     {
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1699,7 +1700,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                double val = mat.value[i * ncol + j - k];
+                double val = mat->value[i * ncol + j - k];
                 if (notNanArr[j - k])
                 {
                     if (minIsNaN)
@@ -1735,16 +1736,16 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsRank(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat.getRowVector(i);
+        Matrix *rowRefa = mat->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -1760,7 +1761,7 @@ using namespace std;
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = rankFirst(rowRefa->value, j, lowestIndex);
+                double val = rankFirst(rowRefa, j, lowestIndex);
                 res->value[i * ncol + j] = val;
             }
             else
@@ -1773,8 +1774,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsRank(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -1783,10 +1784,10 @@ using namespace std;
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat.getRowVector(i);
+        Matrix *rowRefa = mat->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1819,16 +1820,16 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsMean(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat.getRowVector(i);
+        Matrix *rowRefa = mat->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -1844,7 +1845,7 @@ using namespace std;
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = summaryMean(*rowRefa, j, lowestIndex);
+                double val = summaryMean(rowRefa, j, lowestIndex);
                 res->value[i * ncol + j] = val;
             }
             else
@@ -1857,8 +1858,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsMean(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -1867,10 +1868,10 @@ using namespace std;
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        double *rowRefa = mat.getRowVector(i);
+        Matrix *rowRefa = mat->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1889,7 +1890,7 @@ using namespace std;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = summaryMean(*rowRefa, j, lowestIndex);
+                double val = summaryMean(rowRefa, j, lowestIndex);
                 res->value[i * ncol + colid] = val;
             }
             else
@@ -1903,16 +1904,16 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsStd(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat.getRowVector(i);
+        Matrix *rowRefa = mat->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -1928,7 +1929,7 @@ using namespace std;
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = std::sqrt(summaryVariance(*rowRefa, j, lowestIndex));
+                double val = std::sqrt(summaryVariance(rowRefa, j, lowestIndex));
                 res->value[i * ncol + j] = val;
             }
             else
@@ -1941,8 +1942,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsStd(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -1951,10 +1952,10 @@ using namespace std;
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat.getRowVector(i);
+        Matrix *rowRefa = mat->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1973,7 +1974,7 @@ using namespace std;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = std::sqrt(summaryVariance(*rowRefa, j, lowestIndex));
+                double val = std::sqrt(summaryVariance(rowRefa, j, lowestIndex));
                 res->value[i * ncol + colid] = val;
             }
             else
@@ -1987,16 +1988,16 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsSkewness(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat.getRowVector(i);
+        Matrix *rowRefa = mat->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -2012,7 +2013,7 @@ using namespace std;
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = summarySkewness(*rowRefa, j, lowestIndex);
+                double val = summarySkewness(rowRefa, j, lowestIndex);
                 res->value[i * ncol + j] = val;
             }
             else
@@ -2025,8 +2026,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsSkewness(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -2035,10 +2036,10 @@ using namespace std;
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        double *rowRefa = mat.getRowVector(i);
+        Matrix *rowRefa = mat->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -2057,7 +2058,7 @@ using namespace std;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = summarySkewness(*rowRefa, j, lowestIndex);
+                double val = summarySkewness(rowRefa, j, lowestIndex);
                 res->value[i * ncol + colid] = val;
             }
             else
@@ -2071,16 +2072,16 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsKurtosis(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat.getRowVector(i);
+        Matrix *rowRefa = mat->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -2096,7 +2097,7 @@ using namespace std;
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = summaryKurtosis(*rowRefa, j, lowestIndex);
+                double val = summaryKurtosis(rowRefa, j, lowestIndex);
                 res->value[i * ncol + j] = val;
             }
             else
@@ -2109,8 +2110,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsKurtosis(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -2119,10 +2120,10 @@ using namespace std;
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        double *rowRefa = mat.getRowVector(i);
+        Matrix *rowRefa = mat->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -2141,7 +2142,7 @@ using namespace std;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = summaryKurtosis(*rowRefa, j, lowestIndex);
+                double val = summaryKurtosis(rowRefa, j, lowestIndex);
                 res->value[i * ncol + colid] = val;
             }
             else
@@ -2161,8 +2162,8 @@ using namespace std;
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat1.getRowVector(i);
-        Matrix *rowRefb = mat2.getRowVector(i);
+        Matrix *rowRefa = mat1->getRowVector(i);
+        Matrix *rowRefb = mat2->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
             notNanArr[j] = !isnan(mat1->value[i * ncol + j]);
@@ -2181,7 +2182,7 @@ using namespace std;
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = summaryCovariance(*rowRefa, *rowRefb, j, lowestIndex);
+                double val = summaryCovariance(rowRefa, rowRefb, j, lowestIndex);
                 res->value[i * ncol + j] = val;
             }
             else
@@ -2204,8 +2205,8 @@ using namespace std;
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat2.getRowVector(i);
-        Matrix *rowRefb = mat2.getRowVector(i);
+        Matrix *rowRefa = mat2->getRowVector(i);
+        Matrix *rowRefb = mat2->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
             notNanArr[j] = !isnan(mat1->value[i * ncol + j]);
@@ -2227,7 +2228,7 @@ using namespace std;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = summaryCovariance(*rowRefa, *rowRefb, j, lowestIndex);
+                double val = summaryCovariance(rowRefa, rowRefb, j, lowestIndex);
                 res->value[i * ncol + colid] = val;
             }
             else
@@ -2247,8 +2248,8 @@ using namespace std;
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat1.getRowVector(i);
-        Matrix *rowRefb = mat2.getRowVector(i);
+        Matrix *rowRefa = mat1->getRowVector(i);
+        Matrix *rowRefb = mat2->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
             notNanArr[j] = !isnan(mat1->value[i * ncol + j]);
@@ -2267,7 +2268,7 @@ using namespace std;
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = summaryCorrelation(*rowRefa, *rowRefb, j, lowestIndex);
+                double val = summaryCorrelation(rowRefa, rowRefb, j, lowestIndex);
                 res->value[i * ncol + j] = val;
             }
             else
@@ -2290,8 +2291,8 @@ using namespace std;
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat1.getRowVector(i);
-        Matrix *rowRefb = mat2.getRowVector(i);
+        Matrix *rowRefa = mat1->getRowVector(i);
+        Matrix *rowRefb = mat2->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
             notNanArr[j] = !isnan(mat1->value[i * ncol + j]);
@@ -2313,7 +2314,7 @@ using namespace std;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                double val = summaryCorrelation(*rowRefa, *rowRefb, j, lowestIndex);
+                double val = summaryCorrelation(rowRefa, rowRefb, j, lowestIndex);
                 res->value[i * ncol + colid] = val;
             }
             else
@@ -2327,15 +2328,15 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsCountNaN(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     bool *isNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
         for (int j = 0; j < ncol; j++)
         {
-            isNanArr[j] = isnan(mat.value[i * ncol + j]);
+            isNanArr[j] = isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -2363,8 +2364,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsCountNaN(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -2375,7 +2376,7 @@ using namespace std;
     {
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
@@ -2406,8 +2407,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsCountTrue(LogicMatrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     for (int i = 0; i < nrow; i++)
     {
@@ -2417,7 +2418,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                if (mat.value[i * ncol + j - k])
+                if (mat->value[i * ncol + j - k])
                 {
                     numTrue++;
                 }
@@ -2437,8 +2438,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsCountTrue(LogicMatrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -2453,7 +2454,7 @@ using namespace std;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                bool val = mat.value[i * ncol + j - k];
+                bool val = mat->value[i * ncol + j - k];
                 if (val)
                 {
                     numOfTrue++;
@@ -2476,8 +2477,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsCountConsecutiveTrue(LogicMatrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     for (int i = 0; i < nrow; i++)
     {
@@ -2490,7 +2491,7 @@ using namespace std;
             {
                 if (inrun)
                 {
-                    if (mat.value[i * ncol + j - k])
+                    if (mat->value[i * ncol + j - k])
                     {
                         numTrue++;
                     }
@@ -2515,8 +2516,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::tsCountConsecutiveTrue(LogicMatrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -2534,7 +2535,7 @@ using namespace std;
             {
                 if (inRun)
                 {
-                    bool val = mat.value[i * ncol + j - k];
+                    bool val = mat->value[i * ncol + j - k];
                     if (val)
                     {
                         numOfTrue++;
@@ -2563,8 +2564,8 @@ using namespace std;
 
  Matrix *MatrixCalculator::decayLinear(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     bool *notNanArr = new bool[ncol];
     double *currWeightArr = new double[ncol];
@@ -2572,7 +2573,7 @@ using namespace std;
     {
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
             currWeightArr[j] = 1.0 - intDoubleDivide(j, n);
         }
         for (int j = 0; j < ncol; j++)
@@ -2586,7 +2587,7 @@ using namespace std;
                 {
                     double currWeight = currWeightArr[k];
                     sumWeight += currWeight;
-                    sum += currWeight * mat.value[i * ncol + j - k];
+                    sum += currWeight * mat->value[i * ncol + j - k];
                     count++;
                 }
             }
@@ -2604,8 +2605,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::decayLinear(Matrix* mat, int n, int num)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -2619,7 +2620,7 @@ using namespace std;
     {
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
@@ -2633,7 +2634,7 @@ using namespace std;
                 {
                     double currWeight = currWeightArr[k];
                     sumWeight += currWeight;
-                    sum += currWeight * mat.value[i * ncol + j - k];
+                    sum += currWeight * mat->value[i * ncol + j - k];
                     count++;
                 }
             }
@@ -2652,8 +2653,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::decayExponential(Matrix* mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     bool *notNanArr = new bool[ncol];
     double lambda = std::exp(std::log(0.5) / int2Double(n));
@@ -2663,11 +2664,11 @@ using namespace std;
         double currWeightSum = 0;
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
-            double currValue = mat.value[i * ncol + j];
+            double currValue = mat->value[i * ncol + j];
             currValue = notNanArr[j] ? currValue : 0.0;
             currWeightSum = lambda * currWeightSum + 1.0;
             double w = (currWeightSum - 1.0) / currWeightSum;
@@ -2694,8 +2695,8 @@ using namespace std;
     return res;
 }
  Matrix *MatrixCalculator::decayExponential(Matrix* mat, int n, int num) {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     int histStart = std::max(0, ncol - num - n);
@@ -2709,11 +2710,11 @@ using namespace std;
         int colid = 0;
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat.value[i * ncol + j]);
+            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
         }
         for (int j = histStart; j < ncol; j++)
         {
-            double currValue = mat.value[i * ncol + j];
+            double currValue = mat->value[i * ncol + j];
             currValue = notNanArr[j] ? currValue : 0.0;
             currWeightSum = lambda * currWeightSum + 1.0;
             double w = (currWeightSum - 1.0) / currWeightSum;
@@ -2744,8 +2745,8 @@ using namespace std;
 }
  void MatrixCalculator::smoothByDecayLinear(Matrix *mat, int n)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     for(int i = 0; i < nrow; i++){
         for(int j = 0; j < ncol; j ++){
@@ -2813,15 +2814,15 @@ using namespace std;
 }
  Matrix *MatrixCalculator::normalize(Matrix* mat, double scale, double mean, double bound)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int i = 0; i < nrow; i++)
     {
         for (int j = 0; j < ncol; j++)
         {
-            double currValue = mat.value[i * ncol + j];
+            double currValue = mat->value[i * ncol + j];
             if (!isnan(currValue) && !isinf(currValue))
             {
                 double val = currValue - mean;
@@ -2838,8 +2839,8 @@ using namespace std;
     return res;
 }
  Matrix *MatrixCalculator::normalize(Matrix* mat, double scale, double mean, double bound, int num) {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -2849,7 +2850,7 @@ using namespace std;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            double currValue = mat.value[i * ncol + j];
+            double currValue = mat->value[i * ncol + j];
             if (!isnan(currValue) && !isinf(currValue))
             {
                 double val = currValue - mean;
@@ -2887,8 +2888,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::neutralize(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int i = 0; i < ncol; i++)
@@ -2900,7 +2901,7 @@ using namespace std;
         bool *label_validity = new bool[nrow];
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (!isnan(x) && !isinf(x))
             {
                 n++;
@@ -2914,7 +2915,7 @@ using namespace std;
         }
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (label_validity[k])
             {
                 res->value[k * ncol + i] = x - mean;
@@ -2929,8 +2930,8 @@ using namespace std;
 }
 
  Matrix *MatrixCalculator::neutralize(Matrix* mat, int num) {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -2945,7 +2946,7 @@ using namespace std;
         bool *label_validity = new bool[nrow];
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (!isnan(x) && !isinf(x))
             {
                 n++;
@@ -2959,7 +2960,7 @@ using namespace std;
         }
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (label_validity[k])
             {
                 res->value[k * ncol + colid] = x - mean;
@@ -2974,8 +2975,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::mean(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int i = 0; i < ncol; i++)
@@ -2987,7 +2988,7 @@ using namespace std;
         bool *label_validity = new bool[nrow];
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (!isnan(x) && !isinf(x))
             {
                 n++;
@@ -3001,7 +3002,7 @@ using namespace std;
         }
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (label_validity[k])
             {
                 res->value[k * ncol + i] = mean;
@@ -3015,8 +3016,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::unify(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int i = 0; i < ncol; i++)
@@ -3028,7 +3029,7 @@ using namespace std;
         bool *label_validity = new bool[nrow];
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (!isnan(x) && !isinf(x))
             {
                 n++;
@@ -3042,7 +3043,7 @@ using namespace std;
         }
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (label_validity[k])
             {
                 res->value[k * ncol + i] = x / sum;
@@ -3056,8 +3057,8 @@ using namespace std;
     return res;
 }
  Matrix *MatrixCalculator::unify(Matrix* mat, int num) {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, colnum);
     Matrix *res = new Matrix(nrow, colnum);
@@ -3072,7 +3073,7 @@ using namespace std;
         bool *label_validity = new bool[nrow];
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (!isnan(x) && !isinf(x))
             {
                 n++;
@@ -3086,7 +3087,7 @@ using namespace std;
         }
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (label_validity[k])
             {
                 res->value[k * ncol + colid] = x / sum;
@@ -3102,8 +3103,8 @@ using namespace std;
 }
  Matrix *MatrixCalculator::unifyByL2(Matrix* mat)
 {
-    int nrow = mat.getNRow();
-    int ncol = mat.getNCol();
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
 
     for (int i = 0; i < ncol; i++)
@@ -3115,7 +3116,7 @@ using namespace std;
         bool *label_validity = new bool[nrow];
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (!isnan(x) && !isinf(x))
             {
                 n++;
@@ -3129,7 +3130,7 @@ using namespace std;
         }
         for (int k = 0; k < nrow; k++)
         {
-            x = mat.value[k * ncol + i];
+            x = mat->value[k * ncol + i];
             if (label_validity[k])
             {
                 res->value[k * ncol + i] = x / sum;
@@ -3379,7 +3380,7 @@ using namespace std;
         num = 0;
         if (N == 1)
         {
-            return mat.value[0] * mat.value[1 * 1 + 1] - mat->value[0 * 1 + 1] * mat->value[1 * 1 + 0];
+            return mat->value[0] * mat->value[1 * 1 + 1] - mat->value[0 * 1 + 1] * mat->value[1 * 1 + 0];
         }
         for (t0 = 0; t0 <= N; t0++)
         {
@@ -3395,13 +3396,13 @@ using namespace std;
                 }
                 cha = 0;
             }
-            num = num + mat.value[0 * N + t0] * Det(*b, N - 1) * pow(t0, -1);
+            num = num + mat->value[0 * N + t0] * Det(b, N - 1) * pow(t0, -1);
         }
         return num;
     }
     else if (N == 0)
     {
-        return mat.value[0];
+        return mat->value[0];
     }
     return 0;
 }
@@ -3458,31 +3459,31 @@ using namespace std;
  double MatrixCalculator::treat(Matrix* mat)
 {
     double treat = 0;
-    int n = mat.getNCol();
+    int n = mat->getNCol();
     for (int i = 0; i < n; i++)
     {
-        double val = mat.value[i * n + i];
+        double val = mat->value[i * n + i];
         treat += isnan(val) ? 0 : val;
     }
     return treat;
 }
  Matrix *MatrixCalculator::diag(Matrix* mat)
 {
-    int n = mat.getNCol();
+    int n = mat->getNCol();
     Matrix *res = new Matrix(1, n);
     for (int i = 0; i < n; i++)
     {
-        res->value[i] = mat.value[i * n + i];
+        res->value[i] = mat->value[i * n + i];
     }
     return res;
 }
  Matrix *MatrixCalculator::inverseDiag(Matrix* mat)
 {
-    int n = mat.getNCol();
+    int n = mat->getNCol();
     Matrix *res = new Matrix(1, n);
     for (int i = 0; i < n; i++)
     {
-        res->value[i] = 1.0 / mat.value[i * n + i];
+        res->value[i] = 1.0 / mat->value[i * n + i];
     }
     return res;
 }
@@ -3640,21 +3641,21 @@ using namespace std;
     return beta;
 }
 
- Matrix *MatrixCalculator::cumSum(Matrix ts)
+ Matrix *MatrixCalculator::cumSum(Matrix* ts)
 {
-    int len = ts.getNCol();
-    //double* res = MatrixFactory.getInstanceOfZeroVector(len);
+    int len = ts->getNCol();
+    //double* res = MatrixFactory::getInstanceOfZeroVector(len);
     Matrix *res = new Matrix(1, len);
     double cumsum = 0;
     for (int i = 0; i < len; i++)
     {
-        double val = ts.value[i];
+        double val = ts->value[i];
         cumsum += isnan(val) ? 0.0 : val;
         res->value[i] = cumsum;
     }
     return res;
 }
- double MatrixCalculator::summaryMean(Matrix ts, int highIndex, int lowIndex)
+ double MatrixCalculator::summaryMean(Matrix* ts, int highIndex, int lowIndex)
 {
     //ts is 1D matrix
     int len = highIndex - lowIndex + 1;
@@ -3664,7 +3665,7 @@ using namespace std;
     double mean = NAN;
     for (int k = highIndex; k >= lowIndex; k--)
     {
-        x = ts.value[k];
+        x = ts->value[k];
         if (!isnan(x) && !isinf(x))
         {
             n++;
@@ -3680,7 +3681,7 @@ using namespace std;
     }
     return mean;
 }
- double MatrixCalculator::summaryVariance(Matrix ts, int highIndex, int lowIndex)
+ double MatrixCalculator::summaryVariance(Matrix* ts, int highIndex, int lowIndex)
 {
     //ts is 1D matrix
     int len = highIndex - lowIndex + 1;
@@ -3691,7 +3692,7 @@ using namespace std;
     double var = NAN;
     for (int k = highIndex; k >= lowIndex; k--)
     {
-        x = ts.value[k];
+        x = ts->value[k];
         if (!isnan(x) && !isinf(x))
         {
             n++;
@@ -3708,7 +3709,7 @@ using namespace std;
     }
     return var;
 }
- double MatrixCalculator::summarySkewness(Matrix ts, int highIndex, int lowIndex)
+ double MatrixCalculator::summarySkewness(Matrix* ts, int highIndex, int lowIndex)
 {
     //ts is 1D matrix
     int len = highIndex - lowIndex + 1;
@@ -3720,7 +3721,7 @@ using namespace std;
     double skewness = NAN;
     for (int k = highIndex; k >= lowIndex; k--)
     {
-        x = ts.value[k];
+        x = ts->value[k];
         if (!isnan(x) && !isinf(x))
         {
             n++;
@@ -3740,7 +3741,7 @@ using namespace std;
     }
     return skewness;
 }
- double MatrixCalculator::summaryKurtosis(Matrix ts, int highIndex, int lowIndex)
+ double MatrixCalculator::summaryKurtosis(Matrix* ts, int highIndex, int lowIndex)
 {
     //ts is 1D matrix
     int len = highIndex - lowIndex + 1;
@@ -3753,7 +3754,7 @@ using namespace std;
     double kurtosis = NAN;
     for (int k = highIndex; k >= lowIndex; k--)
     {
-        x = ts.value[k];
+        x = ts->value[k];
         if (!isnan(x) && !isinf(x))
         {
             n++;
@@ -3776,7 +3777,7 @@ using namespace std;
     }
     return kurtosis;
 }
- double MatrixCalculator::summaryCovariance(Matrix ts1, Matrix ts2, int highIndex, int lowIndex)
+ double MatrixCalculator::summaryCovariance(Matrix* ts1, Matrix* ts2, int highIndex, int lowIndex)
 {
     //ts is 1D matrix
     int len = highIndex - lowIndex + 1;
@@ -3788,8 +3789,8 @@ using namespace std;
     double cov = NAN;
     for (int k = 0; k < len; k++)
     {
-        x = ts1.value[k];
-        y = ts2.value[k];
+        x = ts1->value[k];
+        y = ts2->value[k];
         if (!isnan(x) && !isinf(x))
         {
             y = (isnan(y) || isinf(y)) ? 0 : y;
@@ -3807,7 +3808,7 @@ using namespace std;
     }
     return cov;
 }
- double MatrixCalculator::summaryCorrelation(Matrix ts1, Matrix ts2, int highIndex, int lowIndex)
+ double MatrixCalculator::summaryCorrelation(Matrix* ts1, Matrix* ts2, int highIndex, int lowIndex)
 {
     double x, y, sumx, sumy, sumxx, sumyy, sumxy, n;
     sumx = 0;
@@ -3820,8 +3821,8 @@ using namespace std;
     int len = highIndex - lowIndex + 1;
     for (int k = 0; k < len; k++)
     {
-        x = ts1.value[k];
-        y = ts2.value[k];
+        x = ts1->value[k];
+        y = ts2->value[k];
         if (!isnan(x) && !isinf(x))
         {
             y = (isnan(y) || isinf(y)) ? 0 : y;
@@ -3846,16 +3847,16 @@ using namespace std;
     }
     return corr;
 }
- double MatrixCalculator::summarySum(Matrix ts)
+ double MatrixCalculator::summarySum(Matrix* ts)
 {
-    int len = ts.getNCol();
+    int len = ts->getNCol();
     double x, sumx, n;
     sumx = 0;
     n = 0;
     double sum = NAN;
     for (int k = 0; k < len; k++)
     {
-        x = ts.value[k];
+        x = ts->value[k];
         if (!isnan(x) && !isinf(x))
         {
             n++;
@@ -3870,16 +3871,16 @@ using namespace std;
     }
     return sum;
 }
- double MatrixCalculator::summaryMean(Matrix ts)
+ double MatrixCalculator::summaryMean(Matrix* ts)
 {
-    int len = ts.getNCol();
+    int len = ts->getNCol();
     double x, sumx;
     sumx = 0;
     int n = 0;
     double mean = NAN;
     for (int k = 0; k < len; k++)
     {
-        x = ts.value[k];
+        x = ts->value[k];
         if (!isnan(x) && !isinf(x))
         {
             n++;
@@ -3895,9 +3896,9 @@ using namespace std;
     }
     return mean;
 }
- double MatrixCalculator::summaryVariance(Matrix ts)
+ double MatrixCalculator::summaryVariance(Matrix* ts)
 {
-    int len = ts.getNCol();
+    int len = ts->getNCol();
     double x, sumx, sumxx;
     sumx = 0;
     sumxx = 0;
@@ -3905,7 +3906,7 @@ using namespace std;
     double var = NAN;
     for (int k = 0; k < len; k++)
     {
-        x = ts.value[k];
+        x = ts->value[k];
         if (!isnan(x) && !isinf(x))
         {
             n++;
@@ -3922,9 +3923,9 @@ using namespace std;
     }
     return var;
 }
- double MatrixCalculator::summarySkewness(Matrix ts)
+ double MatrixCalculator::summarySkewness(Matrix* ts)
 {
-    int len = ts.getNCol();
+    int len = ts->getNCol();
     double x, sumx, sumxx, sumxxx;
     sumx = 0;
     sumxx = 0;
@@ -3933,7 +3934,7 @@ using namespace std;
     double skewness = NAN;
     for (int k = 0; k < len; k++)
     {
-        x = ts.value[k];
+        x = ts->value[k];
         if (!isnan(x) && !isinf(x))
         {
             n++;
@@ -3953,9 +3954,9 @@ using namespace std;
     }
     return skewness;
 }
- double MatrixCalculator::summaryKurtosis(Matrix ts)
+ double MatrixCalculator::summaryKurtosis(Matrix* ts)
 {
-    int len = ts.getNCol();
+    int len = ts->getNCol();
     double x, sumx, sumxx, sumxxx, sumxxxx;
     sumx = 0;
     sumxx = 0;
@@ -3965,7 +3966,7 @@ using namespace std;
     double kurtosis = NAN;
     for (int k = 0; k < len; k++)
     {
-        x = ts.value[k];
+        x = ts->value[k];
         if (!isnan(x) && !isinf(x))
         {
             n++;
@@ -3988,7 +3989,7 @@ using namespace std;
     }
     return kurtosis;
 }
- double MatrixCalculator::summaryCorrelation(Matrix ts1, Matrix ts2)
+ double MatrixCalculator::summaryCorrelation(Matrix* ts1, Matrix* ts2)
 {
     double x, y, sumx, sumy, sumxx, sumyy, sumxy, n;
     sumx = 0;
@@ -3998,11 +3999,11 @@ using namespace std;
     sumxy = 0;
     n = 0;
     double corr = NAN;
-    int len = ts1.getNCol();
+    int len = ts1->getNCol();
     for (int k = 0; k < len; k++)
     {
-        x = ts1.value[k];
-        y = ts2.value[k];
+        x = ts1->value[k];
+        y = ts2->value[k];
         if (!isnan(x) && !isinf(x))
         {
             y = (isnan(y) || isinf(y)) ? 0 : y;
@@ -4027,9 +4028,9 @@ using namespace std;
     }
     return corr;
 }
- double MatrixCalculator::summaryMaxDrawDown(Matrix ts)
+ double MatrixCalculator::summaryMaxDrawDown(Matrix* ts)
 {
-    int len = ts.getNCol();
+    int len = ts->getNCol();
     double x, peak, drawdown, n;
     peak = 0;
     drawdown = 0;
@@ -4037,7 +4038,7 @@ using namespace std;
     double drawdownRatio = NAN;
     for (int k = 0; k < len; k++)
     {
-        x = ts.value[k];
+        x = ts->value[k];
         if (!isnan(x) && !isinf(x))
         {
             n++;
@@ -4052,20 +4053,16 @@ using namespace std;
     }
     return drawdownRatio;
 }
- double MatrixCalculator::summaryGini(Matrix ts, int ngroup)
+ double MatrixCalculator::summaryGini(Matrix* ts, int ngroup)
 {
-    int len = ts.getNCol();
+    int len = ts->getNCol();
     double *sumArray = new double[ngroup];
     for (int i = 0; i < len; i++)
     {
-        double val = ts.value[i];
+        double val = ts->value[i];
         int idgroup = (i * ngroup) / len;
         sumArray[idgroup] += val;
     }
-    list<double> sumList = new list<double>();
-    for (int i = 0; i < ngroup; i++)
-    {
-        sumList.
-    }
+    return 0;
     //TODO
 }

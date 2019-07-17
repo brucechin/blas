@@ -19,7 +19,7 @@ class MatrixCalculator{
 private:
 
     static double* doubleIntArr;
-    static double** doubleIntDivideArr;
+    static double* doubleIntDivideArr;
 
     static double int2Double(int n);
     static double intDoubleDivide(int a, int  b);
@@ -31,19 +31,19 @@ public:
         for(int i = 0; i < 1000; i++){
             doubleIntArr[i] = (double)i;
         }
-        doubleIntDivideArr = new double[100][100];
+        doubleIntDivideArr = new double[10000];
         for(int i = 0; i < 100; i++){
             for(int j = 0; j < 100; j++){
                 if(i == 0){
-                    doubleIntDivideArr[i][j] = 0.0;
+                    doubleIntDivideArr[i * 100 + j] = 0.0;
                 }else{
-                    doubleIntDivideArr[i][j] = (double)j / (double)i;
+                    doubleIntDivideArr[i * 100 + j] = (double)j / (double)i;
                 }
             }
         }
     }
-    const static double VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
-    const static int MAX_HISTORY_LENGTH = 90;
+    const static double VALIDITY_PERCENTAGE_REQUIREMENT;
+    const static int MAX_HISTORY_LENGTH;
     static double int2Double(int n);
     static double intDoubleDivide(int a, int b);
     static Matrix* add(Matrix* mat1, Matrix* mat2);
@@ -94,8 +94,8 @@ public:
     static Matrix* condition(LogicMatrix* mat1, Matrix* mat2, Matrix* mat3);
     static Matrix* condition(LogicMatrix* mat1, Matrix* mat2, Matrix* mat3, int num);
 
-    static double rankFirst(double* vec, int highIndex, int lowIndex);
-    static double* rank(const double* vec);
+    static double rankFirst(Matrix* vec, int highIndex, int lowIndex);
+    static double* rank(double* vec);
     static Matrix* rank(Matrix* mat);
     static Matrix* rank(Matrix* mat, int num);
     
