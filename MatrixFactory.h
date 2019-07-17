@@ -18,8 +18,10 @@
 
 class MatrixFactory{
 
-    MatrixFactory(){}
+    
 public:
+    MatrixFactory(){}
+    
     static Matrix* getInstanceOfEmptyMatrix(){
         return new Matrix(0, 0);
     }
