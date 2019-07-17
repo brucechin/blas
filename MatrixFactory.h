@@ -20,8 +20,7 @@ class MatrixFactory{
 
     
 public:
-    MatrixFactory(){}
-    
+	MatrixFactory() {}
     static Matrix* getInstanceOfEmptyMatrix(){
         return new Matrix(0, 0);
     }
@@ -291,7 +290,6 @@ public:
         for(int i = 0; i < n; i++){
             for(int j = 0; j < m; j++){
                 double m1 = (double)(rand()%101)/101.0;
-                min++;
                 double m2 = (double)(rand()%(max - min + 1) + min);
                 m2 -= 1;
                 (*p++) = m1 + m2;

@@ -1,44 +1,45 @@
-
-
-//#include "../LogicMatrix.h"
-//#include "../Matrix.h"
+#include "gtest/gtest.h"
+#include "cblas.h"
 #include "../MatrixCalculator.h"
-//#include "../MatrixFactory.h"
-
-#include<vector>
+#include <fstream>
 #include<iostream>
-#include<fstream>
-#include<string>
-
 using namespace std;
 
-Matrix* getInstanceOfRandomMatrix(int n, int m, int min, int max){
-        srand((unsigned)time(NULL));
-        Matrix* res = new Matrix(n, m);
-        double* p = &res->value[0];
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++){
-                double m1 = (double)(rand()%101)/101.0;
-                double m2 = (double)(rand()%(max - min + 1) + min);
-                m2 -= 1;
-                (*p++) = m1 + m2;
-            }
-        }
-        return res;
-    }
+int rangeMin = -10000;
+int rangeMax = 10000;
+int matSize = 1000;
+MatrixFactory* factory = new MatrixFactory();
+MatrixCalculator* calculator = new MatrixCalculator();
+string file_a = "a.mat";
+string file_b = "b.mat";
 
-int main(){
-
-    Matrix* a = getInstanceOfRandomMatrix(10, 10, -1000, 1000);
-    Matrix* b = getInstanceOfRandomMatrix(10, 10, -1000, 1000);
-    MatrixCalculator* cal = new MatrixCalculator();
-    Matrix* res = cal->add(a, b);
-    res->print();
-    // ofstream f1, f2;
-    // f1.open("1k-a.txt",ios::binary);
-    // f1.write((char *)&a, sizeof(a));
-    // f2.open("1k-b.txt",ios::binary);
-    // f2.write((char *)&b, sizeof(b));
-    // f1.close();
-    // f2.close();
+TEST(Matrix, MatrixIO) {
+	Matrix* a = factory->getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
+	a->saveMatrix("MatrixIOTest.mat");
+	Matrix* b = new Matrix();
+	b->readMatrix("MatrixIOTest.mat");
+	EXPECT_TRUE(a->compareMatrix(b));
+	delete a;
+	delete b;
 }
+
+
+TEST(MatrixCalculator, Add) {
+	Matrix* a = new Matrix();
+	a->readMatrix(file_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(file_b);
+	Matrix* res = calculator->add(a, b);
+	EXPECT_TRUE(res->compareMatrix(calculator->add(b, a)));
+}
+int main()
+{	
+        Matrix* a = factory->getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
+	a->saveMatrix(file_a);
+	Matrix* b = factory->getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
+	b->saveMatrix(file_b);
+	testing::InitGoogleTest();
+	RUN_ALL_TESTS();
+        return 0;
+}
+						    
