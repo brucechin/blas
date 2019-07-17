@@ -31,7 +31,9 @@ int main(){
 
     Matrix* a = getInstanceOfRandomMatrix(10, 10, -1000, 1000);
     Matrix* b = getInstanceOfRandomMatrix(10, 10, -1000, 1000);
-    a->print();
+    MatrixCalculator* cal = new MatrixCalculator();
+    Matrix* res = cal->add(a, b);
+    res->print();
     // ofstream f1, f2;
     // f1.open("1k-a.txt",ios::binary);
     // f1.write((char *)&a, sizeof(a));
@@ -39,5 +41,4 @@ int main(){
     // f2.write((char *)&b, sizeof(b));
     // f1.close();
     // f2.close();
-    system("pause");
 }

@@ -131,5 +131,5 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 ### 7.17
 
 1. 开始配置google test环境写单元测试，include的时候遇到的坑是要把include文件夹内的东西原封不动挪到系统的include文件夹内，不然可能会破坏原来的结构
-2. vscode下gtest integration失败，不过在visual studio里面很顺利，目前规划在VS里写单元测试，先测试正确性，再在开发机上测速度。
+2. vscode下gtest integration失败，不过在visual studio里面很顺利，目前规划在VS里写单元测试，先测试正确性，再在开发机上测速度。在visual studio出的问题又是，没法把openblas库的lib文件link到项目里，出现了经典的LINK2019的bug，找不到MatrixCalculator里调用的openblas函数的定义。后来在Windows下面开了linux subsystem，装好了环境打算先在这上面搞，因为开发机上没权限配环境很麻烦。
 3. 此外由于本机内存大小的限制，测试中matrix最大size不打算超过5k*5k
