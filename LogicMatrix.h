@@ -1,8 +1,8 @@
 /*
  * @Author: lianke.qin@gmail.com 
  * @Date: 2019-07-08 10:52:55 
- * @Last Modified by: lianke.qin@gmail.com
- * @Last Modified time: 2019-07-09 11:24:28
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2019-07-17 11:31:05
  */
 
 #ifndef LOGICMATRIX_H
@@ -11,7 +11,6 @@
 #include<iostream>
 #include "include/cblas.h"
 #include<vector>
-//#include<unistd.h>
 #include<cstdlib>
 #include<string>
 

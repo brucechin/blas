@@ -115,7 +115,13 @@ public:
 
 
     void print(){
-        printf("print called\n");
+        double* p = value;
+        for(int i = 0; i < nrow; i++){
+            for(int j = 0; j < ncol; j++){
+                std::cout << *p++ << " ";
+            }
+            std::cout << std::endl;
+        }
     }
 
     //add a row/column copy function

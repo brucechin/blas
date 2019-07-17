@@ -118,6 +118,16 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
    
    4. const static成员变量不能in class initialized
    
-   5. redefinition of class xxx : 
+   5. redefinition of class xxx :  在h文件中直接实现接口的话，要在文件开头注明
+   
+      1. > #ifndef XXX_H #define XXX_H 
+         >
+         > 代码区
+         >
+         > #endif
    
    6. matrix类里应该是重载and or not，不能直接定义一个函数，因为他们是保留关键字
+
+### 7.17
+
+1. 开始配置google test环境写单元测试，include的时候遇到的坑是要把include文件夹内的东西原封不动挪到系统的include文件夹内，不然可能会破坏原来的结构
