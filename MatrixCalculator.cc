@@ -217,7 +217,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 {
     int nrow1 = mat1->getNRow();
     int ncol1 = mat1->getNCol();
-    int nrow2 = mat2->getNRow();
+    //int nrow2 = mat2->getNRow();
     int ncol2 = mat2->getNCol();
     Matrix *res = new Matrix(nrow1, ncol2);
 
@@ -302,7 +302,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
-    int len = nrow * ncol;
+    //int len = nrow * ncol;
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     LogicMatrix *res = new LogicMatrix(nrow, colnum);
@@ -335,7 +335,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
-    int len = nrow * ncol;
+    //int len = nrow * ncol;
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     LogicMatrix *res = new LogicMatrix(nrow, colnum);
@@ -370,7 +370,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
-    int len = nrow * ncol;
+    //int len = nrow * ncol;
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     LogicMatrix *res = new LogicMatrix(nrow, colnum);
@@ -403,7 +403,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
-    int len = nrow * ncol;
+    //int len = nrow * ncol;
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     LogicMatrix *res = new LogicMatrix(nrow, colnum);
@@ -438,7 +438,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
-    int len = nrow * ncol;
+    //int len = nrow * ncol;
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     LogicMatrix *res = new LogicMatrix(nrow, colnum);
@@ -691,6 +691,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     int n = sizeof(vec) / sizeof(double);
     double *res = MatrixFactory::getInstanceOfNaNVector(n);
     //TODO
+    return res;
 }
  Matrix *MatrixCalculator::rank(Matrix* mat)
 {

@@ -9,7 +9,7 @@
 
 #include<iostream>
 //#include<sys/time.h>
-#include "include/cblas.h"
+#include <cblas.h>
 #include<vector>
 #include<cstdlib>
 #include<string>
