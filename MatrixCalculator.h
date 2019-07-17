@@ -17,8 +17,8 @@
 class MatrixCalculator{
 private:
 
-    static double* doubleIntArr;
-    static double* doubleIntDivideArr;
+    // static double* doubleIntArr;
+    // static double* doubleIntDivideArr;
 
     static double int2Double(int n);
     static double intDoubleDivide(int a, int  b);
@@ -26,20 +26,20 @@ private:
 
 public:
     MatrixCalculator(){
-        doubleIntArr = new double[1000];
-        for(int i = 0; i < 1000; i++){
-            doubleIntArr[i] = (double)i;
-        }
-        doubleIntDivideArr = new double[10000];
-        for(int i = 0; i < 100; i++){
-            for(int j = 0; j < 100; j++){
-                if(i == 0){
-                    doubleIntDivideArr[i * 100 + j] = 0.0;
-                }else{
-                    doubleIntDivideArr[i * 100 + j] = (double)j / (double)i;
-                }
-            }
-        }
+        // doubleIntArr = new double[1000];
+        // for(int i = 0; i < 1000; i++){
+        //     doubleIntArr[i] = (double)i;
+        // }
+        // doubleIntDivideArr = new double[10000];
+        // for(int i = 0; i < 100; i++){
+        //     for(int j = 0; j < 100; j++){
+        //         if(i == 0){
+        //             doubleIntDivideArr[i * 100 + j] = 0.0;
+        //         }else{
+        //             doubleIntDivideArr[i * 100 + j] = (double)j / (double)i;
+        //         }
+        //     }
+        // }
     }
     const static double VALIDITY_PERCENTAGE_REQUIREMENT;
     const static int MAX_HISTORY_LENGTH;

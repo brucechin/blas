@@ -22,19 +22,12 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 
  double MatrixCalculator::int2Double(int n)
 {
-    return doubleIntArr[n];
+    return (double)n;
 }
 
  double MatrixCalculator::intDoubleDivide(int a, int b)
 {
-    if (a < 100 && b < 100 && a >= 0 && b >= 0)
-    {
-        return doubleIntDivideArr[b * 100 + a];
-    }
-    else
-    {
-        return int2Double(a) / int2Double(b);
-    }
+    return (double)a / (double)b;
 }
 
 //cblas_daxpy(const MKL_INT n, const double a, const double *x, const MKL_INT incx, double *y, const MKL_INT incy);
@@ -671,12 +664,12 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     int biggerCount = 0;
     int count = 0;
     double res = NAN;
-    if (!isnan(first))
+    if (!std::isnan(first))
     {
         for (int i = highIndex; i >= lowIndex; i--)
         {
             double val = vec->value[i];
-            if (!isnan(val))
+            if (!std::isnan(val))
             {
                 if (val > first)
                 {
@@ -1204,7 +1197,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (!isnan(val))
+                if (!std::isnan(val))
                 {
                     sum += val;
                     count++;
@@ -1241,7 +1234,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (!isnan(val))
+                if (!std::isnan(val))
                 {
                     sum += val;
                     count++;
@@ -1276,7 +1269,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (!isnan(val))
+                if (!std::isnan(val))
                 {
                     prod *= val;
                     count++;
@@ -1312,7 +1305,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (!isnan(val))
+                if (!std::isnan(val))
                 {
                     prod *= val;
                     count++;
@@ -1349,7 +1342,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (!isnan(val))
+                if (!std::isnan(val))
                 {
                     max = val;
                     maxIsNaN = false;
@@ -1387,7 +1380,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1440,7 +1433,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (!isnan(val))
+                if (!std::isnan(val))
                 {
                     min = val;
                     minIsNaN = false;
@@ -1478,7 +1471,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1532,7 +1525,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (!isnan(val))
+                if (!std::isnan(val))
                 {
                     if (maxIsNaN)
                     {
@@ -1578,7 +1571,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1641,7 +1634,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (!isnan(val))
+                if (!std::isnan(val))
                 {
                     if (minIsNaN)
                     {
@@ -1687,7 +1680,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1744,7 +1737,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefa = mat->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -1786,7 +1779,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefa = mat->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1828,7 +1821,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefa = mat->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -1870,7 +1863,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefa = mat->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1912,7 +1905,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefa = mat->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -1954,7 +1947,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefa = mat->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -1996,7 +1989,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefa = mat->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -2038,7 +2031,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefa = mat->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -2080,7 +2073,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefa = mat->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -2122,7 +2115,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefa = mat->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -2165,7 +2158,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefb = mat2->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat1->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat1->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -2208,7 +2201,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefb = mat2->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat1->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat1->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -2251,7 +2244,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefb = mat2->getRowVector(i);
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat1->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat1->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -2294,7 +2287,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         Matrix *rowRefb = mat2->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat1->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat1->value[i * ncol + j]);
         }
         int colid = 0;
 
@@ -2335,7 +2328,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         for (int j = 0; j < ncol; j++)
         {
-            isNanArr[j] = isnan(mat->value[i * ncol + j]);
+            isNanArr[j] = std::isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -2375,7 +2368,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         for (int j = histStart; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
@@ -2572,7 +2565,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
             currWeightArr[j] = 1.0 - intDoubleDivide(j, n);
         }
         for (int j = 0; j < ncol; j++)
@@ -2619,7 +2612,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
@@ -2663,7 +2656,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         double currWeightSum = 0;
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         for (int j = 0; j < ncol; j++)
         {
@@ -2709,7 +2702,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         int colid = 0;
         for (int j = 0; j < ncol; j++)
         {
-            notNanArr[j] = !isnan(mat->value[i * ncol + j]);
+            notNanArr[j] = !std::isnan(mat->value[i * ncol + j]);
         }
         for (int j = histStart; j < ncol; j++)
         {
@@ -2754,7 +2747,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             double count = 0;
             for(int k = 0; k < n && k <= j; k++){
                 double val = mat->value[i * ncol + j - k];
-                if(!isnan(val)){
+                if(!std::isnan(val)){
                     double currWeight = 1.0 - (double) k / (double) n;
                     sumWeight += currWeight;
                     sum += currWeight * val;
@@ -2787,7 +2780,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int j = 0; j < ncol; j++)
         {
             double currValue = mat->value[i * ncol + j];
-            if (isnan(currValue) || isinf(currValue))
+            if (std::isnan(currValue) || std::isinf(currValue))
             {
                 mat->value[i * ncol + j] = val;
             }
@@ -2822,7 +2815,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int j = 0; j < ncol; j++)
         {
             double currValue = mat->value[i * ncol + j];
-            if (!isnan(currValue) && !isinf(currValue))
+            if (!std::isnan(currValue) && !std::isinf(currValue))
             {
                 double val = currValue - mean;
                 val = std::abs(val) > bound ? signum(val) * bound : val;
@@ -2850,7 +2843,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int j = colStart; j < ncol; j++)
         {
             double currValue = mat->value[i * ncol + j];
-            if (!isnan(currValue) && !isinf(currValue))
+            if (!std::isnan(currValue) && !std::isinf(currValue))
             {
                 double val = currValue - mean;
                 val = std::abs(val) > bound ? signum(val) * bound : val;
@@ -2875,7 +2868,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int j = 0; j < ncol; j++)
         {
             double currValue = mat->value[i * ncol + j];
-            if (!isnan(currValue) && !isinf(currValue))
+            if (!std::isnan(currValue) && !std::isinf(currValue))
             {
                 double val = currValue - mean;
                 val = std::abs(val) > bound ? signum(val) * bound : val;
@@ -2901,7 +2894,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int k = 0; k < nrow; k++)
         {
             x = mat->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
                 n++;
                 sumx += x;
@@ -2946,7 +2939,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int k = 0; k < nrow; k++)
         {
             x = mat->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
                 n++;
                 sumx += x;
@@ -2988,7 +2981,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int k = 0; k < nrow; k++)
         {
             x = mat->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
                 n++;
                 sumx += x;
@@ -3029,7 +3022,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int k = 0; k < nrow; k++)
         {
             x = mat->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
                 n++;
                 sumx += std::abs(x);
@@ -3073,7 +3066,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int k = 0; k < nrow; k++)
         {
             x = mat->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
                 n++;
                 sumx += std::abs(x);
@@ -3116,7 +3109,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int k = 0; k < nrow; k++)
         {
             x = mat->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
                 n++;
                 sumxx += x * x;
@@ -3155,7 +3148,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int k = 0; k < nrow; k++)
         {
             x = alpha->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x) && x != 0)
+            if (!std::isnan(x) && !std::isinf(x) && x != 0)
             {
                 x++;
             }
@@ -3180,7 +3173,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int k = 0; k < nrow; k++)
         {
             x = alpha->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
                 sumAbsX += std::abs(x);
             }
@@ -3203,7 +3196,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int k = 0; k < nrow; k++)
         {
             x = alpha->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
                 n++;
                 sumx += x;
@@ -3214,7 +3207,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         {
             double meanx = sumx / n;
             mean = meanx;
-            mean = (isnan(mean) || isinf(mean)) ? 0.0 : mean;
+            mean = (std::isnan(mean) || std::isinf(mean)) ? 0.0 : mean;
         }
         res->value[i] = mean;
     }
@@ -3235,7 +3228,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         for (int k = 0; k < nrow; k++)
         {
             x = alpha->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
                 n++;
                 sumx += x;
@@ -3247,7 +3240,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         {
             double varx = (sumxx - sumx * sumx / n) / n;
             var = varx;
-            var = (isnan(var) || isinf(var)) ? 0.0 : var;
+            var = (std::isnan(var) || std::isinf(var)) ? 0.0 : var;
         }
         res->value[i] = var;
     }
@@ -3268,10 +3261,10 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         {
             x = alpha->value[k * ncol + i];
             y = target->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
-                y = isnan(y) ? 0 : y;
-                y = isinf(y) ? 0 : y;
+                y = std::isnan(y) ? 0 : y;
+                y = std::isinf(y) ? 0 : y;
                 n++;
                 sumxy += x * y;
             }
@@ -3301,10 +3294,10 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         {
             x = alpha->value[k * ncol + i];
             y = target->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
-                y = isnan(y) ? 0 : y;
-                y = isinf(y) ? 0 : y;
+                y = std::isnan(y) ? 0 : y;
+                y = std::isinf(y) ? 0 : y;
                 n++;
                 sumxy += x * y;
                 sumx += x;
@@ -3315,7 +3308,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         {
             double currCov = (sumxy - sumx * sumy / n) / n;
             cov = currCov;
-            cov = (isnan(cov) || isinf(cov)) ? 0.0 : cov;
+            cov = (std::isnan(cov) || std::isinf(cov)) ? 0.0 : cov;
         }
         res->value[i] = cov;
     }
@@ -3340,10 +3333,10 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         {
             x = alpha->value[k * ncol + i];
             y = target->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
-                y = isnan(y) ? 0 : y;
-                y = isinf(y) ? 0 : y;
+                y = std::isnan(y) ? 0 : y;
+                y = std::isinf(y) ? 0 : y;
                 n++;
                 sumxy += x * y;
                 sumx += x;
@@ -3358,7 +3351,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             double vary = (sumyy - sumy * sumy / n) / n;
             double cov = (sumxy - sumx * sumy / n) / n;
             corr = cov / std::sqrt(varx * vary);
-            corr = isnan(corr) ? 0.0 : corr;
+            corr = std::isnan(corr) ? 0.0 : corr;
             corr = (corr > 1) ? 1 : corr;
             corr = (corr < -1) ? -1 : corr;
         }
@@ -3462,7 +3455,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int i = 0; i < n; i++)
     {
         double val = mat->value[i * n + i];
-        treat += isnan(val) ? 0 : val;
+        treat += std::isnan(val) ? 0 : val;
     }
     return treat;
 }
@@ -3500,10 +3493,10 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         {
             x = alpha->value[k * ncol + i];
             y = target->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
-                y = isnan(y) ? 0 : y;
-                y = isinf(y) ? 0 : y;
+                y = std::isnan(y) ? 0 : y;
+                y = std::isinf(y) ? 0 : y;
                 n++;
                 sumxy += x * y;
             }
@@ -3534,10 +3527,10 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         {
             x = alpha->value[k * ncol + i];
             y = target->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
-                y = isnan(y) ? 0 : y;
-                y = isinf(y) ? 0 : y;
+                y = std::isnan(y) ? 0 : y;
+                y = std::isinf(y) ? 0 : y;
                 n++;
                 sumxy += x * y;
                 sumx += x;
@@ -3553,7 +3546,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         double vary = (sumyy - sumy * sumy / n) / n;
         double cov = (sumxy - sumx * sumy / n) / n;
         corr = cov / std::sqrt(varx * vary);
-        corr = isnan(corr) ? 0 : corr;
+        corr = std::isnan(corr) ? 0 : corr;
         corr = (corr > 1) ? 1 : corr;
         corr = (corr < -1) ? -1 : corr;
     }
@@ -3578,10 +3571,10 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         {
             x = alpha->value[k * ncol + i];
             y = target->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
-                y = isnan(y) ? 0 : y;
-                y = isinf(y) ? 0 : y;
+                y = std::isnan(y) ? 0 : y;
+                y = std::isinf(y) ? 0 : y;
                 n++;
                 sumxy += x * y;
                 sumx += x;
@@ -3594,7 +3587,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             double varx = (sumxx - sumx * sumx / n) / n;
             double cov = (sumxy - sumx * sumy / n) / n;
             beta = cov / varx;
-            beta = (isnan(beta) || isinf(beta)) ? 0 : beta;
+            beta = (std::isnan(beta) || std::isinf(beta)) ? 0 : beta;
         }
 
         res->value[i] = beta;
@@ -3618,10 +3611,10 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         {
             x = alpha->value[k * ncol + i];
             y = target->value[k * ncol + i];
-            if (!isnan(x) && !isinf(x))
+            if (!std::isnan(x) && !std::isinf(x))
             {
-                y = isnan(y) ? 0 : y;
-                y = isinf(y) ? 0 : y;
+                y = std::isnan(y) ? 0 : y;
+                y = std::isinf(y) ? 0 : y;
                 n++;
                 sumxy += x * y;
                 sumx += x;
@@ -3635,7 +3628,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         double varx = (sumxx - sumx * sumx / n) / n;
         double cov = (sumxy - sumx * sumy / n) / n;
         beta = cov / varx;
-        beta = (isnan(beta) || isinf(beta)) ? 0 : beta;
+        beta = (std::isnan(beta) || std::isinf(beta)) ? 0 : beta;
     }
     return beta;
 }
@@ -3649,7 +3642,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int i = 0; i < len; i++)
     {
         double val = ts->value[i];
-        cumsum += isnan(val) ? 0.0 : val;
+        cumsum += std::isnan(val) ? 0.0 : val;
         res->value[i] = cumsum;
     }
     return res;
@@ -3665,7 +3658,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int k = highIndex; k >= lowIndex; k--)
     {
         x = ts->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
             n++;
             sumx += x;
@@ -3676,7 +3669,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         double meanx = sumx / f_n;
         mean = meanx;
-        mean = (isnan(mean) || isinf(mean)) ? 0 : mean;
+        mean = (std::isnan(mean) || std::isinf(mean)) ? 0 : mean;
     }
     return mean;
 }
@@ -3692,7 +3685,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int k = highIndex; k >= lowIndex; k--)
     {
         x = ts->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
             n++;
             sumx += x;
@@ -3704,7 +3697,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         double varx = (sumxx - sumx * sumx / f_n) / f_n;
         var = varx;
-        var = (isnan(var) || isinf(var)) ? 0 : var;
+        var = (std::isnan(var) || std::isinf(var)) ? 0 : var;
     }
     return var;
 }
@@ -3721,7 +3714,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int k = highIndex; k >= lowIndex; k--)
     {
         x = ts->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
             n++;
             sumx += x;
@@ -3736,7 +3729,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         double sigma = std::sqrt(sumxx / f_n - u * u);
         double ex3 = sumxxx / f_n;
         skewness = (ex3 = 3 * u * sigma * sigma - u * u * u) / (sigma * sigma * sigma);
-        skewness = (isnan(skewness) || isinf(skewness)) ? 0 : skewness;
+        skewness = (std::isnan(skewness) || std::isinf(skewness)) ? 0 : skewness;
     }
     return skewness;
 }
@@ -3754,7 +3747,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int k = highIndex; k >= lowIndex; k--)
     {
         x = ts->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
             n++;
             sumx += x;
@@ -3772,7 +3765,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         double ex4 = sumxxxx / f_n;
         double sigma2 = ex2 - ex1 * ex1;
         kurtosis = (ex4 - 4 * ex1 * ex3 + 6 * ex1 * ex1 * ex2 - 3 * ex1 * ex1 * ex1 * ex1) / (sigma2 * sigma2) - 3.0;
-        kurtosis = (isnan(kurtosis) || isinf(kurtosis)) ? 0 : kurtosis;
+        kurtosis = (std::isnan(kurtosis) || std::isinf(kurtosis)) ? 0 : kurtosis;
     }
     return kurtosis;
 }
@@ -3790,9 +3783,9 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         x = ts1->value[k];
         y = ts2->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
-            y = (isnan(y) || isinf(y)) ? 0 : y;
+            y = (std::isnan(y) || std::isinf(y)) ? 0 : y;
             n++;
             sumx += x;
             sumy += y;
@@ -3803,7 +3796,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     if (n > (double)len * VALIDITY_PERCENTAGE_REQUIREMENT)
     {
         cov = (sumxy - sumx * sumy / f_n) / f_n;
-        cov = (isnan(cov) || isinf(cov)) ? 0 : cov;
+        cov = (std::isnan(cov) || std::isinf(cov)) ? 0 : cov;
     }
     return cov;
 }
@@ -3822,9 +3815,9 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         x = ts1->value[k];
         y = ts2->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
-            y = (isnan(y) || isinf(y)) ? 0 : y;
+            y = (std::isnan(y) || std::isinf(y)) ? 0 : y;
             n++;
             sumx += x;
             sumx += x * x;
@@ -3840,7 +3833,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         double vary = (sumyy - sumy * sumy / n) / n;
         double cov = (sumxy - sumx * sumy / n) / n;
         corr = cov / std::sqrt(varx * vary);
-        corr = isnan(corr) ? 0 : corr;
+        corr = std::isnan(corr) ? 0 : corr;
         corr = (corr > 1) ? 1 : corr;
         corr = (corr < -1) ? -1 : corr;
     }
@@ -3856,7 +3849,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int k = 0; k < len; k++)
     {
         x = ts->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
             n++;
             sumx += x;
@@ -3865,8 +3858,8 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 
     if (n > (double)len * VALIDITY_PERCENTAGE_REQUIREMENT)
     {
-        sum = isnan(sumx) ? 0 : sumx;
-        sum = isinf(sum) ? 0 : sum;
+        sum = std::isnan(sumx) ? 0 : sumx;
+        sum = std::isinf(sum) ? 0 : sum;
     }
     return sum;
 }
@@ -3880,7 +3873,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int k = 0; k < len; k++)
     {
         x = ts->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
             n++;
             sumx += x;
@@ -3891,7 +3884,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         double meanx = sumx / f_n;
         mean = meanx;
-        mean = (isnan(mean) || isinf(mean)) ? 0 : mean;
+        mean = (std::isnan(mean) || std::isinf(mean)) ? 0 : mean;
     }
     return mean;
 }
@@ -3906,7 +3899,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int k = 0; k < len; k++)
     {
         x = ts->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
             n++;
             sumx += x;
@@ -3918,7 +3911,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         double varx = (sumxx - sumx * sumx / f_n) / f_n;
         var = varx;
-        var = (isnan(var) || isinf(var)) ? 0 : var;
+        var = (std::isnan(var) || std::isinf(var)) ? 0 : var;
     }
     return var;
 }
@@ -3934,7 +3927,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int k = 0; k < len; k++)
     {
         x = ts->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
             n++;
             sumx += x;
@@ -3949,7 +3942,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         double sigma = std::sqrt(sumxx / f_n - u * u);
         double ex3 = sumxxx / f_n;
         skewness = (ex3 = 3 * u * sigma * sigma - u * u * u) / (sigma * sigma * sigma);
-        skewness = (isnan(skewness) || isinf(skewness)) ? 0 : skewness;
+        skewness = (std::isnan(skewness) || std::isinf(skewness)) ? 0 : skewness;
     }
     return skewness;
 }
@@ -3966,7 +3959,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int k = 0; k < len; k++)
     {
         x = ts->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
             n++;
             sumx += x;
@@ -3984,7 +3977,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         double ex4 = sumxxxx / f_n;
         double sigma2 = ex2 - ex1 * ex1;
         kurtosis = (ex4 - 4 * ex1 * ex3 + 6 * ex1 * ex1 * ex2 - 3 * ex1 * ex1 * ex1 * ex1) / (sigma2 * sigma2) - 3.0;
-        kurtosis = (isnan(kurtosis) || isinf(kurtosis)) ? 0 : kurtosis;
+        kurtosis = (std::isnan(kurtosis) || std::isinf(kurtosis)) ? 0 : kurtosis;
     }
     return kurtosis;
 }
@@ -4003,9 +3996,9 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     {
         x = ts1->value[k];
         y = ts2->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
-            y = (isnan(y) || isinf(y)) ? 0 : y;
+            y = (std::isnan(y) || std::isinf(y)) ? 0 : y;
             n++;
             sumx += x;
             sumx += x * x;
@@ -4021,7 +4014,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
         double vary = (sumyy - sumy * sumy / n) / n;
         double cov = (sumxy - sumx * sumy / n) / n;
         corr = cov / std::sqrt(varx * vary);
-        corr = isnan(corr) ? 0 : corr;
+        corr = std::isnan(corr) ? 0 : corr;
         corr = (corr > 1) ? 1 : corr;
         corr = (corr < -1) ? -1 : corr;
     }
@@ -4038,7 +4031,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     for (int k = 0; k < len; k++)
     {
         x = ts->value[k];
-        if (!isnan(x) && !isinf(x))
+        if (!std::isnan(x) && !std::isinf(x))
         {
             n++;
             peak = std::max(x, peak);
