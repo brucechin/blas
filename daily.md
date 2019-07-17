@@ -117,3 +117,7 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
    3. 把所有的函数参数都变成matrix的指针了，传值的话拷贝构造额外开销怕是要崩
    
    4. const static成员变量不能in class initialized
+   
+   5. redefinition of class xxx : 
+   
+   6. matrix类里应该是重载and or not，不能直接定义一个函数，因为他们是保留关键字

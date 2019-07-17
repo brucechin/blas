@@ -45,11 +45,13 @@ public:
     static Matrix* getInstanceOfNaNMatrix(int n){
         Matrix* res = new Matrix(n, n);
         res->setValue(NAN);
+        return res;
     }
 
     static Matrix* getInstanceOfNaNMatrix(int n, int m){
         Matrix* res = new Matrix(n, m);
         res->setValue(NAN);
+        return res;
     }
 
     static Matrix* getExpandingColumnInstanceOfMatrix(Matrix* mat, int n){
@@ -66,8 +68,7 @@ public:
         return res;
     }
 
-    static Matrix* getInstanceOfDiagMatrix(double* diag){
-        int n = sizeof(diag) / sizeof(double);
+    static Matrix* getInstanceOfDiagMatrix(double* diag, int n){
         Matrix* res = getInstanceOfZeroMatrix(n);
 
         for(int i = 0; i < n; i++){
@@ -78,8 +79,7 @@ public:
 
     }
 
-    static Matrix* getInstanceOfRowMatrix(double* vec){
-        int n = sizeof(vec) / sizeof(double);
+    static Matrix* getInstanceOfRowMatrix(double* vec, int n){
         Matrix* res = new Matrix(1, n);
         for(int i = 0; i < n; i++){
             double val = vec[i];
@@ -127,6 +127,7 @@ public:
                 res->value[(i + nrow1) * ncol + j] = mat1->value[i * ncol + j];
             }
         }
+        return res;
         
     }
 
@@ -151,7 +152,7 @@ public:
         int nrow = mat1->getNRow();
         int ncol = mat1->getNCol();
 
-        int colnum = min(num, (int) ncol / period);
+        int colnum = std::min(num, (int) ncol / period);
         Matrix* res = new Matrix(nrow, colnum);
 
         for(int i = 0; i < nrow; i++){
@@ -165,8 +166,7 @@ public:
         return res;
     }
 
-    static LogicMatrix* replicateMatrixVertical(bool* logic, int nrow){
-        int ncol = sizeof(logic) / sizeof(bool);
+    static LogicMatrix* replicateMatrixVertical(bool* logic, int nrow, int ncol){
         LogicMatrix* res = new LogicMatrix(nrow, ncol);
         for(int i = 0; i < nrow; i++){
             for(int j = 0; j < ncol; j++){
@@ -179,8 +179,7 @@ public:
         
     }
 
-    static LogicMatrix* replicateMatrixHorizon(bool* logic, int ncol){
-        int nrow = sizeof(logic) / sizeof(bool);
+    static LogicMatrix* replicateMatrixHorizon(bool* logic, int nrow, int ncol){
         LogicMatrix* res = new LogicMatrix(nrow, ncol);
 
         for(int i = 0; i < nrow; i++){
@@ -214,7 +213,7 @@ public:
     static LogicMatrix* subMatrixHorizonByPeriodAndTruncate(LogicMatrix* mat1, int period, int num){
         int nrow = mat1->getNRow();
         int ncol = mat1->getNCol();
-        int colnum = min(num, (int) ncol / period);
+        int colnum = std::min(num, (int) ncol / period);
         LogicMatrix* res = new LogicMatrix(nrow, colnum);
 
         for(int i = 0; i < nrow; i++){
@@ -243,9 +242,11 @@ public:
     }
 
     //utilize memcpy function here to copy memory contents in batch???
-    static double* getInstanceOfVectorCopy(double* vec){
-        int len = sizeof(vec) / sizeof(double);
+    static double* getInstanceOfVectorCopy(double* vec, int len){
         double* res = new double[len];
+        for(int i = 0; i < len; i++){
+            *res++ = *vec++;
+        }
         return res;
     }
 
@@ -297,9 +298,7 @@ public:
         return res;
     }
 
-    static double* mergeVector(double* vec1, double* vec2){
-        int ncol1 = sizeof(vec1) / sizeof(double);
-        int ncol2 = sizeof(vec2) / sizeof(double);
+    static double* mergeVector(double* vec1, double* vec2, int ncol1, int ncol2){
         double* res = getInstanceOfZeroVector(ncol1 + ncol2);
 
         for(int j = 0; j < ncol1; j++){
@@ -334,8 +333,7 @@ public:
         return res;
     }
 
-    static LogicMatrix* getInstanceOfRowLogicMatrix(bool* vec){
-        int n = sizeof(vec) / sizeof(bool);
+    static LogicMatrix* getInstanceOfRowLogicMatrix(bool* vec, int n){
         LogicMatrix* res = new LogicMatrix(1, n);
         for(int i = 0; i < n; i++){
             bool val = vec[1];
@@ -344,16 +342,16 @@ public:
         return res;
     }
 
-    static void copyVectorRight(double* vec, double* host){
-        int id = (sizeof(host) - sizeof(vec)) / sizeof(double);
-        int len = sizeof(vec) / sizeof(double);
+    static void copyVectorRight(double* vec, double* host, int vecLen, int hostLen){
+        int id = hostLen - vecLen;
+        int len = vecLen;
         for(int i = 0; i < len; i++){
             host[i + id] = vec[i];
         }
     }
 
-    static void copyVectorLeft(double* vec, double* host){
-        int len = sizeof(vec) / sizeof(double);
+    static void copyVectorLeft(double* vec, double* host, int vecLen){
+        int len = vecLen;
         for(int i = 0; i < len; i++){
             host[i] = vec[i];
         }

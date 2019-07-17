@@ -6,8 +6,7 @@
  */
 
 #include "MatrixCalculator.h"
-#include "Matrix.h"
-#include "MatrixFactory.h"
+
 #include <algorithm>
 #include <list>
 
@@ -526,7 +525,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     }
     return res;
 }
- LogicMatrix *MatrixCalculator::and(LogicMatrix* mat1, LogicMatrix* mat2)
+ LogicMatrix *MatrixCalculator::matAnd(LogicMatrix* mat1, LogicMatrix* mat2)
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
@@ -541,7 +540,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     }
     return res;
 }
- LogicMatrix *MatrixCalculator::and(LogicMatrix* mat1, LogicMatrix* mat2, int num)
+ LogicMatrix *MatrixCalculator::matAnd(LogicMatrix* mat1, LogicMatrix* mat2, int num)
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
@@ -559,7 +558,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     }
     return res;
 }
- LogicMatrix *MatrixCalculator:: or (LogicMatrix* mat1, LogicMatrix* mat2)
+ LogicMatrix *MatrixCalculator:: matOr (LogicMatrix* mat1, LogicMatrix* mat2)
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
@@ -574,7 +573,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     }
     return res;
 }
- LogicMatrix *MatrixCalculator:: or (LogicMatrix* mat1, LogicMatrix* mat2, int num)
+ LogicMatrix *MatrixCalculator:: matOr (LogicMatrix* mat1, LogicMatrix* mat2, int num)
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
@@ -592,7 +591,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     }
     return res;
 }
- LogicMatrix *MatrixCalculator::not(LogicMatrix* mat1)
+ LogicMatrix *MatrixCalculator::matNot(LogicMatrix* mat1)
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
@@ -606,7 +605,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     }
     return res;
 }
- LogicMatrix *MatrixCalculator::not(LogicMatrix* mat1, int num)
+ LogicMatrix *MatrixCalculator::matNot(LogicMatrix* mat1, int num)
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();

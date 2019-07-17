@@ -5,6 +5,8 @@
  * @Last Modified time: 2019-07-09 11:24:28
  */
 
+#ifndef LOGICMATRIX_H
+#define LOGICMATRIX_H
 
 #include<iostream>
 #include "include/cblas.h"
@@ -107,3 +109,5 @@ public:
 
 
 };
+
+#endif

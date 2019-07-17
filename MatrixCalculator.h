@@ -9,11 +9,10 @@
 #include<iostream>
 #include "include/cblas.h"
 #include<vector>
-//#include<unistd.h>
 #include<cstdlib>
 #include"LogicMatrix.h"
-
-
+#include "MatrixFactory.h"
+#include "Matrix.h"
 
 class MatrixCalculator{
 private:
@@ -44,8 +43,6 @@ public:
     }
     const static double VALIDITY_PERCENTAGE_REQUIREMENT;
     const static int MAX_HISTORY_LENGTH;
-    static double int2Double(int n);
-    static double intDoubleDivide(int a, int b);
     static Matrix* add(Matrix* mat1, Matrix* mat2);
     static Matrix* add(Matrix* mat1, Matrix* mat2, int num);
     static Matrix* sub(Matrix* mat1, Matrix* mat2);
@@ -84,12 +81,12 @@ public:
 
     static LogicMatrix* between(Matrix* mat1, double lowerbound, double upperbound);
     static Matrix* betweenValue(Matrix* mat1, double lowerbound, double upperbound);
-    static LogicMatrix* and(LogicMatrix* mat1, LogicMatrix* mat2);
-    static LogicMatrix* and(LogicMatrix* mat1, LogicMatrix* mat2, int num);
-    static LogicMatrix* or(LogicMatrix* mat1, LogicMatrix* mat2);
-    static LogicMatrix* or(LogicMatrix* mat1, LogicMatrix* mat2, int num);
-    static LogicMatrix* not(LogicMatrix* mat1);
-    static LogicMatrix* not(LogicMatrix* mat1, int num);
+    static LogicMatrix* matAnd(LogicMatrix* mat1, LogicMatrix* mat2);
+    static LogicMatrix* matAnd(LogicMatrix* mat1, LogicMatrix* mat2, int num);
+    static LogicMatrix* matOr(LogicMatrix* mat1, LogicMatrix* mat2);
+    static LogicMatrix* matOr(LogicMatrix* mat1, LogicMatrix* mat2, int num);
+    static LogicMatrix* matNot(LogicMatrix* mat1);
+    static LogicMatrix* matNot(LogicMatrix* mat1, int num);
 
     static Matrix* condition(LogicMatrix* mat1, Matrix* mat2, Matrix* mat3);
     static Matrix* condition(LogicMatrix* mat1, Matrix* mat2, Matrix* mat3, int num);

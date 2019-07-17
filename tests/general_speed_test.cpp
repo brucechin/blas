@@ -1,9 +1,10 @@
 
 
-#include "../LogicMatrix.h"
-#include "../Matrix.h"
+//#include "../LogicMatrix.h"
+//#include "../Matrix.h"
 #include "../MatrixCalculator.h"
-#include "../MatrixFactory.h"
+//#include "../MatrixFactory.h"
+
 #include<vector>
 #include<iostream>
 #include<fstream>

@@ -4,7 +4,8 @@
  * @Last Modified by: lianke.qin@gmail.com
  * @Last Modified time: 2019-07-09 15:25:58
  */
-
+#ifndef MATRIX_H
+#define MATRIX_H
 
 #include<iostream>
 //#include<sys/time.h>
@@ -12,9 +13,9 @@
 #include<vector>
 #include<cstdlib>
 #include<string>
+#include<cstring>
 #include<ctime>
-
-using namespace std;
+#include<memory.h>
 
 class Matrix{
 
@@ -44,7 +45,7 @@ public:
         nrow = n;
         ncol = m;
         value = new double[n * m];
-        memcpy(value, vec, nrow * ncol * sizeof(double));
+        std::memcpy(value, vec, nrow * ncol * sizeof(double));
     }
 
     //copy constructor
@@ -52,7 +53,7 @@ public:
         nrow = mat.nrow;
         ncol = mat.ncol;
         value = new double[nrow * ncol];
-        memcpy(value, mat.value, nrow * ncol * sizeof(double));
+        std::memcpy(value, mat.value, nrow * ncol * sizeof(double));
     }
 
     //copy some rows or columns usingg memcpy
@@ -131,13 +132,15 @@ public:
         return ;
     }
 
-    void saveMatrix(string filename){
+    void saveMatrix(std::string filename){
         return ;
     }
 
 
-    void readMatrix(string filename){
+    void readMatrix(std::string filename){
         return ;
     }
 
 };
+
+#endif
