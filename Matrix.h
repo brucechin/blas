@@ -16,6 +16,9 @@
 #include<cstring>
 #include<ctime>
 #include<memory.h>
+#include<fstream>
+
+using namespace std;
 
 class Matrix{
 
@@ -112,7 +115,17 @@ public:
         }        
         return res;
     }
-
+	bool compareMatrix(Matrix* other) {
+		if (nrow != other->getNRow()) return false;
+		if (ncol != other->getNCol()) return false;
+		double* a = value;
+		double* b = other->value;
+		int len = nrow * ncol;
+		for (int i = 0; i < len; i++) {
+			if ((*a++) != (*b++)) return false;
+		}
+		return true;
+	}
 
     void print(){
         double* p = value;
@@ -139,11 +152,37 @@ public:
     }
 
     void saveMatrix(std::string filename){
+		ofstream file;
+		file.open(filename, ios::binary | ios::out);
+		if (file.is_open()) {
+			file.write((char*)&nrow, sizeof(int));
+			file.write((char*)&ncol, sizeof(int));
+			file.write((char *)value, sizeof(double) * nrow * ncol);
+			file.close();
+		}
+		else {
+			cout << "file open failure" << endl;
+		}
+		
         return ;
     }
 
 
     void readMatrix(std::string filename){
+		ifstream file;
+		file.open(filename, ios::binary | ios::in);
+		if (file.is_open()) {
+			file.read((char*)&nrow, sizeof(int));
+			file.read((char*)&ncol, sizeof(int));
+			delete[] value;
+			value = new double[nrow * ncol];
+			file.read((char*)value, sizeof(double) * nrow * ncol);
+			file.close();
+		}
+		else {
+			cout << "file open failure" << endl;
+		}
+		
         return ;
     }
 
