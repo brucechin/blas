@@ -130,7 +130,7 @@ public:
 	}
 
     void print(){
-        double* p = value;
+        bool* p = value;
         for(int i = 0; i < nrow; i++){
             for(int j = 0; j < ncol; j++){
                 std::cout << *p++ << " ";

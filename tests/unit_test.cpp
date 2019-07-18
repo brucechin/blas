@@ -7,7 +7,7 @@ using namespace std;
 
 int rangeMin = -10000;
 int rangeMax = 10000;
-int matSize = 15;
+int matSize = 10;
 MatrixFactory* factory = new MatrixFactory();
 MatrixCalculator* calculator = new MatrixCalculator();
 string matrix_a = "a.mat";
@@ -1119,8 +1119,8 @@ int main()
 	la->saveMatrix(logicMatrix_a);
 	LogicMatrix* lb = factory->getInstanceOfRandomLogicMatrix(matSize, matSize);
 	lb->saveMatrix(logicMatrix_b);
-	Matrix* res1 = calculator->tsCountTrue(la, 5);
-	Matrix* res2 = calculator->tsCountTrue_op(la, 5);
+	Matrix* res1 = calculator->tsCountTrue(la, 10);
+	Matrix* res2 = calculator->tsCountTrue_op(la, 10);
 	la->print();
 	std::cout << std::endl;
 	res1->print();
