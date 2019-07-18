@@ -4,7 +4,8 @@
         "type_traits": "cpp",
         "xtr1common": "cpp",
         "limits": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "new": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

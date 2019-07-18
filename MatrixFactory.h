@@ -298,6 +298,18 @@ public:
         return res;
     }
 
+    static LogicMatrix* getInstanceOfRandomLogicMatrix(int n, int m){
+        srand((unsigned)time(NULL));
+        LogicMatrix* res = new LogicMatrix(n, m);
+        bool* p = &res->value[0];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                (*p++) = (rand()%2) == 0 ? true : false;
+            }
+        }
+        return res;
+    }
+
     static double* mergeVector(double* vec1, double* vec2, int ncol1, int ncol2){
         double* res = getInstanceOfZeroVector(ncol1 + ncol2);
 
