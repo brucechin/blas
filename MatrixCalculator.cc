@@ -1350,6 +1350,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                 {
                     if(maxIsNaN){
                         max = val;
+                        maxIsNaN = false;
                     }else{
                         max = std::max(max, val);
                     }    
@@ -1399,6 +1400,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                 {
                     if(maxIsNaN){
                         max = val;
+                        maxIsNaN = false;
                     }else{
                         max = std::max(max, val);
                     }    
@@ -1539,17 +1541,15 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                         max = val;
                         maxIsNaN = false;
                         idmax = k;
+                    }else{
+                        if (val > max)
+                        {
+                            max = val;
+                            idmax = k;
+                        }
                     }
+                    count++;
                 }
-                else
-                {
-                    if (val > max)
-                    {
-                        max = val;
-                        idmax = k;
-                    }
-                }
-                count++;
             }
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
@@ -1596,19 +1596,17 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                     if (maxIsNaN)
                     {
                         max = val;
-                        idmax = k;
                         maxIsNaN = false;
-                    }
-                }
-                else
-                {
-                    if (val > max)
-                    {
-                        max = val;
                         idmax = k;
+                    }else{
+                        if (val > max)
+                        {
+                            max = val;
+                            idmax = k;
+                        }
                     }
+                    count++;
                 }
-                count++;
             }
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
@@ -1648,17 +1646,15 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                         min = val;
                         minIsNaN = false;
                         idmin = k;
+                    }else{
+                        if (val < min)
+                        {
+                            min = val;
+                            idmin = k;
+                        }
                     }
+                    count++;
                 }
-                else
-                {
-                    if (val < min)
-                    {
-                        min = val;
-                        idmin = k;
-                    }
-                }
-                count++;
             }
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
@@ -1705,19 +1701,17 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                     if (minIsNaN)
                     {
                         min = val;
-                        idmin = k;
                         minIsNaN = false;
-                    }
-                }
-                else
-                {
-                    if (val < min)
-                    {
-                        min = val;
                         idmin = k;
+                    }else{
+                        if (val < min)
+                        {
+                            min = val;
+                            idmin = k;
+                        }
                     }
+                    count++;
                 }
-                count++;
             }
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
