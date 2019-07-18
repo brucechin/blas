@@ -124,7 +124,7 @@ public:
 		for (int i = 0; i < len; i++) {
             double v1 = *a++;
             double v2 = *b++;
-			if (abs(v1 - v2) > 0.0001 * (v1 + v2)) return false;
+			if (abs(v1 - v2) > 0.001 * abs(v1 + v2)) return false;
 		}
 		return true;
 	}

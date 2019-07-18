@@ -7,7 +7,7 @@ using namespace std;
 
 int rangeMin = -10000;
 int rangeMax = 10000;
-int matSize = 1000;
+int matSize = 15;
 MatrixFactory* factory = new MatrixFactory();
 MatrixCalculator* calculator = new MatrixCalculator();
 string matrix_a = "a.mat";
@@ -639,7 +639,7 @@ TEST(MatrixCalculator, TSArgMin_OP){
 	res2->clear();
 }
 
-TEST(MatrixCalculator, TSArgMax_Compare){
+TEST(MatrixCalculator, TSArgMin_Compare){
 	
 	Matrix* a = new Matrix();
 	a->readMatrix(matrix_a);
@@ -1119,7 +1119,14 @@ int main()
 	la->saveMatrix(logicMatrix_a);
 	LogicMatrix* lb = factory->getInstanceOfRandomLogicMatrix(matSize, matSize);
 	lb->saveMatrix(logicMatrix_b);
-	testing::InitGoogleTest();
-	RUN_ALL_TESTS();
+	Matrix* res1 = calculator->tsCountTrue(la, 5);
+	Matrix* res2 = calculator->tsCountTrue_op(la, 5);
+	res1->print();
+	std::count << std::endl;
+	res2->print();
+	
+	
+	//testing::InitGoogleTest();
+	//RUN_ALL_TESTS();
     return 0;
 }		    
