@@ -130,8 +130,30 @@ public:
     static Matrix* product(Matrix* mat, int n);
     static Matrix* product(Matrix* mat, int n, int num);
     
+    //NOTE here are some optimized functions with "_op" suffix
     static Matrix* sum_op(Matrix* mat, int n);
+    static Matrix* product_op(Matrix* mat, int n);
+    static Matrix* tsMax_op(Matrix* mat, int n);
+    static Matrix* tsMin_op(Matrix* mat, int n);
+    static Matrix* tsArgmax_op(Matrix* mat, int n);
+    static Matrix* tsArgmin_op(Matrix* mat, int n);
+    static Matrix* tsCountNaN_op(Matrix* mat, int n);
+    static Matrix* tsCountTrue_op(LogicMatrix* mat, int n);
+    static Matrix* tsCountConsecutiveTrue_op(LogicMatrix* mat, int n);
 
+/*
+    TODO optimize these later
+    static Matrix* tsMax(Matrix* mat, int n, int num);
+    static Matrix* tsMin(Matrix* mat, int n, int num);
+    static Matrix* tsArgmax(Matrix* mat, int n, int num);
+    static Matrix* tsArgmin(Matrix* mat, int n, int num);
+    static Matrix* tsCountNaN(Matrix* mat, int n, int num);
+    static Matrix* tsCountTrue(LogicMatrix* mat, int n, int num);
+    static Matrix* tsCountConsecutiveTrue(LogicMatrix* mat, int n, int num);
+*/
+
+
+    //DELETE some of these timeseries functions are optimized
     static Matrix* tsMax(Matrix* mat, int n);
     static Matrix* tsMax(Matrix* mat, int n, int num);
     static Matrix* tsMin(Matrix* mat, int n);
@@ -160,7 +182,6 @@ public:
     static Matrix* tsCountTrue(LogicMatrix* mat, int n, int num);
     static Matrix* tsCountConsecutiveTrue(LogicMatrix* mat, int n);
     static Matrix* tsCountConsecutiveTrue(LogicMatrix* mat, int n, int num);
-
     static Matrix* decayLinear(Matrix* mat, int n);
     static Matrix* decayLinear(Matrix* mat, int n, int num);
     static Matrix* decayExponential(Matrix* mat, int n);

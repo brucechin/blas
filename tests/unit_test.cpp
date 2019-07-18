@@ -431,6 +431,40 @@ TEST(MatrixCalculator, Product){
 	res2->clear();
 }
 
+TEST(MatrixCalculator, Product_OP){
+	
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->product_op(a, 100);
+	Matrix* res2 = calculator->product_op(b ,100);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+}
+
+TEST(MatrixCalculator, Product_Compare){
+	
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->product(a, 100);
+	Matrix* res2 = calculator->product(b ,100);
+	Matrix* res1_op = calculator->product_op(a, 100);
+	Matrix* res2_op = calculator->product_op(b ,100);
+	res1->compareMatrix(res1_op);
+	res2->compareMatrix(res2_op);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+	res1_op->clear();
+	res2_op->clear();
+}
+
 TEST(MatrixCalculator, TSMax){
 	
 	Matrix* a = new Matrix();
@@ -443,6 +477,40 @@ TEST(MatrixCalculator, TSMax){
 	b->clear();
 	res1->clear();
 	res2->clear();
+}
+
+TEST(MatrixCalculator, TSMax_OP){
+	
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsMax_op(a, 100);
+	Matrix* res2 = calculator->tsMax_op(b ,100);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+}
+
+TEST(MatrixCalculator, TSMax_Compare){
+	
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsMax(a, 100);
+	Matrix* res2 = calculator->tsMax(b ,100);
+	Matrix* res1_op = calculator->tsMax_op(a, 100);
+	Matrix* res2_op = calculator->tsMax_op(b ,100);
+	res1->compareMatrix(res1_op);
+	res2->compareMatrix(res2_op);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+	res1_op->clear();
+	res2_op->clear();
 }
 
 TEST(MatrixCalculator, TSMin){
@@ -459,6 +527,41 @@ TEST(MatrixCalculator, TSMin){
 	res2->clear();
 }
 
+TEST(MatrixCalculator, TSMin_OP){
+	
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsMin_op(a, 100);
+	Matrix* res2 = calculator->tsMin_op(b ,100);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+}
+
+TEST(MatrixCalculator, TSMin_Compare){
+	
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsMin(a, 100);
+	Matrix* res2 = calculator->tsMin(b ,100);
+	Matrix* res1_op = calculator->tsMin_op(a, 100);
+	Matrix* res2_op = calculator->tsMin_op(b ,100);
+	res1->compareMatrix(res1_op);
+	res2->compareMatrix(res2_op);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+	res1_op->clear();
+	res2_op->clear();
+}
+
+
 TEST(MatrixCalculator, TSArgMax){
 	
 	Matrix* a = new Matrix();
@@ -473,6 +576,41 @@ TEST(MatrixCalculator, TSArgMax){
 	res2->clear();
 }
 
+TEST(MatrixCalculator, TSArgMax_OP){
+	
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsArgmax_op(a, 100);
+	Matrix* res2 = calculator->tsArgmax_op(b ,100);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+}
+
+TEST(MatrixCalculator, TSArgMax_Compare){
+	
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsArgmax(a, 100);
+	Matrix* res2 = calculator->tsArgmax(b ,100);
+	Matrix* res1_op = calculator->tsArgmax_op(a, 100);
+	Matrix* res2_op = calculator->tsArgmax_op(b ,100);
+	res1->compareMatrix(res1_op);
+	res2->compareMatrix(res2_op);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+	res1_op->clear();
+	res2_op->clear();
+}
+
+
 TEST(MatrixCalculator, TSArgMin){
 	
 	Matrix* a = new Matrix();
@@ -486,6 +624,41 @@ TEST(MatrixCalculator, TSArgMin){
 	res1->clear();
 	res2->clear();
 }
+
+TEST(MatrixCalculator, TSArgMin_OP){
+	
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsArgmin_op(a, 100);
+	Matrix* res2 = calculator->tsArgmin_op(b ,100);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+}
+
+TEST(MatrixCalculator, TSArgMax_Compare){
+	
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsArgmin(a, 100);
+	Matrix* res2 = calculator->tsArgmin(b ,100);
+	Matrix* res1_op = calculator->tsArgmin_op(a, 100);
+	Matrix* res2_op = calculator->tsArgmin_op(b ,100);
+	res1->compareMatrix(res1_op);
+	res2->compareMatrix(res2_op);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+	res1_op->clear();
+	res2_op->clear();
+}
+
 
 TEST(MatrixCalculator, TSRank){
 	
@@ -599,6 +772,41 @@ TEST(MatrixCalculator, TSCountTrue){
 	res2->clear();
 }
 
+TEST(MatrixCalculator, TSCountTrue_OP){
+	
+	LogicMatrix* a = new LogicMatrix();
+	a->readMatrix(matrix_a);
+	LogicMatrix* b = new LogicMatrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsCountTrue_op(a, 100);
+	Matrix* res2 = calculator->tsCountTrue_op(b ,100);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+}
+
+TEST(MatrixCalculator, TSCountTrue_Compare){
+	
+	LogicMatrix* a = new LogicMatrix();
+	a->readMatrix(matrix_a);
+	LogicMatrix* b = new LogicMatrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsCountTrue(a, 100);
+	Matrix* res2 = calculator->tsCountTrue(b ,100);
+	Matrix* res1_op = calculator->tsCountTrue_op(a, 100);
+	Matrix* res2_op = calculator->tsCountTrue_op(b ,100);
+	res1->compareMatrix(res1_op);
+	res2->compareMatrix(res2_op);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+	res1_op->clear();
+	res2_op->clear();
+}
+
+
 TEST(MatrixCalculator, TSCountConsecutiveTrue){
 	
 	LogicMatrix* a = new LogicMatrix();
@@ -611,6 +819,40 @@ TEST(MatrixCalculator, TSCountConsecutiveTrue){
 	b->clear();
 	res1->clear();
 	res2->clear();
+}
+
+TEST(MatrixCalculator, TSCountConsecutiveTrue_OP){
+	
+	LogicMatrix* a = new LogicMatrix();
+	a->readMatrix(matrix_a);
+	LogicMatrix* b = new LogicMatrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsCountConsecutiveTrue_op(a, 100);
+	Matrix* res2 = calculator->tsCountConsecutiveTrue_op(b ,100);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+}
+
+TEST(MatrixCalculator, TSCountConsecutiveTrue_Compare){
+	
+	LogicMatrix* a = new LogicMatrix();
+	a->readMatrix(matrix_a);
+	LogicMatrix* b = new LogicMatrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->tsCountConsecutiveTrue(a, 100);
+	Matrix* res2 = calculator->tsCountConsecutiveTrue(b ,100);
+	Matrix* res1_op = calculator->tsCountConsecutiveTrue_op(a, 100);
+	Matrix* res2_op = calculator->tsCountConsecutiveTrue_op(b ,100);
+	res1->compareMatrix(res1_op);
+	res2->compareMatrix(res2_op);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+	res1_op->clear();
+	res2_op->clear();
 }
 
 TEST(MatrixCalculator, DecayLinear){

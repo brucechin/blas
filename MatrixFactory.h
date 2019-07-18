@@ -16,6 +16,8 @@
 #include<random>
 #include<time.h>
 #include<fstream>
+#include <chrono>
+#include <thread>
 using namespace std;
 
 class MatrixFactory{
@@ -286,6 +288,7 @@ public:
     }
 
     static Matrix* getInstanceOfRandomMatrix(int n, int m, int min, int max){
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         srand((unsigned)time(NULL));
         Matrix* res = new Matrix(n, m);
         double* p = &res->value[0];
