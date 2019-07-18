@@ -57,7 +57,7 @@ public:
     static Matrix* matrixMul(double* vec1, Matrix* mat2);
     static Matrix* matrixMul(Matrix* mat1, double* vec2);
     static Matrix* matrixMul(Matrix* mat1, Matrix* mat2);
-
+//TODO : unify all parameter types as Matrix*
 
     static Matrix* max(Matrix* mat1, Matrix* mat2);
     static Matrix* max(Matrix* mat1, Matrix* mat2, int num);
@@ -104,7 +104,7 @@ public:
     static Matrix* abs(Matrix* mat, int num);
     static Matrix* minus(Matrix* mat);
     static Matrix* minus(Matrix* mat, int num);
-    static double* minus(double* vec);
+    static double* minus(double* vec);//DELETE no need for this function
     static Matrix* sqrt(Matrix* mat);
     static Matrix* sqrt(Matrix* mat, int num);
     static Matrix* log(Matrix* mat);
