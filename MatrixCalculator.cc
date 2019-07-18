@@ -4367,7 +4367,9 @@ Matrix *MatrixCalculator::tsCountNaN_op(Matrix* mat, int n)
         for (int j = 0; j < ncol; j++)
         {
             int numNaN = countNanArr[j ];
-            int count = j >= n ? n : j + 1;
+            int count;
+            if(j >= n) count = n;
+            else count = j + 1; 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 res_p[i * ncol + j] = intDoubleDivide(numNaN, count);
@@ -4396,18 +4398,22 @@ Matrix *MatrixCalculator::tsCountTrue_op(LogicMatrix* mat, int n)
         countTrueArr[0] = (mat_p[i * ncol]) ? 1 : 0;
         for (int j = 1; j < ncol; j++)
         {
+            int tmp = mat_p[i * ncol + j] ? 1 : 0;
+            int prev = mat_p[i * ncol + j - n] ? 1 : 0;
             if(j < n){
-                countTrueArr[j] = (mat_p[i * ncol + j]) ? 1 : 0 + countTrueArr[j - 1];
+                countTrueArr[j] = tmp + countTrueArr[j - 1];
             }else{
-                countTrueArr[j] = (mat_p[i * ncol + j]) ? 1 : 0 + countTrueArr[j - 1];
-                countTrueArr[j] -= (mat_p[i * ncol + j - n]) ? 1 : 0;
+                countTrueArr[j] = tmp+ countTrueArr[j - 1];
+                countTrueArr[j] -= prev;
             }
             
         }
         for (int j = 0; j < ncol; j++)
         {
             int numTrue = countTrueArr[j];
-            int count = j >= n ? n : j + 1;
+            int count;
+            if(j >= n) count = n;
+            else count = j + 1; 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 res_p[i * ncol + j] = intDoubleDivide(numTrue, count);
@@ -4451,7 +4457,9 @@ Matrix *MatrixCalculator::tsCountConsecutiveTrue_op(LogicMatrix* mat, int n)
         for (int j = 0; j < ncol; j++)
         {
             int numNaN = countTrueArr[j + 1];
-            int count = j >= n ? n : j + 1;
+            int count;
+            if(j >= n) count = n;
+            else count = j + 1; 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 res_p[i * ncol + j] = intDoubleDivide(numNaN, count);
