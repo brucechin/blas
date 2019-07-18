@@ -761,9 +761,9 @@ TEST(MatrixCalculator, TSCorr){
 TEST(MatrixCalculator, TSCountTrue){
 	
 	LogicMatrix* a = new LogicMatrix();
-	a->readMatrix(matrix_a);
+	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
-	b->readMatrix(matrix_b);
+	b->readMatrix(logicMatrix_b);
 	Matrix* res1 = calculator->tsCountTrue(a, 100);
 	Matrix* res2 = calculator->tsCountTrue(b, 100);
 	a->clear();
@@ -775,9 +775,9 @@ TEST(MatrixCalculator, TSCountTrue){
 TEST(MatrixCalculator, TSCountTrue_OP){
 	
 	LogicMatrix* a = new LogicMatrix();
-	a->readMatrix(matrix_a);
+	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
-	b->readMatrix(matrix_b);
+	b->readMatrix(logicMatrix_b);
 	Matrix* res1 = calculator->tsCountTrue_op(a, 100);
 	Matrix* res2 = calculator->tsCountTrue_op(b ,100);
 	a->clear();
@@ -789,9 +789,9 @@ TEST(MatrixCalculator, TSCountTrue_OP){
 TEST(MatrixCalculator, TSCountTrue_Compare){
 	
 	LogicMatrix* a = new LogicMatrix();
-	a->readMatrix(matrix_a);
+	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
-	b->readMatrix(matrix_b);
+	b->readMatrix(logicMatrix_b);
 	Matrix* res1 = calculator->tsCountTrue(a, 100);
 	Matrix* res2 = calculator->tsCountTrue(b ,100);
 	Matrix* res1_op = calculator->tsCountTrue_op(a, 100);
@@ -810,9 +810,9 @@ TEST(MatrixCalculator, TSCountTrue_Compare){
 TEST(MatrixCalculator, TSCountConsecutiveTrue){
 	
 	LogicMatrix* a = new LogicMatrix();
-	a->readMatrix(matrix_a);
+	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
-	b->readMatrix(matrix_b);
+	b->readMatrix(logicMatrix_b);
 	Matrix* res1 = calculator->tsCountConsecutiveTrue(a, 100);
 	Matrix* res2 = calculator->tsCountConsecutiveTrue(b, 100);
 	a->clear();
@@ -824,9 +824,9 @@ TEST(MatrixCalculator, TSCountConsecutiveTrue){
 TEST(MatrixCalculator, TSCountConsecutiveTrue_OP){
 	
 	LogicMatrix* a = new LogicMatrix();
-	a->readMatrix(matrix_a);
+	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
-	b->readMatrix(matrix_b);
+	b->readMatrix(logicMatrix_b);
 	Matrix* res1 = calculator->tsCountConsecutiveTrue_op(a, 100);
 	Matrix* res2 = calculator->tsCountConsecutiveTrue_op(b ,100);
 	a->clear();
@@ -838,9 +838,9 @@ TEST(MatrixCalculator, TSCountConsecutiveTrue_OP){
 TEST(MatrixCalculator, TSCountConsecutiveTrue_Compare){
 	
 	LogicMatrix* a = new LogicMatrix();
-	a->readMatrix(matrix_a);
+	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
-	b->readMatrix(matrix_b);
+	b->readMatrix(logicMatrix_b);
 	Matrix* res1 = calculator->tsCountConsecutiveTrue(a, 100);
 	Matrix* res2 = calculator->tsCountConsecutiveTrue(b ,100);
 	Matrix* res1_op = calculator->tsCountConsecutiveTrue_op(a, 100);

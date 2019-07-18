@@ -1540,12 +1540,12 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                     {
                         max = val;
                         maxIsNaN = false;
-                        idmax = k;
+                        idmax = j - k;
                     }else{
                         if (val > max)
                         {
                             max = val;
-                            idmax = k;
+                            idmax = j - k;
                         }
                     }
                     count++;
@@ -1597,12 +1597,12 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                     {
                         max = val;
                         maxIsNaN = false;
-                        idmax = k;
+                        idmax = j - k;
                     }else{
                         if (val > max)
                         {
                             max = val;
-                            idmax = k;
+                            idmax = j - k;
                         }
                     }
                     count++;
@@ -1645,12 +1645,12 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                     {
                         min = val;
                         minIsNaN = false;
-                        idmin = k;
+                        idmin = j - k;
                     }else{
                         if (val < min)
                         {
                             min = val;
-                            idmin = k;
+                            idmin = j - k;
                         }
                     }
                     count++;
@@ -1702,12 +1702,12 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                     {
                         min = val;
                         minIsNaN = false;
-                        idmin = k;
+                        idmin = j - k;
                     }else{
                         if (val < min)
                         {
                             min = val;
-                            idmin = k;
+                            idmin = j - k;
                         }
                     }
                     count++;

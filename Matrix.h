@@ -122,8 +122,8 @@ public:
 		double* b = other->value;
 		int len = nrow * ncol;
 		for (int i = 0; i < len; i++) {
-            double v1 = *a++;
-            double v2 = *b++;
+            double v1 = a[i];
+            double v2 = b[i];
 			if (abs(v1 - v2) > 0.001 * abs(v1 + v2)) return false;
 		}
 		return true;

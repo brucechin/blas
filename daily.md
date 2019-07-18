@@ -143,3 +143,4 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 1. 写完了主要函数的单元测试，基本都能跑出来，除了Det和Rank会core dump，之后去修一下。速度慢的主要是timeseries的函数，因为是n^3的复杂度，之后打算用sliding window的trick改一改
 2. 类似tsmax, tsmin, tssum之类的用sliding window改了，tsvar, tscorr, tscov这种还是算了吧。。
 3. 发现老版本的tsmax tsmin都被我抄错了，有毒啊，还是得每个函数以较小的输入时打印出来结果比对来找出实现中的小错误。
+4. 老版本的tsargmax和tsargmin写错了，记得汇报
