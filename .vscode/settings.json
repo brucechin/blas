@@ -5,7 +5,9 @@
         "xtr1common": "cpp",
         "limits": "cpp",
         "cmath": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "string": "cpp",
+        "fstream": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

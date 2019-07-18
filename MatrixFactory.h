@@ -15,7 +15,7 @@
 #include<cmath>
 #include<random>
 #include<time.h>
-
+#include<fstream>
 using namespace std;
 
 class MatrixFactory{
