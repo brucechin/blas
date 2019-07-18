@@ -49,6 +49,11 @@ public:
         //TODO
     }
 
+    void clear(){
+        nrow = 0;
+        ncol = 0;
+        delete[] value;
+    }
     int getNRow(){
         return nrow;
     }

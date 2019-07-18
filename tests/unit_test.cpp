@@ -46,7 +46,9 @@ TEST(MatrixCalculator, Sub){
 	b->readMatrix(matrix_b);
 	Matrix* res = calculator->sub(a, b);
 	EXPECT_TRUE(a->compareMatrix(calculator->add(b, res)));
-
+	a->clear();
+	b->clear();
+	res->clear();
 }
 
 
@@ -58,7 +60,9 @@ TEST(MatrixCalculator, Mul){
 	b->readMatrix(matrix_b);
 	Matrix* res = calculator->mul(a, b);
 	EXPECT_TRUE(a->compareMatrix(calculator->div(res, b)));//FIX this is not exactly the same because of precision issue.
-	
+	a->clear();
+	b->clear();
+	res->clear();
 }
 
 
@@ -70,7 +74,9 @@ TEST(MatrixCalculator, Div){
 	b->readMatrix(matrix_b);
 	Matrix* res = calculator->div(a, b);
 	EXPECT_TRUE(a->compareMatrix(calculator->mul(res, b)));
-	
+	a->clear();
+	b->clear();
+	res->clear();
 }
 
 TEST(MatrixCalculator, MatrixMul){
@@ -80,7 +86,9 @@ TEST(MatrixCalculator, MatrixMul){
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
 	Matrix* res = calculator->matrixMul(a, b);
-	
+	a->clear();
+	b->clear();
+	res->clear();
 }
 
 
@@ -92,7 +100,9 @@ TEST(MatrixCalculator, Max){
 	b->readMatrix(matrix_b);
 	Matrix* res = calculator->max(a, b);
 	EXPECT_TRUE(res->compareMatrix(calculator->max(b, a)));
-	
+	a->clear();
+	b->clear();
+	res->clear();
 }
 
 TEST(MatrixCalculator, Min){
@@ -103,7 +113,9 @@ TEST(MatrixCalculator, Min){
 	b->readMatrix(matrix_b);
 	Matrix* res = calculator->min(a, b);
 	EXPECT_TRUE(res->compareMatrix(calculator->min(b, a)));
-	
+	a->clear();
+	b->clear();
+	res->clear();
 }
 
 TEST(MatrixCalculator, BiggerAndSmaller){
@@ -115,7 +127,9 @@ TEST(MatrixCalculator, BiggerAndSmaller){
 	LogicMatrix* res1 = calculator->bigger(a, b);
 	LogicMatrix* res2 = calculator->smaller(b, a);
 	EXPECT_TRUE(res1->compareMatrix(res2));
-	
+	a->clear();
+	b->clear();
+	res->clear();
 }
 
 TEST(MatrixCalculator, Equal){
@@ -126,7 +140,9 @@ TEST(MatrixCalculator, Equal){
 	b->readMatrix(matrix_b);
 	LogicMatrix* res1 = calculator->equal(a, b);
 	LogicMatrix* res2 = calculator->equal(a, a);
-
+	a->clear();
+	b->clear();
+	res->clear();
 }
 
 TEST(MatrixCalculator, Condition){
@@ -142,7 +158,10 @@ TEST(MatrixCalculator, Condition){
 
 	Matrix* res1 = calculator->condition(la, a, b);
 	Matrix* res2 = calculator->condition(lb, a, b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 // TEST(MatrixCalculator, Rank){
@@ -165,7 +184,10 @@ TEST(MatrixCalculator, Round){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->round(a);
 	Matrix* res2 = calculator->round(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Floor){
@@ -176,7 +198,10 @@ TEST(MatrixCalculator, Floor){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->floor(a);
 	Matrix* res2 = calculator->floor(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Abs){
@@ -187,7 +212,10 @@ TEST(MatrixCalculator, Abs){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->abs(a);
 	Matrix* res2 = calculator->abs(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Minus){
@@ -198,7 +226,10 @@ TEST(MatrixCalculator, Minus){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->minus(a);
 	Matrix* res2 = calculator->minus(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Sqrt){
@@ -209,7 +240,10 @@ TEST(MatrixCalculator, Sqrt){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->sqrt(a);
 	Matrix* res2 = calculator->sqrt(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Log){
@@ -220,7 +254,10 @@ TEST(MatrixCalculator, Log){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->log(a);
 	Matrix* res2 = calculator->log(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Exp){
@@ -231,7 +268,10 @@ TEST(MatrixCalculator, Exp){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->exp(a);
 	Matrix* res2 = calculator->exp(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Sign){
@@ -242,7 +282,10 @@ TEST(MatrixCalculator, Sign){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->sign(a);
 	Matrix* res2 = calculator->sign(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Inverse){
@@ -253,8 +296,12 @@ TEST(MatrixCalculator, Inverse){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->inverse(a);
 	Matrix* res2 = calculator->inverse(b);
-	EXPECT_TRUE(a->compareMatrix(calculator->inverse(res1)));
+	EXPECT_TRUE(a->compareMatrix(calculator->inverse(res1))); //FIX after two inverse we can not get the original one
 	EXPECT_TRUE(b->compareMatrix(calculator->inverse(res2)));
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, SignedPow){
@@ -265,7 +312,10 @@ TEST(MatrixCalculator, SignedPow){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->signedpow(a, 3);
 	Matrix* res2 = calculator->signedpow(b, 3);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Shift){
@@ -276,7 +326,10 @@ TEST(MatrixCalculator, Shift){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->shift(a, 100);
 	Matrix* res2 = calculator->shift(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Delay){
@@ -287,7 +340,10 @@ TEST(MatrixCalculator, Delay){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->delay(a, 100);
 	Matrix* res2 = calculator->delay(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Delta){
@@ -298,7 +354,10 @@ TEST(MatrixCalculator, Delta){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->delta(a, 100);
 	Matrix* res2 = calculator->delta(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Ratio){
@@ -309,7 +368,10 @@ TEST(MatrixCalculator, Ratio){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->ratio(a, 100);
 	Matrix* res2 = calculator->ratio(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Sum){
@@ -320,7 +382,10 @@ TEST(MatrixCalculator, Sum){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->sum(a, 100);
 	Matrix* res2 = calculator->sum(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Product){
@@ -331,7 +396,10 @@ TEST(MatrixCalculator, Product){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->product(a, 100);
 	Matrix* res2 = calculator->product(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSMax){
@@ -342,7 +410,10 @@ TEST(MatrixCalculator, TSMax){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsMax(a, 100);
 	Matrix* res2 = calculator->tsMax(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSMin){
@@ -353,7 +424,10 @@ TEST(MatrixCalculator, TSMin){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsMin(a, 100);
 	Matrix* res2 = calculator->tsMin(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSArgMax){
@@ -364,7 +438,10 @@ TEST(MatrixCalculator, TSArgMax){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsArgmax(a, 100);
 	Matrix* res2 = calculator->tsArgmax(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSArgMin){
@@ -375,7 +452,10 @@ TEST(MatrixCalculator, TSArgMin){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsArgmin(a, 100);
 	Matrix* res2 = calculator->tsArgmin(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSRank){
@@ -386,7 +466,10 @@ TEST(MatrixCalculator, TSRank){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsRank(a, 100);
 	Matrix* res2 = calculator->tsRank(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSMean){
@@ -397,7 +480,10 @@ TEST(MatrixCalculator, TSMean){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsMean(a, 100);
 	Matrix* res2 = calculator->tsMean(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSStd){
@@ -408,7 +494,10 @@ TEST(MatrixCalculator, TSStd){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsStd(a, 100);
 	Matrix* res2 = calculator->tsStd(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSSkewness){
@@ -419,7 +508,10 @@ TEST(MatrixCalculator, TSSkewness){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsSkewness(a, 100);
 	Matrix* res2 = calculator->tsSkewness(b ,100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSKurtosis){
@@ -430,8 +522,11 @@ TEST(MatrixCalculator, TSKurtosis){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsKurtosis(a, 100);
 	Matrix* res2 = calculator->tsKurtosis(b ,100);
-
-}
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+}	
 
 TEST(MatrixCalculator, TSCov){
 	
@@ -441,7 +536,10 @@ TEST(MatrixCalculator, TSCov){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsCov(a, b, 100);
 	Matrix* res2 = calculator->tsCov(b, a, 100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSCorr){
@@ -452,7 +550,10 @@ TEST(MatrixCalculator, TSCorr){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsCorr(a, b, 100);
 	Matrix* res2 = calculator->tsCorr(b, a, 100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSCountTrue){
@@ -463,7 +564,10 @@ TEST(MatrixCalculator, TSCountTrue){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsCountTrue(a, 100);
 	Matrix* res2 = calculator->tsCountTrue(b, 100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, TSCountConsecutiveTrue){
@@ -474,7 +578,10 @@ TEST(MatrixCalculator, TSCountConsecutiveTrue){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsCountConsecutiveTrue(a, 100);
 	Matrix* res2 = calculator->tsCountConsecutiveTrue(b, 100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, DecayLinear){
@@ -485,7 +592,10 @@ TEST(MatrixCalculator, DecayLinear){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->decayLinear(a, 100);
 	Matrix* res2 = calculator->decayLinear(b, 100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, DecayExp){
@@ -496,7 +606,10 @@ TEST(MatrixCalculator, DecayExp){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->decayExponential(a, 100);
 	Matrix* res2 = calculator->decayExponential(b, 100);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Neutralize){
@@ -507,7 +620,10 @@ TEST(MatrixCalculator, Neutralize){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->neutralize(a);
 	Matrix* res2 = calculator->neutralize(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Mean){
@@ -518,7 +634,10 @@ TEST(MatrixCalculator, Mean){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->mean(a);
 	Matrix* res2 = calculator->mean(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Unify){
@@ -529,7 +648,10 @@ TEST(MatrixCalculator, Unify){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->unify(a);
 	Matrix* res2 = calculator->unify(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, EvalValidPct){
@@ -540,7 +662,10 @@ TEST(MatrixCalculator, EvalValidPct){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->evalValidPct(a);
 	Matrix* res2 = calculator->evalValidPct(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, EvalAbsSum){
@@ -551,7 +676,10 @@ TEST(MatrixCalculator, EvalAbsSum){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->evalAbsSum(a);
 	Matrix* res2 = calculator->evalAbsSum(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, EvalMean){
@@ -562,7 +690,10 @@ TEST(MatrixCalculator, EvalMean){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->evalMean(a);
 	Matrix* res2 = calculator->evalMean(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, EvalVariance){
@@ -573,7 +704,10 @@ TEST(MatrixCalculator, EvalVariance){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->evalVariance(a);
 	Matrix* res2 = calculator->evalVariance(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, EvalCov){
@@ -584,7 +718,10 @@ TEST(MatrixCalculator, EvalCov){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->evalCovariance(a, b);
 	Matrix* res2 = calculator->evalCovariance(b, a);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, EvalCorr){
@@ -595,7 +732,10 @@ TEST(MatrixCalculator, EvalCorr){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->evalCorrelation(a, b);
 	Matrix* res2 = calculator->evalCorrelation(b, a);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, EvalInnerProduction){
@@ -606,7 +746,10 @@ TEST(MatrixCalculator, EvalInnerProduction){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->evalInnerProduction(a, b);
 	Matrix* res2 = calculator->evalInnerProduction(b, a);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Det){
@@ -617,6 +760,8 @@ TEST(MatrixCalculator, Det){
 	b->readMatrix(matrix_b);
 	double res1 = calculator->Det(a, matSize);
 	double res2 = calculator->Det(b, matSize);
+	a->clear();
+	b->clear();
 
 }
 
@@ -629,6 +774,8 @@ TEST(MatrixCalculator, Treat){
 	b->readMatrix(matrix_b);
 	double res1 = calculator->treat(a);
 	double res2 = calculator->treat(b);
+	a->clear();
+	b->clear();
 
 }
 
@@ -640,7 +787,10 @@ TEST(MatrixCalculator, Inv){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->inv(a);
 	Matrix* res2 = calculator->inv(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, Diag){
@@ -651,7 +801,10 @@ TEST(MatrixCalculator, Diag){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->diag(a);
 	Matrix* res2 = calculator->diag(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, InverseDiag){
@@ -662,7 +815,10 @@ TEST(MatrixCalculator, InverseDiag){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->inverseDiag(a);
 	Matrix* res2 = calculator->inverseDiag(b);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 TEST(MatrixCalculator, EvalBeta){
@@ -673,7 +829,10 @@ TEST(MatrixCalculator, EvalBeta){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->evalBeta(a, b);
 	Matrix* res2 = calculator->evalBeta(b, a);
-
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
 }
 
 int main()
