@@ -191,7 +191,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 //                  const MKL_INT n, const MKL_INT k, const double alpha, const double *a, const MKL_INT lda, const double *b,
 //                  const MKL_INT ldb, const double beta, double *c, const MKL_INT ldc);
 
- Matrix *matrixMul(double *vec1, Matrix* mat2)
+ Matrix *MatrixCalculator::matrixMul(double *vec1, Matrix* mat2)
 {
     int nrow = mat2->getNRow();
     int ncol = mat2->getNCol();
@@ -202,7 +202,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     return res;
 }
 
- Matrix *matrixMul(Matrix* mat1, double *vec2)
+ Matrix *MatrixCalculator::matrixMul(Matrix* mat1, double *vec2)
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
@@ -213,7 +213,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     return res;
 }
 
- Matrix *matrixMul(Matrix* mat1, Matrix* mat2)
+ Matrix *MatrixCalculator::matrixMul(Matrix* mat1, Matrix* mat2)
 {
     int nrow1 = mat1->getNRow();
     int ncol1 = mat1->getNCol();
