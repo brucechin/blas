@@ -16,6 +16,8 @@
 #include<random>
 #include<time.h>
 
+using namespace std;
+
 class MatrixFactory{
 
     

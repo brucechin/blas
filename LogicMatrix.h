@@ -17,7 +17,7 @@
 
 //we need to validate the input pamameters before using them
 
-
+using namespace std;
 class LogicMatrix{
 private:
 
