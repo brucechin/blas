@@ -2480,20 +2480,18 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
         {
             int numTrue = 0;
             int count = 0;
-            bool inrun = true;
             for (int k = 0; k < n && k <= j; k++)
             {
-                if (inrun)
+                
+                if (mat->value[i * ncol + j - k])
                 {
-                    if (mat->value[i * ncol + j - k])
-                    {
-                        numTrue++;
-                    }
-                    else
-                    {
-                        inrun = false;
-                    }
+                    numTrue++;
                 }
+                else
+                {
+                    numTrue=0;
+                }
+                
                 count++;
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
@@ -2522,24 +2520,24 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            bool inRun = true;
             int numOfTrue = 0;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                if (inRun)
+                for (int k = 0; k < n && k <= j; k++)
+            {
+                
+                if (mat->value[i * ncol + j - k])
                 {
-                    bool val = mat->value[i * ncol + j - k];
-                    if (val)
-                    {
-                        numOfTrue++;
-                    }
-                    else
-                    {
-                        inRun = false;
-                    }
+                    numOfTrue++;
                 }
+                else
+                {
+                    numOfTrue=0;
+                }
+                
                 count++;
+            }
             }
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
