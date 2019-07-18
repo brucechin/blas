@@ -4352,21 +4352,21 @@ Matrix *MatrixCalculator::tsCountNaN_op(Matrix* mat, int n)
     int *countNanArr = new int[ncol + 1];
     for (int i = 0; i < nrow; i++)
     {
-        for (int j = 0; j < ncol; j++)
+        for (int j = 1; j < ncol + 1; j++)
         {
             countNanArr[0] = 0;
-            if(j < n){
-                countNanArr[j] = countNanArr[j - 1] + std::isnan(mat_p[i * ncol + j]) ? 1 : 0;
+            if(j <= n ){
+                countNanArr[j] = countNanArr[j - 1] + std::isnan(mat_p[i * ncol + j - 1]) ? 1 : 0;
             }else{
-                countNanArr[j] = countNanArr[j - 1] + std::isnan(mat_p[i * ncol + j]) ? 1 : 0;
-                countNanArr[j] -= std::isnan(mat_p[i * ncol + j - n]) ? 1 : 0;
+                countNanArr[j] = countNanArr[j - 1] + std::isnan(mat_p[i * ncol + j - 1]) ? 1 : 0;
+                countNanArr[j] -= std::isnan(mat_p[i * ncol + j - n - 1]) ? 1 : 0;
             }
             
         }
         for (int j = 0; j < ncol; j++)
         {
             int numNaN = countNanArr[j + 1];
-            int count = j >= n ? n : j;
+            int count = j >= n ? n : j + 1;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 res_p[i * ncol + j] = intDoubleDivide(numNaN, count);
@@ -4393,20 +4393,20 @@ Matrix *MatrixCalculator::tsCountTrue_op(LogicMatrix* mat, int n)
     for (int i = 0; i < nrow; i++)
     {
         countTrueArr[0] = 0;
-        for (int j = 1; j < ncol; j++)
+        for (int j = 1; j < ncol + 1; j++)
         {
-            if(j < n){
-                countTrueArr[j] += (mat_p[i * ncol + j]) ? 1 : 0 + countTrueArr[j - 1];
+            if(j <= n){
+                countTrueArr[j] += (mat_p[i * ncol + j - 1]) ? 1 : 0 + countTrueArr[j - 1];
             }else{
-                countTrueArr[j] = (mat_p[i * ncol + j]) ? 1 : 0 + countTrueArr[j - 1];
-                countTrueArr[j] -= (mat_p[i * ncol + j - n]) ? 1 : 0;
+                countTrueArr[j] = (mat_p[i * ncol + j - 1]) ? 1 : 0 + countTrueArr[j - 1];
+                countTrueArr[j] -= (mat_p[i * ncol + j - n - 1]) ? 1 : 0;
             }
             
         }
         for (int j = 0; j < ncol; j++)
         {
             int numNaN = countTrueArr[j + 1];
-            int count = j >= n ? n : j;
+            int count = j >= n ? n : j + 1;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 res_p[i * ncol + j] = intDoubleDivide(numNaN, count);
@@ -4432,14 +4432,14 @@ Matrix *MatrixCalculator::tsCountConsecutiveTrue_op(LogicMatrix* mat, int n)
     int *countTrueArr = new int[ncol + 1];
     for (int i = 0; i < nrow; i++)
     {
-        for (int j = 0; j < ncol; j++)
+        for (int j = 1; j < ncol + 1; j++)
         {
             countTrueArr[0] = 0;
-            if(j < n){
-                countTrueArr[j] += (mat_p[i * ncol + j]) ? 1 : 0 + countTrueArr[j - 1];
+            if(j <= n){
+                countTrueArr[j] += (mat_p[i * ncol + j - 1]) ? 1 : 0 + countTrueArr[j - 1];
             }else{
-                countTrueArr[j] = countTrueArr[j - 1] - (mat_p[i * ncol + j - n]) ? 1 : 0;
-                if(mat_p[i * ncol + j]){
+                countTrueArr[j] = countTrueArr[j - 1] - (mat_p[i * ncol + j - n - 1]) ? 1 : 0;
+                if(mat_p[i * ncol + j - 1]){
                     countTrueArr[j]++ ;
                 }else{
                     countTrueArr[j] = 0;
@@ -4450,7 +4450,7 @@ Matrix *MatrixCalculator::tsCountConsecutiveTrue_op(LogicMatrix* mat, int n)
         for (int j = 0; j < ncol; j++)
         {
             int numNaN = countTrueArr[j + 1];
-            int count = j >= n ? n : j;
+            int count = j >= n ? n : j + 1;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 res_p[i * ncol + j] = intDoubleDivide(numNaN, count);

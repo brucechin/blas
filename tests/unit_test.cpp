@@ -1121,8 +1121,10 @@ int main()
 	lb->saveMatrix(logicMatrix_b);
 	Matrix* res1 = calculator->tsCountTrue(la, 5);
 	Matrix* res2 = calculator->tsCountTrue_op(la, 5);
+	la->print();
+	std::cout << std::endl;
 	res1->print();
-	std::count << std::endl;
+	std::cout << std::endl;
 	res2->print();
 	
 	
