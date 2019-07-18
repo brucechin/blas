@@ -167,11 +167,16 @@ public:
     static void smoothByDecayLinear(Matrix* mat, int n);
     static void inputNaN(Matrix* mat, double val);
 
-
+//TODO these are not tested yet
     static void activate(Matrix* mat, double threshold);
     static Matrix* normalize(Matrix* mat, double scale, double mean, double bound);
     static Matrix* normalize(Matrix* mat, double scale, double mean, double bound, int num);
     static void normalizeBySpec(Matrix* mat, double scale, double mean, double bound);
+
+
+
+
+
     static Matrix* neutralize(Matrix* mat);
     static Matrix* neutralize(Matrix* mat, int num);
     static Matrix* mean(Matrix* mat);
