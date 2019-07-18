@@ -153,7 +153,7 @@ public:
 */
 
 
-    //DELETE some of these timeseries functions are optimized
+    //DELETE some of these timeseries functions are optimized above
     static Matrix* tsMax(Matrix* mat, int n);
     static Matrix* tsMax(Matrix* mat, int n, int num);
     static Matrix* tsMin(Matrix* mat, int n);

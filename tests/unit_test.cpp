@@ -409,7 +409,7 @@ TEST(MatrixCalculator, Sum_Compare){
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->sum(a, 100);
-	Matrix* res2 = calculator->sum_op(a,100);
+	Matrix* res2 = calculator->sum_op(a, 100);
 	EXPECT_TRUE(res1->compareMatrix(res2));
 	a->clear();
 	b->clear();
@@ -455,8 +455,8 @@ TEST(MatrixCalculator, Product_Compare){
 	Matrix* res2 = calculator->product(b ,100);
 	Matrix* res1_op = calculator->product_op(a, 100);
 	Matrix* res2_op = calculator->product_op(b ,100);
-	res1->compareMatrix(res1_op);
-	res2->compareMatrix(res2_op);
+	EXPECT_TRUE(res1->compareMatrix(res1_op));
+	EXPECT_TRUE(res2->compareMatrix(res2_op));
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -503,8 +503,8 @@ TEST(MatrixCalculator, TSMax_Compare){
 	Matrix* res2 = calculator->tsMax(b ,100);
 	Matrix* res1_op = calculator->tsMax_op(a, 100);
 	Matrix* res2_op = calculator->tsMax_op(b ,100);
-	res1->compareMatrix(res1_op);
-	res2->compareMatrix(res2_op);
+	EXPECT_TRUE(res1->compareMatrix(res1_op));
+	EXPECT_TRUE(res2->compareMatrix(res2_op));
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -551,8 +551,8 @@ TEST(MatrixCalculator, TSMin_Compare){
 	Matrix* res2 = calculator->tsMin(b ,100);
 	Matrix* res1_op = calculator->tsMin_op(a, 100);
 	Matrix* res2_op = calculator->tsMin_op(b ,100);
-	res1->compareMatrix(res1_op);
-	res2->compareMatrix(res2_op);
+	EXPECT_TRUE(res1->compareMatrix(res1_op));
+	EXPECT_TRUE(res2->compareMatrix(res2_op));
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -600,8 +600,8 @@ TEST(MatrixCalculator, TSArgMax_Compare){
 	Matrix* res2 = calculator->tsArgmax(b ,100);
 	Matrix* res1_op = calculator->tsArgmax_op(a, 100);
 	Matrix* res2_op = calculator->tsArgmax_op(b ,100);
-	res1->compareMatrix(res1_op);
-	res2->compareMatrix(res2_op);
+	EXPECT_TRUE(res1->compareMatrix(res1_op));
+	EXPECT_TRUE(res2->compareMatrix(res2_op));
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -649,8 +649,8 @@ TEST(MatrixCalculator, TSArgMax_Compare){
 	Matrix* res2 = calculator->tsArgmin(b ,100);
 	Matrix* res1_op = calculator->tsArgmin_op(a, 100);
 	Matrix* res2_op = calculator->tsArgmin_op(b ,100);
-	res1->compareMatrix(res1_op);
-	res2->compareMatrix(res2_op);
+	EXPECT_TRUE(res1->compareMatrix(res1_op));
+	EXPECT_TRUE(res2->compareMatrix(res2_op));
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -796,8 +796,8 @@ TEST(MatrixCalculator, TSCountTrue_Compare){
 	Matrix* res2 = calculator->tsCountTrue(b ,100);
 	Matrix* res1_op = calculator->tsCountTrue_op(a, 100);
 	Matrix* res2_op = calculator->tsCountTrue_op(b ,100);
-	res1->compareMatrix(res1_op);
-	res2->compareMatrix(res2_op);
+	EXPECT_TRUE(res1->compareMatrix(res1_op));
+	EXPECT_TRUE(res2->compareMatrix(res2_op));
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -845,8 +845,8 @@ TEST(MatrixCalculator, TSCountConsecutiveTrue_Compare){
 	Matrix* res2 = calculator->tsCountConsecutiveTrue(b ,100);
 	Matrix* res1_op = calculator->tsCountConsecutiveTrue_op(a, 100);
 	Matrix* res2_op = calculator->tsCountConsecutiveTrue_op(b ,100);
-	res1->compareMatrix(res1_op);
-	res2->compareMatrix(res2_op);
+	EXPECT_TRUE(res1->compareMatrix(res1_op));
+	EXPECT_TRUE(res2->compareMatrix(res2_op));
 	a->clear();
 	b->clear();
 	res1->clear();

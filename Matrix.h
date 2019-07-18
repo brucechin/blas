@@ -122,7 +122,9 @@ public:
 		double* b = other->value;
 		int len = nrow * ncol;
 		for (int i = 0; i < len; i++) {
-			if ((*a++) != (*b++)) return false;
+            double v1 = *a++;
+            double v2 = *b++;
+			if (abs(v1 - v2) > 0.0001 * (v1 + v2)) return false;
 		}
 		return true;
 	}
