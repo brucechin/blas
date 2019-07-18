@@ -137,3 +137,7 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 5. gtest一些总结
    1. ASSERT_* 系列的断言，当检查点失败时，退出当前函数（并不会停止后续的TEST()）
    2. EXPECT_* 系列的断言，当检查点失败时，继续往下执行。
+
+### 7.18
+
+1. 写完了主要函数的单元测试，基本都能跑出来，除了Det和Rank会core dump，之后去修一下。速度慢的主要是timeseries的函数，因为是n^3的复杂度，之后打算用sliding window的trick改一改

@@ -130,6 +130,7 @@ public:
     static Matrix* product(Matrix* mat, int n);
     static Matrix* product(Matrix* mat, int n, int num);
     
+    static Matrix* sum_op(Matrix* mat, int n);
 
     static Matrix* tsMax(Matrix* mat, int n);
     static Matrix* tsMax(Matrix* mat, int n, int num);

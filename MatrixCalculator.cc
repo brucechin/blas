@@ -1218,6 +1218,53 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 
     return res;
 }
+ Matrix* MatrixCalculator::sum_op(Matrix* mat, int n)
+{
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
+    int len = nrow * ncol;
+    Matrix *res = new Matrix(nrow, ncol);
+    double* mat_p = mat->value;
+    double* res_p = res->value;
+    for (int i = 0; i < nrow; i++)
+    {
+        double sum = 0.0;
+        int count = 0;
+        for (int j = 0; j < ncol; j++)
+        {
+            int pos = i * ncol + j;
+            double val = mat_p[pos];
+            if(j < 100){
+                if (!std::isnan(val))
+                {
+                    sum += val;
+                    count++;
+                }
+            }else{
+                if (!std::isnan(val))
+                {
+                    sum += val;
+                    count++;
+                }
+                if(!std::isnan(mat_p[pos])){
+                    sum -= mat_p[pos];
+                    count--;
+                }
+            }
+
+            if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
+            {
+                res_p[pos] = sum;
+            }
+            else
+            {
+                res_p[pos] = NAN;
+            }
+        }
+    }
+
+    return res;
+}
  Matrix* MatrixCalculator::sum(Matrix* mat, int n, int num)
 {
     int nrow = mat->getNRow();
@@ -1849,6 +1896,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
     }
     return res;
 }
+
  Matrix *MatrixCalculator::tsMean(Matrix* mat, int n, int num)
 {
     int nrow = mat->getNRow();
