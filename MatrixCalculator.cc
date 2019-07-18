@@ -2524,8 +2524,6 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             int count = 0;
             for (int k = 0; k < n && k <= j; k++)
             {
-                for (int k = 0; k < n && k <= j; k++)
-            {
                 
                 if (mat->value[i * ncol + j - k])
                 {
@@ -2537,7 +2535,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                 }
                 
                 count++;
-            }
+            
             }
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
