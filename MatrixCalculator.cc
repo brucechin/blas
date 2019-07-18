@@ -1346,16 +1346,15 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (!std::isnan(val))
+                if(!std::isnan(val))
                 {
-                    max = val;
-                    maxIsNaN = false;
+                    if(maxIsNaN){
+                        max = val;
+                    }else{
+                        max = std::max(max, val);
+                    }    
+                    count++;                
                 }
-                else
-                {
-                    max = std::max(max, val);
-                }
-                count++;
             }
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
@@ -1396,16 +1395,15 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (notNanArr[j - k])
+                if(!std::isnan(val))
                 {
-                    max = val;
-                    maxIsNaN = false;
+                    if(maxIsNaN){
+                        max = val;
+                    }else{
+                        max = std::max(max, val);
+                    }    
+                    count++;                
                 }
-                else
-                {
-                    max = std::max(max, val);
-                }
-                count++;
             }
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
@@ -1437,16 +1435,19 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (!std::isnan(val))
-                {
-                    min = val;
-                    minIsNaN = false;
+                if(!std::isnan(val)){
+                    if (minIsNaN)
+                    {
+                        min = val;
+                        minIsNaN = false;
+                    }
+                    else
+                    {
+                        min = std::min(min, val);
+                    }
+                    count++;
                 }
-                else
-                {
-                    min = std::min(min, val);
-                }
-                count++;
+                
             }
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
@@ -1487,16 +1488,18 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             for (int k = 0; k < n && k <= j; k++)
             {
                 double val = mat->value[i * ncol + j - k];
-                if (notNanArr[j - k])
-                {
-                    min = val;
-                    minIsNaN = false;
+                if(!std::isnan(val)){
+                    if (minIsNaN)
+                    {
+                        min = val;
+                        minIsNaN = false;
+                    }
+                    else
+                    {
+                        min = std::min(min, val);
+                    }
+                    count++;
                 }
-                else
-                {
-                    min = std::min(min, val);
-                }
-                count++;
             }
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
@@ -4189,7 +4192,7 @@ Matrix* MatrixCalculator::product_op(Matrix* mat, int n)
             count++;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res_p[i * ncol + j]= mat_p[q.front()];
+                res_p[i * ncol + j]= mat_p[ncol * i + q.front()];
             }
             else
             {
@@ -4236,7 +4239,7 @@ Matrix *MatrixCalculator::tsMin_op(Matrix* mat, int n)
             count++;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res_p[i * ncol + j]= mat_p[q.front()];
+                res_p[i * ncol + j]= mat_p[ncol * i + q.front()];
             }
             else
             {
@@ -4355,18 +4358,19 @@ Matrix *MatrixCalculator::tsCountNaN_op(Matrix* mat, int n)
         countNanArr[0] = (mat_p[i * ncol]) ? 1 : 0;
         for (int j = 1; j < ncol; j++)
         {
-            
-            if(j < n ){
-                countNanArr[j] = countNanArr[j] + std::isnan(mat_p[i * ncol + j]) ? 1 : 0;
+            int val = std::isnan(mat_p[i * ncol + j]) ? 1 : 0;
+            int prev = std::isnan(mat_p[i * ncol + j - n]) ? 1 : 0;
+            if(j < n){
+                countNanArr[j] = countNanArr[j] + val;
             }else{
-                countNanArr[j] = countNanArr[j] + std::isnan(mat_p[i * ncol + j]) ? 1 : 0;
-                countNanArr[j] -= std::isnan(mat_p[i * ncol + j - n]) ? 1 : 0;
+                countNanArr[j] = countNanArr[j] + val;
+                countNanArr[j] -= prev;
             }
             
         }
         for (int j = 0; j < ncol; j++)
         {
-            int numNaN = countNanArr[j ];
+            int numNaN = countNanArr[j];
             int count;
             if(j >= n) count = n;
             else count = j + 1; 
@@ -4412,8 +4416,10 @@ Matrix *MatrixCalculator::tsCountTrue_op(LogicMatrix* mat, int n)
         {
             int numTrue = countTrueArr[j];
             int count;
+
             if(j >= n) count = n;
             else count = j + 1; 
+
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 res_p[i * ncol + j] = intDoubleDivide(numTrue, count);
@@ -4442,27 +4448,26 @@ Matrix *MatrixCalculator::tsCountConsecutiveTrue_op(LogicMatrix* mat, int n)
         countTrueArr[0] = (mat_p[i * ncol]) ? 1 : 0;
         for(int j = 1; j < ncol; j++)
         {
-            if(j < n){
-                countTrueArr[j] += (mat_p[i * ncol + j]) ? 1 : 0 + countTrueArr[j - 1];
+            if(mat_p[i * ncol + j]){
+                countTrueArr[j] = countTrueArr[j - 1] + 1;
+                if(j >= n){
+                    int prev = mat_p[i * ncol + j - n] ? 1 : 0;
+                    countTrueArr[j] -= prev;
+                }
             }else{
-                countTrueArr[j] = countTrueArr[j] - (mat_p[i * ncol + j - n]) ? 1 : 0;
-                if(mat_p[i * ncol + j - 1]){
-                    countTrueArr[j]++ ;
-                }else{
-                    countTrueArr[j] = 0;
-                }                
+                countTrueArr[j] = 0;
             }
             
         }
         for (int j = 0; j < ncol; j++)
         {
-            int numNaN = countTrueArr[j + 1];
+            int numTrue = countTrueArr[j];
             int count;
             if(j >= n) count = n;
             else count = j + 1; 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res_p[i * ncol + j] = intDoubleDivide(numNaN, count);
+                res_p[i * ncol + j] = intDoubleDivide(numTrue, count);
             }
             else
             {
