@@ -145,3 +145,4 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 3. 发现老版本的tsmax tsmin都被我抄错了，有毒啊，还是得每个函数以较小的输入时打印出来结果比对来找出实现中的小错误。
 4. 老版本的tsargmax和tsargmin写错了，记录的位置应该是j-k而不是k。同时count consecutive true也不太他对，java版本是遇到一个false就停止了，而且是倒着数的，记得汇报
 5. 总结一下，目前除了Det，Rank会core dump以外，其他函数都可以运行，但结果正确性无法保证，ts有optimize过的几个函数比较过正确性了，一些简单的加减乘除保证正确性。
+6. java代码没有注释导致有些函数的实现无法判断是否正确，timeseries部分都是从pivot倒着计算的，很神奇。

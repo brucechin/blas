@@ -1540,12 +1540,12 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                     {
                         max = val;
                         maxIsNaN = false;
-                        idmax = j - k;
+                        idmax = k;
                     }else{
                         if (val > max)
                         {
                             max = val;
-                            idmax = j - k;
+                            idmax = k;
                         }
                     }
                     count++;
@@ -1597,12 +1597,12 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                     {
                         max = val;
                         maxIsNaN = false;
-                        idmax = j - k;
+                        idmax =  k;
                     }else{
                         if (val > max)
                         {
                             max = val;
-                            idmax = j - k;
+                            idmax =  k;
                         }
                     }
                     count++;
@@ -1645,12 +1645,12 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                     {
                         min = val;
                         minIsNaN = false;
-                        idmin = j - k;
+                        idmin = k;
                     }else{
                         if (val < min)
                         {
                             min = val;
-                            idmin = j - k;
+                            idmin = k;
                         }
                     }
                     count++;
@@ -1702,12 +1702,12 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                     {
                         min = val;
                         minIsNaN = false;
-                        idmin = j - k;
+                        idmin = k;
                     }else{
                         if (val < min)
                         {
                             min = val;
-                            idmin = j - k;
+                            idmin = k;
                         }
                     }
                     count++;
@@ -2478,25 +2478,26 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     {
         for (int j = 0; j < ncol; j++)
         {
-            int numTrue = 0;
+            int numOfTrue = 0;
             int count = 0;
+            int inrun = true;
             for (int k = 0; k < n && k <= j; k++)
             {
-                
-                if (mat->value[i * ncol + j - k])
-                {
-                    numTrue++;
+                if(inrun){
+                    if (mat->value[i * ncol + j - k])
+                        {
+                            numOfTrue++;
+                        }
+                        else
+                        {
+                            inrun = false;
+                        }
                 }
-                else
-                {
-                    numTrue=0;
-                }
-                
                 count++;
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + j] = intDoubleDivide(numTrue, count);
+                res->value[i * ncol + j] = intDoubleDivide(numOfTrue, count);
             }
             else
             {
@@ -2522,20 +2523,20 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
         {
             int numOfTrue = 0;
             int count = 0;
+            int inrun = true;
             for (int k = 0; k < n && k <= j; k++)
             {
-                
-                if (mat->value[i * ncol + j - k])
-                {
-                    numOfTrue++;
+                if(inrun){
+                    if (mat->value[i * ncol + j - k])
+                        {
+                            numOfTrue++;
+                        }
+                        else
+                        {
+                            inrun = false;
+                        }
                 }
-                else
-                {
-                    numOfTrue=0;
-                }
-                
                 count++;
-            
             }
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
@@ -4276,7 +4277,7 @@ Matrix *MatrixCalculator::tsArgmin_op(Matrix* mat, int n)
             count++;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res_p[i * ncol + j]= q.front();
+                res_p[i * ncol + j]= j - q.front();
             }
             else
             {
@@ -4323,7 +4324,7 @@ Matrix *MatrixCalculator::tsArgmax_op(Matrix* mat, int n)
             count++;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res_p[i * ncol + j]= q.front();
+                res_p[i * ncol + j]= j - q.front();
             }
             else
             {
@@ -4427,6 +4428,7 @@ Matrix *MatrixCalculator::tsCountTrue_op(LogicMatrix* mat, int n)
 
 Matrix *MatrixCalculator::tsCountConsecutiveTrue_op(LogicMatrix* mat, int n)
 {
+    //FIX this implementation is different from original version
     int nrow = mat->getNRow();
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
