@@ -4434,15 +4434,15 @@ Matrix *MatrixCalculator::tsCountConsecutiveTrue_op(LogicMatrix* mat, int n)
     Matrix *res = new Matrix(nrow, ncol);
     bool* mat_p = mat->value;
     double* res_p = res->value;
-    int *countTrueArr = new int[ncol];
+    int *countTrueArr = new int[ncol + 1];
     for (int i = 0; i < nrow; i++)
     {
-        countTrueArr[0] = (mat_p[i * ncol]) ? 1 : 0;
-        for(int j = 1; j < ncol; j++)
+        countTrueArr[ncol] = 0;
+        for(int j = ncol - 1; j >= 0; j--)
         {
             if(mat_p[i * ncol + j]){
-                countTrueArr[j] = countTrueArr[j - 1] + 1;
-                if(j >= n){
+                countTrueArr[j] = countTrueArr[j + 1] + 1;
+                if(ncol - j > n){
                     int prev = mat_p[i * ncol + j - n] ? 1 : 0;
                     countTrueArr[j] -= prev;
                 }
