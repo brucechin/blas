@@ -1119,16 +1119,15 @@ int main()
 	la->saveMatrix(logicMatrix_a);
 	LogicMatrix* lb = factory->getInstanceOfRandomLogicMatrix(matSize, matSize);
 	lb->saveMatrix(logicMatrix_b);
-	Matrix* res1 = calculator->tsCountTrue(la, 10);
-	Matrix* res2 = calculator->tsCountTrue_op(la, 10);
-	la->print();
-	std::cout << std::endl;
-	res1->print();
-	std::cout << std::endl;
-	res2->print();
 	
+//	double res1 = calculator->Det(a, 10);
+//	double res2 = calculator->Det(b, 10);
+//	a->print();
+//	std::cout << std::endl;
+//	std:;cout << res1 <<std::endl;
+//	std::cout << res2<<std::endl;
 	
-	//testing::InitGoogleTest();
-	//RUN_ALL_TESTS();
+	testing::InitGoogleTest();
+	RUN_ALL_TESTS();
     return 0;
 }		    

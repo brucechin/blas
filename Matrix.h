@@ -35,6 +35,10 @@ public:
         ncol = 0;
         value = new double[0];
     }
+	~Matrix(){
+		delete[] value;
+		std::cout << "deconstruct"<<std::endl;
+	}
 
     Matrix(int n, int m){
         nrow = n;
@@ -60,7 +64,13 @@ public:
     }
 
     //copy some rows or columns usingg memcpy
+	void setNCol(int m){
+		ncol = m;
+	}
 
+	void setNRow(int n){
+		nrow = n;
+	}
     void clear(){
         nrow = 0;
         ncol = 0;
@@ -124,7 +134,7 @@ public:
 		for (int i = 0; i < len; i++) {
             double v1 = a[i];
             double v2 = b[i];
-			if (abs(v1 - v2) > 0.001 * abs(v1 + v2)) return false;
+			if (abs(abs(v1) - abs(v2)) > 0.001 * abs(abs(v1) + abs(v2))) return false;
 		}
 		return true;
 	}
