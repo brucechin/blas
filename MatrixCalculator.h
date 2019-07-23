@@ -92,7 +92,7 @@ public:
     static Matrix* condition(LogicMatrix* mat1, Matrix* mat2, Matrix* mat3, int num);
 
     static double rankFirst(Matrix* vec, int highIndex, int lowIndex);
-    static double* rank(double* vec);
+    static double* rank(double* vec, int n);
     static Matrix* rank(Matrix* mat);
     static Matrix* rank(Matrix* mat, int num);
     

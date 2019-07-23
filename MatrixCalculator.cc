@@ -686,15 +686,46 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
 
     return res;
 }
- double *MatrixCalculator::rank(double *vec)
+ double *MatrixCalculator::rank(double *vec, int n)
 {
-    int n = sizeof(vec) / sizeof(double);
+    //int n = sizeof(vec) / sizeof(double);
     double *res = MatrixFactory::getInstanceOfNaNVector(n);
     //TODO
+    list<int> idlist;
+    for(int i = 0; i < n; i++){
+        double val = vec[i];
+        if(!isnan(val)){
+            idlist.push_back(i);
+        }
+    }
+    int max = idlist.size() - 1;
+    if(max > 0){
+        idlist.sort();
+        int lastRank = 0;
+        double lastValue = NAN;
+        int size = idlist.size();
+        for(int i = 0; i < size; i++){
+            int currid = idlist.front();
+            idlist.pop_front();
+            double currValue = vec[currid];
+            int currank = i;
+
+            if(currValue == lastValue){
+                res[currid] = lastRank;
+            }else{
+                res[currid] = currank;
+                lastValue = currValue;
+                lastRank = currank;
+            }
+            res[currid] = res[currid] / (double)max;
+        }
+    }
+
     return res;
 }
  Matrix *MatrixCalculator::rank(Matrix* mat)
 {
+    //FIX core dump
     int nrow = mat->getNRow();
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
@@ -706,16 +737,19 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
         {
             vec[i] = mat->value[i * ncol + j];
         }
-        double *curResult = rank(vec);
+        double *curResult = rank(vec, nrow);
         for (int i = 0; i < nrow; i++)
         {
             res->value[i * ncol + j] = curResult[i];
         }
+        delete[] vec;
+        delete[] curResult;
     }
     return res;
 }
  Matrix *MatrixCalculator::rank(Matrix* mat, int num)
 {
+    //FIX 
     int nrow = mat->getNRow();
     int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
@@ -729,12 +763,14 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
         {
             vec[i] = mat->value[i * ncol + j];
         }
-        double *curResult = rank(vec);
+        double *curResult = rank(vec, nrow);
         for (int i = 0; i < nrow; i++)
         {
             res->value[i * ncol + colid] = curResult[i];
         }
         colid++;
+        delete[] vec;
+        delete[] curResult;
     }
     return res;
 }
@@ -1419,6 +1455,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             colid++;
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsMin(Matrix* mat, int n)
@@ -1515,6 +1552,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             colid++;
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsArgmax(Matrix* mat, int n)
@@ -1620,6 +1658,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             colid++;
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsArgmin(Matrix* mat, int n)
@@ -1725,6 +1764,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             colid++;
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsRank(Matrix* mat, int n)
@@ -1763,6 +1803,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             }
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsRank(Matrix* mat, int n, int num)
@@ -1809,6 +1850,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             colid++;
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsMean(Matrix* mat, int n)
@@ -1847,6 +1889,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             }
         }
     }
+    delete[] notNanArr;
     return res;
 }
 
@@ -1894,6 +1937,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             colid++;
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsStd(Matrix* mat, int n)
@@ -1932,6 +1976,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             }
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsStd(Matrix* mat, int n, int num)
@@ -1978,6 +2023,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             colid++;
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsSkewness(Matrix* mat, int n)
@@ -2016,6 +2062,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             }
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsSkewness(Matrix* mat, int n, int num)
@@ -2062,6 +2109,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             colid++;
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsKurtosis(Matrix* mat, int n)
@@ -2100,6 +2148,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             }
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsKurtosis(Matrix* mat, int n, int num)
@@ -2146,6 +2195,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             colid++;
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsCov(Matrix* mat1, Matrix* mat2, int n)
@@ -2185,6 +2235,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             }
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsCov(Matrix* mat1, Matrix* mat2, int n, int num)
@@ -2232,6 +2283,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             colid++;
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsCorr(Matrix* mat1, Matrix* mat2, int n)
@@ -2271,6 +2323,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             }
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::tsCorr(Matrix* mat1, Matrix* mat2, int n, int num)
@@ -2592,6 +2645,8 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             }
         }
     }
+    delete[] notNanArr;
+    delete[] currWeightArr;
     return res;
 }
  Matrix *MatrixCalculator::decayLinear(Matrix* mat, int n, int num)
@@ -2640,6 +2695,8 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             colid++;
         }
     }
+    delete[] notNanArr;
+    delete[] currWeightArr;
     return res;
 }
  Matrix *MatrixCalculator::decayExponential(Matrix* mat, int n)
@@ -2683,6 +2740,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             }
         }
     }
+    delete[] notNanArr;
     return res;
 }
  Matrix *MatrixCalculator::decayExponential(Matrix* mat, int n, int num) {
@@ -3359,44 +3417,31 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     return res;
 }
 
- double MatrixCalculator::Det(Matrix* mat, int N)
+double Det(Matrix *aa, int N)//N为代数余子式的size
 {
-    int t0, t1, t2;
-    double num;
-    int cha;
-    Matrix *b = new Matrix(N, N);
-    if (N > 0)
-    {
-        cha = 0;
-        num = 0;
-        if (N == 1)
-        {
-            return mat->value[0] * mat->value[1 * 1 + 1] - mat->value[0 * 1 + 1] * mat->value[1 * 1 + 0];
-        }
-        for (t0 = 0; t0 <= N; t0++)
-        {
-            for (t1 = 1; t1 <= N; t1++)
-            {
-                for (t2 = 0; t2 <= N; t2++)
-                {
-                    if (t2 == t0)
-                    {
-                        cha = 1;
-                    }
-                    b->value[(t1 - 1) * N + t2] = mat->value[t1 * N + t2 + cha];
-                }
-                cha = 0;
-            }
-            num = num + mat->value[0 * N + t0] * Det(b, N - 1) * pow(t0, -1);
-        }
-        return num;
-    }
-    else if (N == 0)
-    {
-        return mat->value[0];
-    }
-    return 0;
+    int n = N + 1; 
+	if (n == 1)
+		return aa->value[0];
+	Matrix *bb = new Matrix(n - 1, n- 1); //创建n-1阶的代数余子式阵bb    
+	int mov = 0;//判断行是否移动   
+	double sum = 0.0;//sum为行列式的值  
+	for (int arow = 0; arow < n; arow++) // a的行数把矩阵a(nn)赋值到b(n-1)  
+	{
+		for (int brow = 0; brow < n - 1; brow++)//把aa阵第一列各元素的代数余子式存到bb  
+		{    
+			mov = arow > brow ? 0 : 1; //bb中小于arow的行，同行赋值，等于的错过，大于的加一  
+			for (int j = 0; j < n - 1; j++)  //从aa的第二列赋值到第n列  
+			{
+				bb->value[brow*(n - 1) + j] = aa->value[(brow + mov)*n + j + 1];
+			}
+		}
+		int flag = (arow % 2 == 0 ? 1: -1);//因为列数为0，所以行数是偶数时候，代数余子式为1.  
+		sum += flag * aa->value[arow * n] * Det(bb, n-1);//aa第一列各元素与其代数余子式积的和即为行列式
+	}
+	delete[] bb;
+	return sum;
 }
+
  double MatrixCalculator::Inverse(Matrix *mat1, int N, Matrix *mat3)
 {
     int t0, t1, t2, t3;
@@ -4054,8 +4099,13 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
         int idgroup = (i * ngroup) / len;
         sumArray[idgroup] += val;
     }
-    return 0;
+
     //TODO
+
+
+    delete[] sumArray;
+    return 0;
+    
 }
 
 
