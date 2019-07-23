@@ -146,3 +146,28 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 4. 老版本的tsargmax和tsargmin写错了，记录的位置应该是j-k而不是k。同时count consecutive true也不太他对，java版本是遇到一个false就停止了，而且是倒着数的，记得汇报
 5. 总结一下，目前除了Det，Rank会core dump以外，其他函数都可以运行，但结果正确性无法保证，ts有optimize过的几个函数比较过正确性了，一些简单的加减乘除保证正确性。
 6. java代码没有注释导致有些函数的实现无法判断是否正确，timeseries部分都是从pivot倒着计算的，很神奇。
+
+### 7.19
+
+1. tsargmax tsargmin是思路不一致的问题，考虑到业务代码上已经采用旧逻辑写完了，我不能修改，但按他的旧逻辑很难实现N^2的优化，ts count consecutive true函数放弃优化了
+2. 今天需要用JNI来在java中调用C++，java坑还是挺多的，在CLASSPATH环境变量里需要设项目的root directory，不然java找不到要执行的对应的class，与此同时，java.library.path里包含了java运行时寻找动态链接库的路径，需要把gcc编译出来的so文件弄过去。java里loadlibrary的时候比如load “Hello”，那么lib文件名为“libHello.so”/"libHello.dll"
+3. linker出bug的时候可以修改/etc/ld.so.conf然后/sbin/ldconfig，增加寻找的文件夹路径，gcc/g++ 编译的时候要带上-I include路径，-L 库文件路径
+4. JNI里的JMatrix里再弄一个专门持有C++内存地址的对象句柄，当JMatrix析构的时候，这个对象调用回调函数释放C++对应地址上的内存，JMatrxi内部的各种计算也通过这个对象操作。
+5. 还是要自己查一下如何用java管理调用C++的对象和内存，在C++这边写一个demo class，构造和析构函数输出一些东西，然后用javah生成的对应的C++的函数调用这个demo class对象，看看java这边对象析构时的回调函数能不能把C++这边对应的析构掉。
+
+### 7.20
+
+1. 发现java finalize不会让对象在main()函数结束的时候主动调用进而析构C++对象，要不要主动析构？？？
+2. 针对问题1打算是C++这边Matrix在构造的时候通过JNI在JVM里申请内存然后用，这样java那边需要析构的时候jvm会判断内存够不够用需不需要gc
+3. 发现JNI生成的native层C++实现的时候需要按java那边生成的函数顺序来实现，否则在link 动态链接库的时候会出现找不到函数定义的error
+4. 目前需要考虑MatrixCalculator这个类里如果每个函数接口都要与原java接口大部分一样的话，那么我需要一个Matrix.java?然后问题2中C++通过JNI分配java Matrix类还是C++ matrix类实例化的内存？如果不再搞一个Matrix.java的话，那么MatrixCalculator.java里native的接口就需要每个接口传入Matrix对象的指针long型参数，而且Matrix的初始化也会有问题。
+
+### 7.22
+
+1. 发现JNI的接口NewDoubleArray分配的内存块如果太大了(比如大于30*sizeof(double))在用C++去修改内存上的值的时候会报错  	**libjvm.so+0x6f1dc8(这个地址不固定) JNIHandles::make**
+
+   用env->SetDoubleArrayElements(target, 0, size, buffer)用buffer里的内容写入到target上时，target得是jdoublearray类型，buffer得是jdouble*类型
+
+2. 但是用env->GetDoubleArrayElements(target, *isCopy)获取目前来看这样分配的内存也能在jvm内存不够用时被正确析构，但这会拷贝一下target，太耗内存了。
+
+3. 直接在C++里实例化对象的话，java程序能一直运行不报错out of memory，但之前的对象也没有被析构很难受，估计是用虚拟内存在撑着。
