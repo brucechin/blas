@@ -6,7 +6,6 @@
  */
 
 #include "MatrixCalculator.h"
-
 #include <algorithm>
 #include <list>
 #include<deque>
@@ -1853,6 +1852,46 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     delete[] notNanArr;
     return res;
 }
+
+// Matrix* MatrixCalculator::tsMean_op(Matrix* mat, int n){
+//     int nrow = mat->getNRow();
+//     int ncol = mat->getNCol();
+//     Matrix *res = new Matrix(nrow, ncol);
+//     int* tsNotNanCount = new int[ncol];//count the number of not NAN in a sliding window
+//     double* tsSummaryMean = new double[ncol];
+
+//     for(int i = 0; i < nrow; i++){
+//         Matrix *rowRefa = mat->getRowVector(i);
+//         tsNotNanCount[0] = std::isnan(mat->value[i * ncol]) ? 0 : 1;
+//         double sumx = std::isnan(mat->value[i * ncol]) ? 0 : mat->value[i * ncol];
+        
+//         for(int j = 1; j < ncol; j++){
+//             double val = mat->value[i * ncol + j];
+//             tsNotNanCount[j] = tsNotNanCount[j - 1] + (std::isnan(val) ? 0 : 1);
+//             sumx += (std::isnan(val) ? 0 : val);
+//             if(j >= n){
+//                 double tmp = mat->value[i * ncol + j - n];
+//                 tsNotNanCount[j] -= (std::isnan(tmp) ? 0 : 1);
+//                 sumx -= (std::isnan(tmp) ? 0 : tmp);
+//             }
+
+//             if(tsNotNanCount[j] > n * VALIDITY_PERCENTAGE_REQUIREMENT){
+//                 double meanx = sumx / tsNotNanCount[j];
+//                 tsSummaryMean[j] = (std::isnan(meanx) || std::isinf(meanx)) ? 0 : meanx;
+//             }
+//         }
+
+//         for(int j = 0; j < ncol; j++){
+//             int count = tsNotNanCount[j];
+//             if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+//                 res->value[i * ncol + j] = tsSummaryMean[j];
+//             }else{
+//                 res->value[i * ncol + j] = NAN;
+//             }
+//         }
+//     }
+// }
+
  Matrix *MatrixCalculator::tsMean(Matrix* mat, int n)
 {
     int nrow = mat->getNRow();
@@ -3417,7 +3456,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     return res;
 }
 
-double Det(Matrix *aa, int N)//N为代数余子式的size
+double MatrixCalculator::Det(Matrix *aa, int N)//N为代数余子式的size
 {
     int n = N + 1; 
 	if (n == 1)

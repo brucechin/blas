@@ -171,3 +171,59 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 2. 但是用env->GetDoubleArrayElements(target, *isCopy)获取目前来看这样分配的内存也能在jvm内存不够用时被正确析构，但这会拷贝一下target，太耗内存了。
 
 3. 直接在C++里实例化对象的话，java程序能一直运行不报错out of memory，但之前的对象也没有被析构很难受，估计是用虚拟内存在撑着。
+
+### 7.23
+
+1. 今天主要测了hftdev上单线程运行java和c++版本之间速度差异，最夸张的是matrixMul函数，C++利用openblas优化后快了一百倍，但没利用openblas写的函数大多性能相近，难有一个数量级左右的提升。
+
+| （10k * 10k matrix） | java(s) | c++(s)                 |
+| -------------------- | ------- | ---------------------- |
+| smaller              | 0.8     | 0.19                   |
+| between              | 0.16    | 0.39                   |
+| condition            | 1.2     | 0.81                   |
+| round                | 0.8     | 0.0003                 |
+| tsstd                | 39.045  | 38.427                 |
+| tsCountTrue          | 21      | 10.29 (optimized0.82)  |
+| tsMax                | 48      | 13.57(optimized 0.057) |
+| tsSkewness           | 25      | 25.07                  |
+| tsMean               | 22      | 23.01                  |
+
+结论：没用openblas的c++接口跟java性能差异不是很大，想要提升还需要算法上降低复杂度
+
+### 7.24
+
+1. 今天被安排了新的活，要写一个java的threadpool来管理机器上的CPU和内存资源，尽可能的提升任务并行度，提升资源利用率
+2. 说要试试sun.misc.Unsafe类在jvm之外分配内存然后在上面搞事情，但这个跟在native层用C++实例化对象的效果差不多？
+3. 配了一会clion+WSL失败了，IDEA很好用但sigar这个库一直报错，不知道还有啥获取系统cpu mem使用信息比较好用
+4. JNI里的局部引用、全局引用、弱全局引用是native层代码引用JAVA里的实例，影响jvm对这些被native层代码引用的实例GC的时机的，jvm没法自动GC native层分配的内存
+5. 使用java里的弱引用试图督促jvm释放过了生命周期的matrix，调用finalize后clear掉native里的空间，但失败了。目前唯一成功的是System.gc()强制回收
+6. 在JVM运行空间中，对象的整个生命周期大致可以分为7个阶段：创建阶段（Creation）、应用阶段（Using）、不可视阶段（Invisible）、不可到达阶段（Unreachable）、可收集阶段（Collected）、终结阶段（Finalized）与释放阶段（Free）。
+
+### 7.25
+
+1. 今天学习使用了ThreadPoolExecutor和Timer类，做了一个定时收集CPU使用情况来更新ThreadPoolExecutor的pool size，感觉这种资源管理跟k8s很像啦，不过k8s集群还得调试几个月才能上线。
+
+### 7.29
+
+1. 打算看一下MXNet里java封装的时候如何处理C++那边的内存的
+2. mxnet里java接口的调用demo程序中，ndarray在new出来之后没有手动析构，需要看一下怎么做到的。
+3. 之前也有查过用java的weak reference或者phantom reference，但考虑到这样业务代码又要重写就很麻烦。
+
+### 7.30
+
+1. 今天看tensorflow的java wrapper发现他们讨论把tensor分配在java还是native(JNI/C++)这边的时候也折腾了很久，让人头秃
+
+   > That sounds good! After looking further into JNI, I suggest the following:
+   >
+   > - Tensors are always backed by a direct ByteBuffer that is created on the Scala/Java side.
+   > - They have an "asNative" method that (through JNI) calls "TF_NewTensor" in the C API. It also the JNI "NewGlobalRef" method to create a global reference to the direct ByteBuffer object. This guarantees that as long as TensorFlow native uses that byte buffer, it won't be garbage collected by the JVM. As a deallocator function we provide a function that the JNI "DeleteGlobalRef" method on the previously created reference.
+   >
+   > And that's the only interaction between the native TensorFlow tensors API and the Scala/Java API. The rest of it (i.e., elements access, slicing, etc.) is all handled on the Scala side. The same could apply to the current Java API and void the copying.
+   
+2. tf java里的tensor要么是自己调用close()，要么因为它是继承autocloseable类可以在try语句中new出来，语句块结束后会自动析构。
+
+3. 又回到C++和java性能对比的问题上，突然意识到之前benchmark的错误在于分配10000乘以10000个double的连续内存是非常耗时的，可能比计算还要耗时，那么两者对比的时间差异不大可能是由此导致的。我又修改成128 128的矩阵连续运算5000次发现差距依然不大，那么说明小块内存分配相比小矩阵计算也很耗时。现在需要测在矩阵不同size下整个计算过程中为result矩阵分配空间消耗了多少时间。
+
+4. 然而经测试，内存分配并不怎么消耗时间：）总用时占比小于1%.
+
+5. 进一步直接测C++调用openblas和裸写的速度差异。

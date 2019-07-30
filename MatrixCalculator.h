@@ -5,6 +5,8 @@
  * @Last Modified time: 2019-07-09 11:24:15
  */
 
+#ifndef _MATRIXCALCULATOR_H
+#define _MATRIXCALCULATOR_H
 
 #include<iostream>
 #include <cblas.h>
@@ -140,7 +142,6 @@ public:
     static Matrix* tsCountNaN_op(Matrix* mat, int n);
     static Matrix* tsCountTrue_op(LogicMatrix* mat, int n);
     static Matrix* tsCountConsecutiveTrue_op(LogicMatrix* mat, int n);
-
 /*
     TODO optimize these later
     static Matrix* tsMax(Matrix* mat, int n, int num);
@@ -244,3 +245,4 @@ public:
 
     //TODO:reshape, SVD, QR factorization, transpose, egienvalue, trace, 
 };
+#endif
