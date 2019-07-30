@@ -39,241 +39,241 @@ int main()
 
     res = calculator->add(a, b);
     res->saveMatrix("add.mat");
-    delete[] res;
+    res->clear();
     
     res = calculator->sub(a, b);
     res->saveMatrix("sub.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->div(a, b);
     res->saveMatrix("div.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->mul(a, b);
     res->saveMatrix("mul.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->matrixMul(a, b);
     res->saveMatrix("matrixMul.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->max(a, b);
     res->saveMatrix("max.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->min(a, b);
     res->saveMatrix("min.mat");
-    delete[] res;
+    res->clear();
 
     lres = calculator->bigger(a, b);
     lres->saveMatrix("bigger.mat");
-    delete[] lres;
+    lres->clear();
 
     lres = calculator->smaller(a, b);
     lres->saveMatrix("smaller.mat");
-    delete[] lres;
+    lres->clear();
 
 
     lres = calculator->equal(a, b);
     lres->saveMatrix("equal.mat");
-    delete[] lres;
+    lres->clear();
 	
     lres = calculator->between(a, lowerBound, upperBound);
     lres->saveMatrix("between.mat");
-    delete[] lres;
+    lres->clear();
 
     lres = calculator->matAnd(la, lb);
     lres->saveMatrix("matAnd.mat");
-    delete[] lres;
+    lres->clear();
 
     lres = calculator->matOr(la, lb);
     lres->saveMatrix("matOr.mat");
-    delete[] lres;
+    lres->clear();
 
     lres = calculator->matNot(la);
     lres->saveMatrix("matNot.mat");
-    delete[] lres;
+    lres->clear();
 
     res = calculator->condition(la, a, b);
     res->saveMatrix("condition.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->rank(a);
     res->saveMatrix("rank.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->round(a);
     res->saveMatrix("round.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->floor(a);
     res->saveMatrix("floor.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->abs(a);
     res->saveMatrix("abs.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->minus(a);
     res->saveMatrix("minus.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->sqrt(a);
     res->saveMatrix("sqrt.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->log(a);
     res->saveMatrix("log.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->exp(a);
     res->saveMatrix("exp.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->sign(a);
     res->saveMatrix("sign.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->inverse(a);
     res->saveMatrix("inverse.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->signedpow(a, 2);
     res->saveMatrix("signedpow.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->shift(a, stepSize);
     res->saveMatrix("shift.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->delay(a, stepSize);
     res->saveMatrix("delay.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->delta(a, stepSize);
     res->saveMatrix("delta.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->ratio(a, stepSize);
     res->saveMatrix("ratio.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->sum(a, stepSize);
     res->saveMatrix("sum.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->product(a, stepSize);
     res->saveMatrix("product.mat");
-    delete[] res;
+    res->clear();
 
 
     res = calculator->tsMax(a, stepSize);
     res->saveMatrix("tsmax.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsMin(a, stepSize);
     res->saveMatrix("tsmin.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsArgmax(a, stepSize);
     res->saveMatrix("tsargmax.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsArgmin(a, stepSize);
     res->saveMatrix("tsargmin.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsRank(a, stepSize);
     res->saveMatrix("tsrank.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsMean(a, stepSize);
     res->saveMatrix("tsmean.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsStd(a, stepSize);
     res->saveMatrix("tsstd.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsSkewness(a, stepSize);
     res->saveMatrix("tsskewness.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsKurtosis(a, stepSize);
     res->saveMatrix("tskurtosis.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsCov(a, b, stepSize);
     res->saveMatrix("tscov.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsCorr(a, b, stepSize);
     res->saveMatrix("tscorr.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsCountTrue(la, stepSize);
     res->saveMatrix("tscounttrue.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->tsCountConsecutiveTrue(la, stepSize);
     res->saveMatrix("tscountconsecutivetrue.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->decayLinear(a, stepSize);
     res->saveMatrix("decaylinear.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->decayExponential(a, stepSize);
     res->saveMatrix("decayexponential.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->neutralize(a);
     res->saveMatrix("neutralize.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->unify(a);
     res->saveMatrix("unify.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->evalValidPct(a);
     res->saveMatrix("evalvalidpct.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->evalAbsSum(a);
     res->saveMatrix("evalabssum.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->evalMean(a);
     res->saveMatrix("evalmean.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->evalVariance(a);
     res->saveMatrix("evalvariance.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->evalInnerProduction(a, b);
     res->saveMatrix("evalinnerproduction.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->evalCovariance(a, b);
     res->saveMatrix("evalcovariance.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->evalCorrelation(a, b);
     res->saveMatrix("evalcorrelation.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->evalBeta(a, b);
     res->saveMatrix("evalbeta.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->diag(a);
     res->saveMatrix("diag.mat");
-    delete[] res;
+    res->clear();
 
     res = calculator->cumSum(a);
     res->saveMatrix("cumsum.mat");
-    delete[] res;
+    res->clear();
 
 
     return 0;
