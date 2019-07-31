@@ -106,7 +106,7 @@ public:
     static Matrix* abs(Matrix* mat, int num);
     static Matrix* minus(Matrix* mat);
     static Matrix* minus(Matrix* mat, int num);
-    static double* minus(double* vec);//DELETE no need for this function
+    // static double* minus(double* vec);//DELETE no need for this function
     static Matrix* sqrt(Matrix* mat);
     static Matrix* sqrt(Matrix* mat, int num);
     static Matrix* log(Matrix* mat);

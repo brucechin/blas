@@ -138,7 +138,25 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int nrow = mat2->getNRow();
     int ncol = mat2->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    //TODO vmMul(nrow * ncol, mat1->value, mat->value, res->value);
+    //this is used only Intel MKL is available
+    //vmMul(nrow * ncol, mat1->value, mat->value, res->value);
+    
+    int nrow = mat1->getNRow();
+    int ncol = mat1->getNCol();
+    Matrix *res = new Matrix(nrow, ncol);
+    double *v1 = mat1->value;
+    double *v2 = mat2->value;
+    double *r = res->value;
+    for (int i = 0; i < nrow; i++)
+    {
+        for (int j = 0; j < ncol; j++)
+        {
+            *r++ = (*v1++) * (*v2++); // conduct division then move forward each pointer.
+        }
+    }
+
+    return res;
+
     return res;
 }
 
@@ -146,7 +164,23 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
-    //TODO
+    
+    int nrow = mat1->getNRow();
+    int ncol = mat1->getNCol();
+    int colnum = std::min(num, ncol);
+    int colStart = std::max(0, ncol - num);
+    Matrix *res = new Matrix(nrow, colnum);
+
+    for (int i = 0; i < nrow; i++)
+    {
+        int colid = 0;
+        for (int j = colStart; j < ncol; j++)
+        {
+            res->value[i * ncol + colid] = mat1->value[i * ncol + j] * mat2->value[i * ncol + j];
+            colid++;
+        }
+    }
+    return res;
 }
 
 //void cblas_domatcopy (char ordering, char trans, size_t rows, size_t cols, const double alpha, const double * A, size_t lda, double * B, size_t ldb);
@@ -230,6 +264,14 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int ncol = mat1->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     //TODO vdFmax(nrow * ncol, mat1->value, mat2->value, res->value);
+
+    bool *r = res->value;
+    double *v1 = mat1->value;
+    double *v2 = mat2->value;
+    for (int i = 0; i < len; i++)
+    {
+        r[i] = std::max(v1[i], v2[i]) ;
+    }
     return res;
 }
 
@@ -259,6 +301,14 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int ncol = mat1->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     //TODO vdFmin(nrow * ncol, mat1->value, mat2->value, res->value);
+
+    bool *r = res->value;
+    double *v1 = mat1->value;
+    double *v2 = mat2->value;
+    for (int i = 0; i < len; i++)
+    {
+        r[i] = std::min(v1[i], v2[i]) ;
+    }
     return res;
 }
 
@@ -495,7 +545,8 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     double *v1 = mat1->value;
     for (int i = 0; i < len; i++)
     {
-        *r++ = ((*v1) > lowerbound) && ((*v1++) <= upperbound);
+        double val = v1[i];
+        r[i] = (val > lowerbound) && (val <= upperbound);
     }
     return res;
 }
@@ -528,7 +579,8 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     bool *v2 = mat2->value;
     for (int i = 0; i < len; i++)
     {
-        *r++ = (*v1++) && (*v2++);
+        r[i] = v1[i] && v2[i];
+        //*r++ = (*v1++) && (*v2++);
     }
     return res;
 }
@@ -561,7 +613,8 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     bool *v2 = mat2->value;
     for (int i = 0; i < len; i++)
     {
-        *r++ = (*v1++) || (*v2++);
+        r[i] = v1[i] || v2[i];
+        //*r++ = (*v1++) || (*v2++);
     }
     return res;
 }
@@ -780,6 +833,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     //TODO vdRound(nrow * ncol, mat->value, res->value);
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            res->value[i * ncol + j] = std::round(mat->value[i * ncol + j]);
+        }
+    }
     return res;
 }
  Matrix* MatrixCalculator::round(Matrix* mat, int num)
@@ -806,6 +864,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     //TODO vdFloor(nrow * ncol, mat->value, res->value);
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            res->value[i * ncol + j] = std::floor(mat->value[i * ncol + j]);
+        }
+    }
     return res;
 }
  Matrix* MatrixCalculator::floor(Matrix* mat, int num)
@@ -832,6 +895,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     //TODO vdAbs(nrow * ncol, mat->value, res->value);
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            res->value[i * ncol + j] = std::abs(mat->value[i * ncol + j]);
+        }
+    }
     return res;
 }
  Matrix* MatrixCalculator::abs(Matrix* mat, int num)
@@ -859,6 +927,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     Matrix *res = new Matrix(nrow, ncol);
     Matrix *zero = MatrixFactory::getInstanceOfZeroMatrix(mat);
     //TODO vdSub(nrow * ncol, zero->value, mat->value, res->value);
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            res->value[i * ncol + j] = 0.0 - mat->value[i * ncol + j];
+        }
+    }
     return res;
 }
  Matrix* MatrixCalculator::minus(Matrix* mat, int num)
@@ -879,20 +952,25 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     }
     return res;
 }
- double *MatrixCalculator::minus(double *vec)
-{
-    int len = sizeof(vec) / sizeof(double);
-    double *res = new double[len];
-    double *zero = MatrixFactory::getInstanceOfZeroVector(len);
-    //TODO vdSub(nrow * ncol, zero, vec, res);
-    return res;
-}
+//  double *MatrixCalculator::minus(double *vec)
+// {
+//     int len = sizeof(vec) / sizeof(double);
+//     double *res = new double[len];
+//     double *zero = MatrixFactory::getInstanceOfZeroVector(len);
+//     //TODO vdSub(nrow * ncol, zero, vec, res);
+//     return res;
+// }
  Matrix* MatrixCalculator::sqrt(Matrix* mat)
 {
     int nrow = mat->getNRow();
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     //TODO vdSqrt(nrow * ncol, mat->value, res->value);
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            res->value[i * ncol + j] = std::sqrt(mat->value[i * ncol + j]);
+        }
+    }
     return res;
 }
  Matrix* MatrixCalculator::sqrt(Matrix* mat, int num)
@@ -919,6 +997,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     //TODO vdLn(nrow * ncol, mat->value, res->value); //base is e
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            res->value[i * ncol + j] = std::log(mat->value[i * ncol + j]);
+        }
+    }
     return res;
 }
  Matrix* MatrixCalculator::log(Matrix* mat, int num)
@@ -945,6 +1028,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     //TODO vdExp(nrow * ncol, mat->value, res->value);
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            res->value[i * ncol + j] = std::exp(mat->value[i * ncol + j]);
+        }
+    }
     return res;
 }
  Matrix* MatrixCalculator::exp(Matrix* mat, int num)
@@ -1003,6 +1091,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     //TODO vdInv(nrow * ncol, mat->value, res->value);
+    for(int i = 0; i < nrow; i++){
+        for(int j = 0; j < ncol; j++){
+            res->value[i * ncol + j] = 1.0 / (mat->value[i * ncol + j]);
+        }
+    }
     return res;
 }
  Matrix* MatrixCalculator::inverse(Matrix* mat, int num)
@@ -1017,7 +1110,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = 1 / (mat->value[i * ncol + j]);
+            res->value[i * ncol + colid] = 1.0 / (mat->value[i * ncol + j]);
             colid++;
         }
     }
