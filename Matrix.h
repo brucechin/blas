@@ -17,7 +17,7 @@
 #include<ctime>
 #include<memory.h>
 #include<fstream>
-
+#include<cmath>
 using namespace std;
 
 class Matrix{
@@ -134,7 +134,7 @@ public:
 		for (int i = 0; i < len; i++) {
             double v1 = a[i];
             double v2 = b[i];
-			if (abs(abs(v1) - abs(v2)) > 0.001 * abs(abs(v1) + abs(v2))) return false;
+			if (std::abs(std::abs(v1) - std::abs(v2)) > 0.001 * std::abs(std::abs(v1) + std::abs(v2))) return false;
 		}
 		return true;
 	}

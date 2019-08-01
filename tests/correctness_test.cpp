@@ -37,6 +37,18 @@ int main()
     Matrix* res;
     LogicMatrix* lres;
 
+
+    std::cout << "Det(a) : "<<calculator->Det(a, a->getNRow()) <<std::endl;
+
+    std::cout << "treat(a) : "<<calculator->treat(a) <<std::endl;
+
+    res = calculator->normalize(a, 2.0, 10.0, 1000.0);
+    res->saveMatrix("normalize.mat");
+    res->clear();
+    
+    calculator->smoothByDecayLinear(a, 5);
+    a->saveMatrix("smooth.mat");
+
     res = calculator->add(a, b);
     res->saveMatrix("add.mat");
     res->clear();

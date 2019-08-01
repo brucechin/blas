@@ -141,9 +141,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     //this is used only Intel MKL is available
     //vmMul(nrow * ncol, mat1->value, mat->value, res->value);
     
-    int nrow = mat1->getNRow();
-    int ncol = mat1->getNCol();
-    Matrix *res = new Matrix(nrow, ncol);
+
     double *v1 = mat1->value;
     double *v2 = mat2->value;
     double *r = res->value;
@@ -165,8 +163,6 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
     
-    int nrow = mat1->getNRow();
-    int ncol = mat1->getNCol();
     int colnum = std::min(num, ncol);
     int colStart = std::max(0, ncol - num);
     Matrix *res = new Matrix(nrow, colnum);
@@ -264,8 +260,8 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int ncol = mat1->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     //TODO vdFmax(nrow * ncol, mat1->value, mat2->value, res->value);
-
-    bool *r = res->value;
+    int len = nrow * ncol;
+    double *r = res->value;
     double *v1 = mat1->value;
     double *v2 = mat2->value;
     for (int i = 0; i < len; i++)
@@ -301,8 +297,8 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     int ncol = mat1->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
     //TODO vdFmin(nrow * ncol, mat1->value, mat2->value, res->value);
-
-    bool *r = res->value;
+    int len = nrow * ncol;
+    double *r = res->value;
     double *v1 = mat1->value;
     double *v2 = mat2->value;
     for (int i = 0; i < len; i++)
@@ -752,13 +748,32 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     }
     int max = idlist.size() - 1;
     if(max > 0){
-        idlist.sort();
+        //idlist.sort();
+        //this sorting is not correct
+
+        int k = 0;
+        int* idArr = new int[idlist.size()];
+        for(int id : idlist){
+            idArr[k] = id;
+            k++;
+        } 
+        for(int i = max; i > 0; i--){
+            for(int j = 0; j < i; j++){
+                if(vec[idArr[j]] > vec[idArr[j + 1]]){
+                    int tmp = idArr[j];
+                    idArr[j] = idArr[j + 1];
+                    idArr[j + 1] = tmp;
+                }
+            }
+        }
+        //finish sorting
         int lastRank = 0;
         double lastValue = NAN;
         int size = idlist.size();
         for(int i = 0; i < size; i++){
-            int currid = idlist.front();
-            idlist.pop_front();
+            // int currid = idlist.front();
+            // idlist.pop_front();
+            int currid = idArr[i];
             double currValue = vec[currid];
             int currank = i;
 
@@ -771,6 +786,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
             }
             res[currid] = res[currid] / (double)max;
         }
+        delete[] idArr;
     }
 
     return res;
@@ -3904,7 +3920,7 @@ double MatrixCalculator::Det(Matrix *aa, int N)//N为代数余子式的size
         double u = sumx / f_n;
         double sigma = std::sqrt(sumxx / f_n - u * u);
         double ex3 = sumxxx / f_n;
-        skewness = (ex3 = 3 * u * sigma * sigma - u * u * u) / (sigma * sigma * sigma);
+        skewness = (ex3 - 3 * u * sigma * sigma - u * u * u) / (sigma * sigma * sigma);
         skewness = (std::isnan(skewness) || std::isinf(skewness)) ? 0 : skewness;
     }
     return skewness;
@@ -3955,7 +3971,7 @@ double MatrixCalculator::Det(Matrix *aa, int N)//N为代数余子式的size
     sumxy = 0;
     int n = 0;
     double cov = NAN;
-    for (int k = 0; k < len; k++)
+    for (int k = highIndex; k >= lowIndex; k--)
     {
         x = ts1->value[k];
         y = ts2->value[k];
@@ -3987,7 +4003,7 @@ double MatrixCalculator::Det(Matrix *aa, int N)//N为代数余子式的size
     n = 0;
     double corr = NAN;
     int len = highIndex - lowIndex + 1;
-    for (int k = 0; k < len; k++)
+    for (int k = highIndex; k >= lowIndex; k++)
     {
         x = ts1->value[k];
         y = ts2->value[k];
@@ -4117,7 +4133,7 @@ double MatrixCalculator::Det(Matrix *aa, int N)//N为代数余子式的size
         double u = sumx / f_n;
         double sigma = std::sqrt(sumxx / f_n - u * u);
         double ex3 = sumxxx / f_n;
-        skewness = (ex3 = 3 * u * sigma * sigma - u * u * u) / (sigma * sigma * sigma);
+        skewness = (ex3 - 3 * u * sigma * sigma - u * u * u) / (sigma * sigma * sigma);
         skewness = (std::isnan(skewness) || std::isinf(skewness)) ? 0 : skewness;
     }
     return skewness;

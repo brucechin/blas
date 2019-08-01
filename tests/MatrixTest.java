@@ -8,7 +8,12 @@
 public class MatrixTest {
     public static void main(String[] args){
 
-
+        int rangeMin = -10000;
+        int rangeMax = 10000;
+        int matSize = 1000;
+        int lowerBound = -100;
+        int upperBound = 100;
+        int stepSize = 50; // used for shift/delta/delay/ratio/sum/product
         MatrixFactory factory = new MatrixFactory();
         MatrixCalculator calculator = new MatrixCalculator();
         String matrix_a = "a.mat";
@@ -27,6 +32,18 @@ public class MatrixTest {
         Matrix compareMatrix;
         LogicMatrix compareLogicMatrix;
 
+        System.out.println("Det(a) : " + calculator.Det(a.value, a.getNRow()));
+
+        System.out.println("treat(a) : " + calculator.treat(a));
+
+        res = calculator.Normalize(a, 2.0, 10.0, 1000.0);
+        compareMatrix.readCppMatrix("normalize.mat");
+        res.compareMat(compareMatrix);
+        res.clear();
+        
+        calculator->smoothByDecayLinear(a, 5);
+        compareMatrix.readCppMatrix("smooth.mat");
+        a.compareMat(compareMatrix);
 
         res = calculator.add(a, b);
         compareMatrix.readCppMatrix("add.mat");

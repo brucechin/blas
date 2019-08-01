@@ -236,6 +236,13 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
    - [x] mul(0,0)
    - [x] max(0,0)
    - [x] min(0,0)
-   - [ ] rank(0,0)
+   - [x] rank(0,0)
+   - [x] tsskewness, tscorr, tscov
    - [x] abs, log, minus, exp, inverse, sqrt, floor, round
 2. 发现有些bug是因为访存炫技玩脱了导致的，不该作死的。
+3. 另外一个问题是C++里的NAN二进制写到文件里后java再读出来转换成0.0了
+
+### 8.1
+
+1. C++和java库作比较时，如果相对误差控制在10^-9以内也都满足条件
+2. rank的也解决了。。居然是因为冒泡排序没写对。。zs了
