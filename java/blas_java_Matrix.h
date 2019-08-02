@@ -9,6 +9,30 @@ extern "C" {
 #endif
 /*
  * Class:     blas_java_Matrix
+ * Method:    clear
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_blas_java_Matrix_clear
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     blas_java_Matrix
+ * Method:    saveMatrix
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_blas_java_Matrix_saveMatrix
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     blas_java_Matrix
+ * Method:    readMatrix
+ * Signature: (Ljava/lang/String;)J
+ */
+JNIEXPORT jlong JNICALL Java_blas_java_Matrix_readMatrix
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     blas_java_Matrix
  * Method:    ccMatrix
  * Signature: (II)J
  */

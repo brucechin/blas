@@ -1,6 +1,7 @@
 package blas.java;
 import java.lang.Thread;
-public class Matrix{
+import java.io.*;
+public class Matrix implements AutoCloseable{
 	static{
 		System.loadLibrary("Matrix");
 	}
@@ -12,8 +13,9 @@ public class Matrix{
 	}
 
 	public Matrix(int n, int m){
+		nrow = n;
+		ncol = m;
 		ptr = ccMatrix(n, m);
-		System.out.println("construction done");
 	}
 
 //	public Matrix(String filename){
@@ -24,137 +26,43 @@ public class Matrix{
 	public void finalize(){
 		System.out.println("deconstruct");
 	}
+
+	public void close() throws IOException{
+	
+		System.out.println("closing" + nrow);
+		nrow = 0;
+		ncol = 0;
+		clear();
+	}
 	public native void clear();
 
-	public native int getNRow();
+	public int getNRow(){return this.nrow;}
 
-	public native int getNCol();
+	public int getNCol(){return this.ncol;}
 
 	//public void setElement(int i, int j, double x);
-	//
+	
 	//public double getElement(int i, int j);
 	
-	public native void print();
+	//public native void print();
 
-	//public native void saveMatrix(String filename);
+	public native void saveMatrix(String filename);
 
-	//public native long readMatrix(String filename);
+	public native long readMatrix(String filename);
 
 	public native long ccMatrix(int n, int m);
 	
 	public static void main(String[] args){
-		
-		{
-			Matrix mat = new Matrix(10000, 10000);
+	
+		Matrix a = new Matrix(100, 100);
+		try(Matrix b = new Matrix(200, 200);
+			Matrix c = new Matrix(300, 300)){
+				System.out.println("running");
+			}
+		catch(IOException e){
+			System.out.println("exception");
 		}
 	
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
-		{
-			Matrix mat = new Matrix(10000, 10000);
-		}
+	
 	}
 }
