@@ -1,27 +1,27 @@
 package blas.java;
 import java.lang.Thread;
 import java.io.*;
-public class Matrix implements AutoCloseable{
+public class LogicMatrix implements AutoCloseable{
 	static{
 		System.loadLibrary("Matrix");
 	}
 	public long ptr;//pointing to the memory allocated to this Matrix
 	//public int nrow;
 	//public int ncol;
-	public Matrix(){
-		ptr = ccMatrixNative(0, 0);
+	public LogicMatrix(){
+		ptr = ccLogicMatrixNative(0, 0);
 	}
 
-	public Matrix(int n, int m){
-		ptr = ccMatrixNative(n, m);
+	public LogicMatrix(int n, int m){
+		ptr = ccLogicMatrixNative(n, m);
 	}
 
-	public Matrix(String filename){
-		ptr = ccMatrixNative(0, 0);
+	public LogicMatrix(String filename){
+		ptr = ccLogicMatrixNative(0, 0);
 		readMatrix(filename);
 	}
 
-	public Matrix(Matrix other){
+	public LogicMatrix(LogicMatrix other){
 	
 		//TODO : deep copy
 	
@@ -65,23 +65,23 @@ public class Matrix implements AutoCloseable{
 		return res;
 	}
 
-	public void setElement(int i, int j, double x){
+	public void setElement(int i, int j, boolean x){
 		setElementNative(i, j, x, ptr);
 	}
 	
-	public double getElement(int i, int j){
+	public boolean getElement(int i, int j){
 		return getElementNative(i, j, ptr);
 	}
 	
-	public Matrix getRowVector(int i){
-		Matrix res = new Matrix(0, 0);
+	public LogicMatrix getRowVector(int i){
+		LogicMatrix res = new LogicMatrix(0, 0);
 		long resPtr = getRowVectorNative(i, ptr);
 		res.setPtr(resPtr);
 		return res;
 	}
 
-	public Matrix getColVector(int j){
-		Matrix res = new Matrix(0, 0);
+	public LogicMatrix getColVector(int j){
+		LogicMatrix res = new LogicMatrix(0, 0);
 		long resPtr = getColVectorNative(j, ptr);
 		res.setPtr(resPtr);
 		return res;
@@ -93,9 +93,9 @@ public class Matrix implements AutoCloseable{
 	
 	public void readMatrix(String filename){readMatrixNative(filename, ptr);}
 	
-	public native void setElementNative(int i, int j, double x, long ptr);
+	public native void setElementNative(int i, int j, boolean x, long ptr);
 
-	public native double getElementNative(int i, int j, long ptr);
+	public native boolean getElementNative(int i, int j, long ptr);
 
 	public native long getRowVectorNative(int i, long ptr);
 
@@ -113,7 +113,7 @@ public class Matrix implements AutoCloseable{
 
 	public native void readMatrixNative(String filename, long ptr);
 
-	public native long ccMatrixNative(int n, int m);
+	public native long ccLogicMatrixNative(int n, int m);
 	
 	public static void main(String[] args){
 	

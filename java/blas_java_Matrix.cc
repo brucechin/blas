@@ -33,14 +33,14 @@ JNIEXPORT jdouble JNICALL Java_blas_java_Matrix_getElementNative(JNIEnv *env, jo
 }
 
 
-JNIEXPORT jlong JNICALL Java_blas_java_Matrix_getRowVectorNative(JNIEnv *env, jobject jb, jint i, jlong ptr, jlong resPtr){
+JNIEXPORT jlong JNICALL Java_blas_java_Matrix_getRowVectorNative(JNIEnv *env, jobject jb, jint i, jlong ptr){
 	Matrix* mat = (Matrix*)ptr;
 	Matrix* res = mat->getRowVector(i);
 	return (jlong)res;
 }
 
 
-JNIEXPORT jlong JNICALL Java_blas_java_Matrix_getColVectorNative(JNIEnv *env, jobject jb, jint j, jlong ptr, jlong resPtr){
+JNIEXPORT jlong JNICALL Java_blas_java_Matrix_getColVectorNative(JNIEnv *env, jobject jb, jint j, jlong ptr){
 	Matrix* mat = (Matrix*)ptr;
 	Matrix* res = mat->getColVector(j);
 	return (jlong)res;

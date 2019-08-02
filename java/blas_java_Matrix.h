@@ -10,9 +10,9 @@ extern "C" {
 /*
  * Class:     blas_java_Matrix
  * Method:    setElementNative
- * Signature: (IIDJ)D
+ * Signature: (IIDJ)V
  */
-JNIEXPORT jdouble JNICALL Java_blas_java_Matrix_setElementNative
+JNIEXPORT void JNICALL Java_blas_java_Matrix_setElementNative
   (JNIEnv *, jobject, jint, jint, jdouble, jlong);
 
 /*
@@ -26,18 +26,18 @@ JNIEXPORT jdouble JNICALL Java_blas_java_Matrix_getElementNative
 /*
  * Class:     blas_java_Matrix
  * Method:    getRowVectorNative
- * Signature: (IJJ)V
+ * Signature: (IJ)J
  */
-JNIEXPORT void JNICALL Java_blas_java_Matrix_getRowVectorNative
-  (JNIEnv *, jobject, jint, jlong, jlong);
+JNIEXPORT jlong JNICALL Java_blas_java_Matrix_getRowVectorNative
+  (JNIEnv *, jobject, jint, jlong);
 
 /*
  * Class:     blas_java_Matrix
  * Method:    getColVectorNative
- * Signature: (IJJ)V
+ * Signature: (IJ)J
  */
-JNIEXPORT void JNICALL Java_blas_java_Matrix_getColVectorNative
-  (JNIEnv *, jobject, jint, jlong, jlong);
+JNIEXPORT jlong JNICALL Java_blas_java_Matrix_getColVectorNative
+  (JNIEnv *, jobject, jint, jlong);
 
 /*
  * Class:     blas_java_Matrix
