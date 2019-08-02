@@ -3,7 +3,7 @@ import java.lang.Thread;
 import java.io.*;
 public class LogicMatrix implements AutoCloseable{
 	static{
-		System.loadLibrary("Matrix");
+		System.loadLibrary("LogicMatrix");
 	}
 	public long ptr;//pointing to the memory allocated to this Matrix
 	//public int nrow;
@@ -117,22 +117,22 @@ public class LogicMatrix implements AutoCloseable{
 	
 	public static void main(String[] args){
 	
-		Matrix a = new Matrix(5, 5);
-		try(Matrix b = new Matrix(10, 10);
-			Matrix c = new Matrix(15, 15)){
+		LogicMatrix a = new LogicMatrix(5, 5);
+		try(LogicMatrix b = new LogicMatrix(10, 10);
+			LogicMatrix c = new LogicMatrix(15, 15)){
 
 			a.print();
-			b.setElement(0, 0, 0);
+			b.setElement(0, 0, false);
 			b.saveMatrix("test.mat");
 			a.readMatrix("test.mat");
 			a.print();
-			double t = a.getElement(1, 1);
+			boolean t = a.getElement(1, 1);
 			System.out.println(t);
 			
-			Matrix arow = a.getRowVector(1);
+			LogicMatrix arow = a.getRowVector(1);
 			System.out.println("\n");
 			arow.print();
-			Matrix acol = a.getColVector(2);
+			LogicMatrix acol = a.getColVector(2);
 			acol.print();
 			
 			}

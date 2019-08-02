@@ -6,9 +6,9 @@
 #########################################################################
 #!/bin/bash
 
-javac Matrix.java
-javah -cp /home/liankeqin/ blas.java.Matrix
-g++ -I /opt/Java/jdk/include/ -I /opt/Java/jdk/include/linux/ -shared -fPIC blas_java_Matrix.cc -o libMatrix.so
-sudo cp libMatrix.so /usr/lib/
-javac Matrix.java
-java -Xmx128M blas.java.Matrix
+javac LogicMatrix.java
+javah -cp /home/liankeqin/ blas.java.LogicMatrix
+g++ -I /opt/Java/jdk/include/ -I /opt/Java/jdk/include/linux/ -shared -fPIC blas_java_LogicMatrix.cc -o libLogicMatrix.so
+sudo cp libLogicMatrix.so /usr/lib/
+javac LogicMatrix.java
+java -Xmx128M blas.java.LogicMatrix
