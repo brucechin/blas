@@ -246,3 +246,7 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 
 1. C++和java库作比较时，如果相对误差控制在10^-9以内也都满足条件
 2. rank的也解决了。。居然是因为冒泡排序没写对。。zs了
+
+### 8.2
+
+1. 开始利用AutoCloseable类写Matrix.java + JNI，目前readMatrix/writeMatrix还有构造和析构函数等都可用了，迈出了坚实的第一步（说明在C++这一层的内存访问正常且正常释放）

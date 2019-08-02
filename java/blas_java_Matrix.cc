@@ -20,18 +20,57 @@ static JNIEnv* JNU_GetEnv(){
 
 */
 
+JNIEXPORT void JNICALL Java_blas_java_Matrix_setElementNative(JNIEnv *env, jobject jb, jint i, jint j, jdouble val, jlong ptr){
+	Matrix* mat = (Matrix*)ptr;
+	mat->setElement(i, j, val);
+}
+
+
+JNIEXPORT jdouble JNICALL Java_blas_java_Matrix_getElementNative(JNIEnv *env, jobject jb, jint i, jint j, jlong ptr){
+	Matrix* mat = (Matrix*)ptr;
+	jdouble res = mat->getElement(i, j);
+	return res;
+}
+
+
+JNIEXPORT jlong JNICALL Java_blas_java_Matrix_getRowVectorNative(JNIEnv *env, jobject jb, jint i, jlong ptr, jlong resPtr){
+	Matrix* mat = (Matrix*)ptr;
+	Matrix* res = mat->getRowVector(i);
+	return (jlong)res;
+}
+
+
+JNIEXPORT jlong JNICALL Java_blas_java_Matrix_getColVectorNative(JNIEnv *env, jobject jb, jint j, jlong ptr, jlong resPtr){
+	Matrix* mat = (Matrix*)ptr;
+	Matrix* res = mat->getColVector(j);
+	return (jlong)res;
+	
+}
+
+
+JNIEXPORT jint JNICALL Java_blas_java_Matrix_getNRowNative(JNIEnv *env, jobject jb, jlong ptr){
+	Matrix* mat = (Matrix*)ptr;
+	return (jint)mat->getNRow();
+}
+
+
+JNIEXPORT jint JNICALL Java_blas_java_Matrix_getNColNative(JNIEnv *env, jobject jb, jlong ptr){
+	Matrix* mat = (Matrix*)ptr;
+	return (jint)mat->getNCol();
+}
 
 
 JNIEXPORT void JNICALL Java_blas_java_Matrix_clearNative(JNIEnv *env, jobject jb, jlong ptr){
 	delete((Matrix*)ptr);
 	return ;
-
 }
+
 
 JNIEXPORT void JNICALL Java_blas_java_Matrix_printNative(JNIEnv *env, jobject jb, jlong ptr){
 	Matrix* mat = (Matrix*)ptr;
 	mat->print();
 }
+
 
 JNIEXPORT void JNICALL Java_blas_java_Matrix_saveMatrixNative(JNIEnv *env, jobject jb, jstring file, jlong ptr){
 	Matrix* mat = (Matrix*)ptr;
@@ -45,6 +84,7 @@ JNIEXPORT void JNICALL Java_blas_java_Matrix_readMatrixNative(JNIEnv *env, jobje
 	std::string filename = env->GetStringUTFChars(file, 0);
 	mat->readMatrix(filename);
 }
+
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_Matrix_ccMatrixNative(JNIEnv *env, jobject jb, jint n, jint m){
