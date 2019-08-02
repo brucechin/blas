@@ -70,12 +70,19 @@ public:
         return value[i * ncol + j];
     }
 
-    bool getRowVector(int i){
-        bool* res = new bool[ncol];
-        for(int j = 0; j < ncol; j++){
-            res[j] = getElement(i, j);
-        }
+    LogicMatrix* getRowVector(int i){
+        LogicMatrix* res = new LogicMatrix(1, ncol);
+			for(int j = 0; j < ncol; j++){
+				res->value[j] = value[i * ncol + j];
+			}
+			return res;
+    }
 
+    LogicMatrix* getColVector(int j){
+        LogicMatrix* res = new LogicMatrix(nrow, 1);
+        for(int i = 0; i < nrow; i++){
+            res->value[i] = value[i * ncol + j];
+        }        
         return res;
     }
 
@@ -88,7 +95,7 @@ public:
     }
 
     void setElement(int i, int j, bool x){
-
+        value[i * ncol + j] = x;
     }
 
     bool compareMatrix(LogicMatrix* other) {

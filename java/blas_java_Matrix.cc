@@ -4,7 +4,8 @@
 #include<stdexcept>
 #include<unistd.h>
 #include<cstring>
-static JavaVM *cached_jvm = 0;
+
+//static JavaVM *cached_jvm = 0;
 
 /*
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* jvm, void* reserved){
