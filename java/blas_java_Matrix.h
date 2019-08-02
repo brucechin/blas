@@ -9,10 +9,50 @@ extern "C" {
 #endif
 /*
  * Class:     blas_java_Matrix
- * Method:    clearNative
- * Signature: (J)V
+ * Method:    setElementNative
+ * Signature: (IIDJ)D
  */
-JNIEXPORT void JNICALL Java_blas_java_Matrix_clearNative
+JNIEXPORT jdouble JNICALL Java_blas_java_Matrix_setElementNative
+  (JNIEnv *, jobject, jint, jint, jdouble, jlong);
+
+/*
+ * Class:     blas_java_Matrix
+ * Method:    getElementNative
+ * Signature: (IIJ)D
+ */
+JNIEXPORT jdouble JNICALL Java_blas_java_Matrix_getElementNative
+  (JNIEnv *, jobject, jint, jint, jlong);
+
+/*
+ * Class:     blas_java_Matrix
+ * Method:    getRowVectorNative
+ * Signature: (IJ)Lblas/java/Matrix;
+ */
+JNIEXPORT jobject JNICALL Java_blas_java_Matrix_getRowVectorNative
+  (JNIEnv *, jobject, jint, jlong);
+
+/*
+ * Class:     blas_java_Matrix
+ * Method:    getColVectorNative
+ * Signature: (IJ)Lblas/java/Matrix;
+ */
+JNIEXPORT jobject JNICALL Java_blas_java_Matrix_getColVectorNative
+  (JNIEnv *, jobject, jint, jlong);
+
+/*
+ * Class:     blas_java_Matrix
+ * Method:    getNRowNative
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_blas_java_Matrix_getNRowNative
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     blas_java_Matrix
+ * Method:    getNColNative
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_blas_java_Matrix_getNColNative
   (JNIEnv *, jobject, jlong);
 
 /*
@@ -21,6 +61,14 @@ JNIEXPORT void JNICALL Java_blas_java_Matrix_clearNative
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_blas_java_Matrix_printNative
+  (JNIEnv *, jobject, jlong);
+
+/*
+ * Class:     blas_java_Matrix
+ * Method:    clearNative
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_blas_java_Matrix_clearNative
   (JNIEnv *, jobject, jlong);
 
 /*
@@ -34,9 +82,9 @@ JNIEXPORT void JNICALL Java_blas_java_Matrix_saveMatrixNative
 /*
  * Class:     blas_java_Matrix
  * Method:    readMatrixNative
- * Signature: (Ljava/lang/String;J)J
+ * Signature: (Ljava/lang/String;J)V
  */
-JNIEXPORT jlong JNICALL Java_blas_java_Matrix_readMatrixNative
+JNIEXPORT void JNICALL Java_blas_java_Matrix_readMatrixNative
   (JNIEnv *, jobject, jstring, jlong);
 
 /*

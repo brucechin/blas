@@ -24,7 +24,7 @@ static JNIEnv* JNU_GetEnv(){
 
 JNIEXPORT void JNICALL Java_blas_java_Matrix_clearNative(JNIEnv *env, jobject jb, jlong ptr){
 	delete((Matrix*)ptr);
-	return 0;
+	return ;
 
 }
 
@@ -48,17 +48,11 @@ JNIEXPORT void JNICALL Java_blas_java_Matrix_readMatrixNative(JNIEnv *env, jobje
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_Matrix_ccMatrixNative(JNIEnv *env, jobject jb, jint n, jint m){
-	//long ptr;
 	jint size = n * m;
-	
 	Matrix* mat = new Matrix(n, m);
 	mat->setValue(10);
 	std::cout << "C++ constructor done"<<std::endl;
 	return (jlong) mat;
-
-
-
-
 
 
 	/*
