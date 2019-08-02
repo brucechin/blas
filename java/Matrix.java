@@ -51,6 +51,10 @@ public class Matrix implements AutoCloseable{
 		clearNative(ptr);
 	}
 
+	public long getPtr(){
+		return ptr;
+	}
+
 	public int getNRow(){
 		int res = getNRowNative(ptr);
 		return res;
@@ -70,11 +74,17 @@ public class Matrix implements AutoCloseable{
 	}
 	
 	public Matrix getRowVector(int i){
-		return getRowVectorNative(i, ptr);
+		Matrix res = new Matrix(0, 0);
+		long resPtr = res.getPtr();
+		getRowVectorNative(i, ptr, resPtr);
+		return res;
 	}
 
 	public Matrix getColVector(int j){
-		return getColVectorNative(j, ptr);
+		Matrix res = new Matrix(0, 0);
+		long resPtr = res.getPtr();
+		getColVectorNative(j, ptr, resPtr);
+		return res;
 	}
 
 	public void print(){printNative(ptr);}
@@ -87,9 +97,9 @@ public class Matrix implements AutoCloseable{
 
 	public native double getElementNative(int i, int j, long ptr);
 
-	public native Matrix getRowVectorNative(int i, long ptr);
+	public native void getRowVectorNative(int i, long ptr, long resPtr);
 
-	public native Matrix getColVectorNative(int j, long ptr);
+	public native void getColVectorNative(int j, long ptr, long resPtr);
 	
 	public native int getNRowNative(long ptr);
 

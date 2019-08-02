@@ -26,18 +26,18 @@ JNIEXPORT jdouble JNICALL Java_blas_java_Matrix_getElementNative
 /*
  * Class:     blas_java_Matrix
  * Method:    getRowVectorNative
- * Signature: (IJ)Lblas/java/Matrix;
+ * Signature: (IJJ)V
  */
-JNIEXPORT jobject JNICALL Java_blas_java_Matrix_getRowVectorNative
-  (JNIEnv *, jobject, jint, jlong);
+JNIEXPORT void JNICALL Java_blas_java_Matrix_getRowVectorNative
+  (JNIEnv *, jobject, jint, jlong, jlong);
 
 /*
  * Class:     blas_java_Matrix
  * Method:    getColVectorNative
- * Signature: (IJ)Lblas/java/Matrix;
+ * Signature: (IJJ)V
  */
-JNIEXPORT jobject JNICALL Java_blas_java_Matrix_getColVectorNative
-  (JNIEnv *, jobject, jint, jlong);
+JNIEXPORT void JNICALL Java_blas_java_Matrix_getColVectorNative
+  (JNIEnv *, jobject, jint, jlong, jlong);
 
 /*
  * Class:     blas_java_Matrix
