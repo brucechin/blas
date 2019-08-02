@@ -32,9 +32,9 @@ public class Matrix implements AutoCloseable{
 		System.out.println("closing" + nrow);
 		nrow = 0;
 		ncol = 0;
-		clear();
+		clearNative(ptr);
 	}
-	public native void clear();
+	public native void clearNative(long ptr);
 
 	public int getNRow(){return this.nrow;}
 

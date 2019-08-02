@@ -9,11 +9,11 @@ extern "C" {
 #endif
 /*
  * Class:     blas_java_Matrix
- * Method:    clear
- * Signature: ()V
+ * Method:    clearNative
+ * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_blas_java_Matrix_clear
-  (JNIEnv *, jobject);
+JNIEXPORT void JNICALL Java_blas_java_Matrix_clearNative
+  (JNIEnv *, jobject, jlong);
 
 /*
  * Class:     blas_java_Matrix
