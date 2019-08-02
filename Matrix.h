@@ -22,181 +22,181 @@ using namespace std;
 
 class Matrix{
 
-private:
-    int nrow;
-    int ncol;
-    
-
-public:
-    double* value;//public attribute for easier access during calculation
-
-    Matrix(){
-        nrow = 0;
-        ncol = 0;
-        value = new double[0];
-    }
-	~Matrix(){
-		delete[] value;
-		std::cout << "deconstruct"<<std::endl;
-	}
-
-    Matrix(int n, int m){
-        nrow = n;
-        ncol = m;
-        value = new double[n * m];
-        //memset
-    }
-
-    //TODO : how to input a 2-D array as parameter
-    Matrix(int n, int m, double* vec){
-        nrow = n;
-        ncol = m;
-        value = new double[n * m];
-        std::memcpy(value, vec, nrow * ncol * sizeof(double));
-    }
-
-    //copy constructor
-    Matrix(Matrix& mat){
-        nrow = mat.nrow;
-        ncol = mat.ncol;
-        value = new double[nrow * ncol];
-        std::memcpy(value, mat.value, nrow * ncol * sizeof(double));
-    }
-
-    //copy some rows or columns usingg memcpy
-	void setNCol(int m){
-		ncol = m;
-	}
-
-	void setNRow(int n){
-		nrow = n;
-	}
-    void clear(){
-        nrow = 0;
-        ncol = 0;
-        delete[] value;
-    }
-
-    int getNRow(){
-        return nrow;
-    }
-
-    int getNCol(){
-        return ncol;
-    }
-
-    //return the start pointer of the matrix????
-    double* getMatrix(){
-        return value;
-    }
-
-    double getElement(int i, int j){
-        return value[i * ncol + j];
-    }
-
-    void setElement(int i, int j, double x){
-        value[i * ncol + j] = x;
-    }
+	private:
+		int nrow;
+		int ncol;
 
 
-    //loop unrolling trick is not used here.
-    void setValue(double x){
-        //can be optimized using OpenBLAS
-        for(int i = 0; i < nrow; i++){
-            double *cp = &value[i * ncol];
-            for(int j = 0; j < ncol; j++){
-                *cp++ = x;
-            }
-        }
-    }
+	public:
+		double* value;//public attribute for easier access during calculation
 
-    Matrix* getRowVector(int i){
-        Matrix* res = new Matrix(1, ncol);
-        for(int j = 0; j < ncol; j++){
-            res->value[j] = value[i * ncol + j];
-        }
-        return res;
-    }
-
-    Matrix* getColVector(int j){
-        Matrix* res = new Matrix(nrow, 1);
-        for(int i = 0; i < nrow; i++){
-            res->value[i] = value[i * ncol + j];
-        }        
-        return res;
-    }
-	bool compareMatrix(Matrix* other) {
-		if (nrow != other->getNRow()) return false;
-		if (ncol != other->getNCol()) return false;
-		double* a = value;
-		double* b = other->value;
-		int len = nrow * ncol;
-		for (int i = 0; i < len; i++) {
-            double v1 = a[i];
-            double v2 = b[i];
-			if (std::abs(std::abs(v1) - std::abs(v2)) > 0.001 * std::abs(std::abs(v1) + std::abs(v2))) return false;
+		Matrix(){
+			nrow = 0;
+			ncol = 0;
+			value = new double[0];
 		}
-		return true;
-	}
-
-    void print(){
-        double* p = value;
-        for(int i = 0; i < nrow; i++){
-            for(int j = 0; j < ncol; j++){
-                std::cout << *p++ << " ";
-            }
-            std::cout << std::endl;
-        }
-    }
-
-    //add a row/column copy function
-    
-    void copyTo(Matrix mat){
-        return ;
-    }
-
-    void copyToUpperLeft(Matrix mat){
-        return ;
-    }
-
-    void copyToLowerRight(Matrix mat){
-        return ;
-    }
-
-    void saveMatrix(std::string filename){
-		ofstream file;
-		file.open(filename, ios::binary | ios::out);
-		if (file.is_open()) {
-			file.write((char*)&nrow, sizeof(int));
-			file.write((char*)&ncol, sizeof(int));
-			file.write((char *)value, sizeof(double) * nrow * ncol);
-			file.close();
-		}
-		else {
-			cout << "file open failure" << endl;
-		}
-		
-        return ;
-    }
-
-
-    void readMatrix(std::string filename){
-		ifstream file;
-		file.open(filename, ios::binary | ios::in);
-		if (file.is_open()) {
-			file.read((char*)&nrow, sizeof(int));
-			file.read((char*)&ncol, sizeof(int));
+		~Matrix(){
 			delete[] value;
+			std::cout << "deconstruct"<<std::endl;
+		}
+
+		Matrix(int n, int m){
+			nrow = n;
+			ncol = m;
+			value = new double[n * m];
+			//memset
+		}
+
+		//TODO : how to input a 2-D array as parameter
+		Matrix(int n, int m, double* vec){
+			nrow = n;
+			ncol = m;
+			value = new double[n * m];
+			std::memcpy(value, vec, nrow * ncol * sizeof(double));
+		}
+
+		//copy constructor
+		Matrix(Matrix& mat){
+			nrow = mat.nrow;
+			ncol = mat.ncol;
 			value = new double[nrow * ncol];
-			file.read((char*)value, sizeof(double) * nrow * ncol);
-			file.close();
+			std::memcpy(value, mat.value, nrow * ncol * sizeof(double));
 		}
-		else {
-			cout << "file open failure" << endl;
+
+		//copy some rows or columns usingg memcpy
+		void setNCol(int m){
+			ncol = m;
 		}
-		
-        return ;
-    }
+
+		void setNRow(int n){
+			nrow = n;
+		}
+		void clear(){
+			nrow = 0;
+			ncol = 0;
+			delete[] value;
+		}
+
+		int getNRow(){
+			return nrow;
+		}
+
+		int getNCol(){
+			return ncol;
+		}
+
+		//return the start pointer of the matrix????
+		double* getMatrix(){
+			return value;
+		}
+
+		double getElement(int i, int j){
+			return value[i * ncol + j];
+		}
+
+		void setElement(int i, int j, double x){
+			value[i * ncol + j] = x;
+		}
+
+
+		//loop unrolling trick is not used here.
+		void setValue(double x){
+			//can be optimized using OpenBLAS
+			for(int i = 0; i < nrow; i++){
+				double *cp = &value[i * ncol];
+				for(int j = 0; j < ncol; j++){
+					*cp++ = x;
+				}
+			}
+		}
+
+		Matrix* getRowVector(int i){
+			Matrix* res = new Matrix(1, ncol);
+			for(int j = 0; j < ncol; j++){
+				res->value[j] = value[i * ncol + j];
+			}
+			return res;
+		}
+
+		Matrix* getColVector(int j){
+			Matrix* res = new Matrix(nrow, 1);
+			for(int i = 0; i < nrow; i++){
+				res->value[i] = value[i * ncol + j];
+			}        
+			return res;
+		}
+		bool compareMatrix(Matrix* other) {
+			if (nrow != other->getNRow()) return false;
+			if (ncol != other->getNCol()) return false;
+			double* a = value;
+			double* b = other->value;
+			int len = nrow * ncol;
+			for (int i = 0; i < len; i++) {
+				double v1 = a[i];
+				double v2 = b[i];
+				if (std::abs(std::abs(v1) - std::abs(v2)) > 0.001 * std::abs(std::abs(v1) + std::abs(v2))) return false;
+			}
+			return true;
+		}
+
+		void print(){
+			double* p = value;
+			for(int i = 0; i < nrow; i++){
+				for(int j = 0; j < ncol; j++){
+					std::cout << *p++ << " ";
+				}
+				std::cout << std::endl;
+			}
+		}
+
+		//add a row/column copy function
+
+		void copyTo(Matrix mat){
+			return ;
+		}
+
+		void copyToUpperLeft(Matrix mat){
+			return ;
+		}
+
+		void copyToLowerRight(Matrix mat){
+			return ;
+		}
+
+		void saveMatrix(std::string filename){
+			ofstream file;
+			file.open(filename, ios::binary | ios::out);
+			if (file.is_open()) {
+				file.write((char*)&nrow, sizeof(int));
+				file.write((char*)&ncol, sizeof(int));
+				file.write((char *)value, sizeof(double) * nrow * ncol);
+				file.close();
+			}
+			else {
+				cout << "file open failure" << endl;
+			}
+
+			return ;
+		}
+
+
+		void readMatrix(std::string filename){
+			ifstream file;
+			file.open(filename, ios::binary | ios::in);
+			if (file.is_open()) {
+				file.read((char*)&nrow, sizeof(int));
+				file.read((char*)&ncol, sizeof(int));
+				delete[] value;
+				value = new double[nrow * ncol];
+				file.read((char*)value, sizeof(double) * nrow * ncol);
+				file.close();
+			}
+			else {
+				cout << "file open failure" << endl;
+			}
+
+			return ;
+		}
 
 };
 

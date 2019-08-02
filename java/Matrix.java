@@ -9,13 +9,13 @@ public class Matrix implements AutoCloseable{
 	public int nrow;
 	public int ncol;
 	public Matrix(){
-		ptr = ccMatrix(0, 0);
+		ptr = ccMatrixNative(0, 0);
 	}
 
 	public Matrix(int n, int m){
 		nrow = n;
 		ncol = m;
-		ptr = ccMatrix(n, m);
+		ptr = ccMatrixNative(n, m);
 	}
 
 //	public Matrix(String filename){
@@ -44,13 +44,13 @@ public class Matrix implements AutoCloseable{
 	
 	//public double getElement(int i, int j);
 	
-	//public native void print();
+	public native void printNative(long ptr);
 
-	public native void saveMatrix(String filename);
+	public native void saveMatrixNative(String filename, long ptr);
 
-	public native long readMatrix(String filename);
+	public native long readMatrixNative(String filename, long ptr);
 
-	public native long ccMatrix(int n, int m);
+	public native long ccMatrixNative(int n, int m);
 	
 	public static void main(String[] args){
 	

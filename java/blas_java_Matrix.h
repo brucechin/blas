@@ -17,26 +17,34 @@ JNIEXPORT void JNICALL Java_blas_java_Matrix_clear
 
 /*
  * Class:     blas_java_Matrix
- * Method:    saveMatrix
- * Signature: (Ljava/lang/String;)V
+ * Method:    printNative
+ * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_blas_java_Matrix_saveMatrix
-  (JNIEnv *, jobject, jstring);
+JNIEXPORT void JNICALL Java_blas_java_Matrix_printNative
+  (JNIEnv *, jobject, jlong);
 
 /*
  * Class:     blas_java_Matrix
- * Method:    readMatrix
- * Signature: (Ljava/lang/String;)J
+ * Method:    saveMatrixNative
+ * Signature: (Ljava/lang/String;J)V
  */
-JNIEXPORT jlong JNICALL Java_blas_java_Matrix_readMatrix
-  (JNIEnv *, jobject, jstring);
+JNIEXPORT void JNICALL Java_blas_java_Matrix_saveMatrixNative
+  (JNIEnv *, jobject, jstring, jlong);
 
 /*
  * Class:     blas_java_Matrix
- * Method:    ccMatrix
+ * Method:    readMatrixNative
+ * Signature: (Ljava/lang/String;J)J
+ */
+JNIEXPORT jlong JNICALL Java_blas_java_Matrix_readMatrixNative
+  (JNIEnv *, jobject, jstring, jlong);
+
+/*
+ * Class:     blas_java_Matrix
+ * Method:    ccMatrixNative
  * Signature: (II)J
  */
-JNIEXPORT jlong JNICALL Java_blas_java_Matrix_ccMatrix
+JNIEXPORT jlong JNICALL Java_blas_java_Matrix_ccMatrixNative
   (JNIEnv *, jobject, jint, jint);
 
 #ifdef __cplusplus
