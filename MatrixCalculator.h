@@ -215,7 +215,7 @@ public:
     static Matrix* evalCorrelation(Matrix* alpha, Matrix* target);
 
 
-    static double Det(Matrix* mat, int N);
+    static double Det(Matrix* mat, int N); //REMINDER : N = mat.getNRow() - 1
     static double Inverse(Matrix* mat1, int N, Matrix* mat3);
     static Matrix* inv(Matrix* mat);
     static double treat(Matrix* mat);

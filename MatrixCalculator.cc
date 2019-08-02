@@ -3584,9 +3584,9 @@ double MatrixCalculator::Det(Matrix *aa, int N)//N为代数余子式的size
 			}
 		}
 		int flag = (arow % 2 == 0 ? 1: -1);//因为列数为0，所以行数是偶数时候，代数余子式为1.  
-		sum += flag * aa->value[arow * n] * Det(bb, n-1);//aa第一列各元素与其代数余子式积的和即为行列式
+		sum += flag * aa->value[arow * n] * Det(bb, N-1);//aa第一列各元素与其代数余子式积的和即为行列式
 	}
-	delete[] bb;
+	delete bb;
 	return sum;
 }
 

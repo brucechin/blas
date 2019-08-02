@@ -3,6 +3,7 @@
 #include<iostream>
 #include<stdexcept>
 #include<unistd.h>
+#include<cstring>
 static JavaVM *cached_jvm = 0;
 
 /*
@@ -21,45 +22,38 @@ static JNIEnv* JNU_GetEnv(){
 
 
 
-JNIEXPORT void JNICALL Java_blas_java_Matrix_clear(JNIEnv *env, jobject jb){
-	
+JNIEXPORT void JNICALL Java_blas_java_Matrix_clearNative(JNIEnv *env, jobject jb, jlong ptr){
+	delete((Matrix*)ptr);
+	return 0;
 
 }
 
-JNIEXPORT void JNICALL Java_blas_java_Matrix_getNCol(JNIEnv *env, jobject jb){
-
-
+JNIEXPORT void JNICALL Java_blas_java_Matrix_printNative(JNIEnv *env, jobject jb, jlong ptr){
+	Matrix* mat = (Matrix*)ptr;
+	mat->print();
 }
 
-JNIEXPORT void JNICALL Java_blas_java_Matrix_getNRow(JNIEnv *env, jobject jb){
-
-
-}
-JNIEXPORT void JNICALL Java_blas_java_Matrix_print(JNIEnv *env, jobject jb){
-
-
-}
-/*
-
-JNIEXPORT void JNICALL Java_blas_java_Matrix_saveMatrix(JNIEnv *env, jobject jb, jstring filename){
-
-
+JNIEXPORT void JNICALL Java_blas_java_Matrix_saveMatrixNative(JNIEnv *env, jobject jb, jstring file, jlong ptr){
+	Matrix* mat = (Matrix*)ptr;
+	std::string filename = env->GetStringUTFChars(file, 0);
+	mat->saveMatrix(filename);
 }
 
 
-JNIEXPORT void JNICALL Java_blas_java_Matrix_readMatrix(JNIEnv *env, jobject jb, jstring filename){
-
+JNIEXPORT void JNICALL Java_blas_java_Matrix_readMatrixNative(JNIEnv *env, jobject jb, jstring file, jlong ptr){
+	Matrix* mat = (Matrix*)ptr;
+	std::string filename = env->GetStringUTFChars(file, 0);
+	mat->readMatrix(filename);
 }
-*/
 
-JNIEXPORT jlong JNICALL Java_blas_java_Matrix_ccMatrix(JNIEnv *env, jobject jb, jint n, jint m){
+
+JNIEXPORT jlong JNICALL Java_blas_java_Matrix_ccMatrixNative(JNIEnv *env, jobject jb, jint n, jint m){
 	//long ptr;
 	jint size = n * m;
 	
 	Matrix* mat = new Matrix(n, m);
 	mat->setValue(10);
-	std::cout << "constructor done"<<std::endl;
-	//usleep(3000000);
+	std::cout << "C++ constructor done"<<std::endl;
 	return (jlong) mat;
 
 
