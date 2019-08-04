@@ -121,6 +121,7 @@ public:
     static Matrix* signedpow(Matrix* mat, double index, int num);
 
     static Matrix* shift(Matrix* mat, int n);
+    static Matrix* shift(Matrix* mat, int n, int num);
     static Matrix* delay(Matrix* mat, int n);
     static Matrix* delay(Matrix* mat, int n, int num);
     static Matrix* delta(Matrix* mat, int n);

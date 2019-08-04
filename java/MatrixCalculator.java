@@ -7,9 +7,7 @@ public class MatrixCalculator{
 
 	long nativeMatrixCalculator;
 	
-	public MatrixCalculator(){
-		nativeMatrixCalculator = createMatrixCalculator();
-	}
+	public MatrixCalculator(){}
 
 
 
@@ -688,7 +686,6 @@ public class MatrixCalculator{
 	}
 
 
-	private native long createMatrixCalculator();
 
 	private static native long addNative(long mat1, long mat2);
 	private static native long subNative(long mat1, long mat2);
