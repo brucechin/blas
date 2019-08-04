@@ -5,7 +5,7 @@
 #include"../Matrix.h"
 #include"../LogicMatrix.h"
 #include"../MatrixCalculator.h"
-
+#include"blas_java_MatrixCalculator.h"
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_addNative__JJ(JNIEnv * env, jclass obj, jlong p1, jlong p2){
@@ -93,25 +93,25 @@ JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_equalNative__JD(JNIEnv *
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_orNative__JJ(JNIEnv * env, jclass obj, jlong p1, jlong p2){
-    LogicMatrix* res = MatrixCalculator::matOr((Matrix*) p1, (Matrix*) p2);
+    LogicMatrix* res = MatrixCalculator::matOr((LogicMatrix*) p1, (LogicMatrix*) p2);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_andNative__JJ(JNIEnv * env, jclass obj, jlong p1, jlong p2){
-    LogicMatrix* res = MatrixCalculator::matAnd((Matrix*) p1, (Matrix*) p2);
+    LogicMatrix* res = MatrixCalculator::matAnd((LogicMatrix*) p1, (LogicMatrix*) p2);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_notNative__J(JNIEnv * env, jclass obj, jlong p1){
-    LogicMatrix* res = MatrixCalculator::matNot((Matrix*) p1);
+    LogicMatrix* res = MatrixCalculator::matNot((LogicMatrix*) p1);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_conditionNative__JJJ(JNIEnv * env, jclass obj, jlong p1, jlong p2, jlong p3){
-    LogicMatrix* res = MatrixCalculator::matOr((LogicMatrix*) p1, (Matrix*) p2, (Matrix*) p3);
+	Matrix* res = MatrixCalculator::condition((LogicMatrix*) p1, (Matrix*) p2, (Matrix*) p3);
     return (jlong)res;
 }
 
@@ -123,7 +123,7 @@ JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_betweenNative(JNIEnv * e
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_betweenValueNative(JNIEnv * env, jclass obj, jlong p1, jdouble lowerbound, jdouble upperbound){
-    Matrix* res = MatrixCalculator::between((Matrix*) p1, lowerbound, upperbound);
+    Matrix* res = MatrixCalculator::betweenValue((Matrix*) p1, lowerbound, upperbound);
     return (jlong)res;
 }
 
@@ -342,7 +342,7 @@ JNIEXPORT void JNICALL Java_blas_java_MatrixCalculator_activateNative(JNIEnv * e
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_normalizeNative__JDDD(JNIEnv * env, jclass obj, jlong p1, jdouble scale, jdouble mean, jdouble bound){
-    Matrix* res = MatrixCalculator::decayExponential((Matrix*) p1, scale, mean, bound);
+    Matrix* res = MatrixCalculator::normalize((Matrix*) p1, scale, mean, bound);
     return (jlong)res;
 }
 
@@ -425,8 +425,8 @@ JNIEXPORT jdouble JNICALL Java_blas_java_MatrixCalculator_DetNative(JNIEnv * env
 
 
 JNIEXPORT jdouble JNICALL Java_blas_java_MatrixCalculator_InverseNative(JNIEnv * env, jclass obj, jlong p1, jint N, jlong p3){
-    Matrix* res = MatrixCalculator::Inverse((Matrix*) p1, N, (Matrix*) p3);
-    return (jlong)res;
+    jdouble res = MatrixCalculator::Inverse((Matrix*) p1, N, (Matrix*) p3);
+    return res;
 }
 
 
@@ -479,12 +479,9 @@ JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_cumSumNative(JNIEnv * en
 
 
 JNIEXPORT jdouble JNICALL Java_blas_java_MatrixCalculator_evalBetaByLongVectorNative(JNIEnv * env, jclass obj, jlong p1, jlong p2){
-    Matrix* res = MatrixCalculator::evalBetaByLongVector((Matrix*) p1, (Matrix*) p2);
-    return (jlong)res;
+    jdouble res = MatrixCalculator::evalBetaByLongVector((Matrix*) p1, (Matrix*) p2);
+    return res;
 }
-
-
-
 
 
 
@@ -567,37 +564,25 @@ JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_equalNative__JD(JNIEnv *
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_orNative__JJ(JNIEnv * env, jclass obj, jlong p1, jlong p2, jint num){
-    LogicMatrix* res = MatrixCalculator::matOr((Matrix*) p1, (Matrix*) p2, num);
+    LogicMatrix* res = MatrixCalculator::matOr((LogicMatrix*) p1, (LogicMatrix*) p2, num);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_andNative__JJ(JNIEnv * env, jclass obj, jlong p1, jlong p2, jint num){
-    LogicMatrix* res = MatrixCalculator::matAnd((Matrix*) p1, (Matrix*) p2, num);
+    LogicMatrix* res = MatrixCalculator::matAnd((LogicMatrix*) p1, (LogicMatrix*) p2, num);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_notNative__J(JNIEnv * env, jclass obj, jlong p1, jint num){
-    LogicMatrix* res = MatrixCalculator::matNot((Matrix*) p1, num);
+    LogicMatrix* res = MatrixCalculator::matNot((LogicMatrix*) p1, num);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_conditionNative__JJJ(JNIEnv * env, jclass obj, jlong p1, jlong p2, jlong p3, jint num){
-    LogicMatrix* res = MatrixCalculator::matOr((LogicMatrix*) p1, (Matrix*) p2, (Matrix*) p3, num);
-    return (jlong)res;
-}
-
-
-JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_betweenNative(JNIEnv * env, jclass obj, jlong p1, jdouble lowerbound, jdouble upperbound, jint num){
-    LogicMatrix* res = MatrixCalculator::between((Matrix*) p1, lowerbound, upperbound, num);
-    return (jlong)res;
-}
-
-
-JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_betweenValueNative(JNIEnv * env, jclass obj, jlong p1, jdouble lowerbound, jdouble upperbound, jint num){
-    Matrix* res = MatrixCalculator::between((Matrix*) p1, lowerbound, upperbound, num);
+    Matrix* res = MatrixCalculator::condition((LogicMatrix*) p1, (Matrix*) p2, (Matrix*) p3, num);
     return (jlong)res;
 }
 
@@ -802,7 +787,7 @@ JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_decayExponentialNative__
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_normalizeNative__JDDD(JNIEnv * env, jclass obj, jlong p1, jdouble scale, jdouble mean, jdouble bound, jint num){
-    Matrix* res = MatrixCalculator::decayExponential((Matrix*) p1, scale, mean, bound, num);
+    Matrix* res = MatrixCalculator::normalize((Matrix*) p1, scale, mean, bound, num);
     return (jlong)res;
 }
 

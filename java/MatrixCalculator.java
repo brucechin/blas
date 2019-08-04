@@ -1,4 +1,5 @@
 package blas.java;
+import blas.java.*;
 public class MatrixCalculator{
 	
 	static{
@@ -9,7 +10,11 @@ public class MatrixCalculator{
 	
 	public MatrixCalculator(){}
 
-
+	public static void main(String[] args){
+	
+		System.out.println("hello world!");
+	
+	}
 
 	public static Matrix add(Matrix mat1, Matrix mat2){
 		Matrix res = new Matrix();
