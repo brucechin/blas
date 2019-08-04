@@ -35,7 +35,7 @@ public class MatrixCalculator{
 	}
 	public static Matrix mul(double val, Matrix mat){
 		Matrix res = new Matrix();
-		res.setPtr(addNative(val, mat.getPtr()));
+		res.setPtr(mulNative(val, mat.getPtr()));
 		return res;
 	}
 	public static Matrix matrixMul(Matrix mat1, Matrix mat2){
@@ -66,7 +66,7 @@ public class MatrixCalculator{
 	}
 	public static LogicMatrix bigger(Matrix mat1, double val){
 		LogicMatrix res = new LogicMatrix();
-		res.setPtr(biggerrNative(mat1.getPtr(), val));
+		res.setPtr(biggerNative(mat1.getPtr(), val));
 		return res;
 	}
 	public static LogicMatrix smaller(Matrix mat1, double val){
@@ -81,7 +81,7 @@ public class MatrixCalculator{
 	}
 	public static LogicMatrix equal(Matrix mat1, double val){
 		LogicMatrix res = new LogicMatrix();
-		res.setPtr(equalrNative(mat1.getPtr(), val));
+		res.setPtr(equalNative(mat1.getPtr(), val));
 		return res;
 	}
 	public static LogicMatrix or(LogicMatrix mat1, LogicMatrix mat2){
@@ -106,7 +106,7 @@ public class MatrixCalculator{
 	}
 	public static LogicMatrix between(Matrix mat, double lowerbound, double upperbound){
 		LogicMatrix res = new LogicMatrix();
-		res.setPtr(betweenNative(mat.getPtr(), lowerbound, upperbound);
+		res.setPtr(betweenNative(mat.getPtr(), lowerbound, upperbound));
 		return res;
 	}
 	public static Matrix betweenValue(Matrix mat, double lowerbound, double upperbound){
@@ -250,7 +250,7 @@ public class MatrixCalculator{
 		res.setPtr(tsCovNative(mat1.getPtr(), mat2.getPtr(), n));
 		return res;
 	}
-	public static Matrix tsCorr(Matrix mat1, Matrix mat2, int n);{
+	public static Matrix tsCorr(Matrix mat1, Matrix mat2, int n){
 		Matrix res = new Matrix();
 		res.setPtr(tsCorrNative(mat1.getPtr(), mat2.getPtr(), n));
 		return res;
@@ -290,7 +290,7 @@ public class MatrixCalculator{
 		inputNaNNative(mat.getPtr(), val);
 	}
 	public static void activate(Matrix mat, double threshold){
-		activateNative(mat.getPtr(), threshold)
+		activateNative(mat.getPtr(), threshold);
 	}
 
 	public static Matrix normalize(Matrix mat, double scale, double mean, double bound){
@@ -345,27 +345,26 @@ public class MatrixCalculator{
 	}
 	public static Matrix evalInnerProduction(Matrix alpha, Matrix target){
 		Matrix res = new Matrix();
-		res.setPtr(evalInnerProductionNative(alpha.getPtr()), target.getPtr());
+		res.setPtr(evalInnerProductionNative(alpha.getPtr(), target.getPtr()));
 		return res;
 	}
 	public static Matrix evalCovariance(Matrix alpha, Matrix target){
 		Matrix res = new Matrix();
-		res.setPtr(evalCovarianceNative(alpha.getPtr()), target.getPtr());
+		res.setPtr(evalCovarianceNative(alpha.getPtr(), target.getPtr()));
 		return res;
 	}
 	public static Matrix evalCorrelation(Matrix alpha, Matrix target){
 		Matrix res = new Matrix();
-		res.setPtr(evalCorrelationNative(alpha.getPtr()), target.getPtr());
+		res.setPtr(evalCorrelationNative(alpha.getPtr(), target.getPtr()));
 		return res;
 	}
 
 	public static double Det(Matrix mat, int N){////REMINDER : N = mat.getNRow() - 1
-		double res = Det(mat.getPtr(), N));
+		double res = DetNative(mat.getPtr(), N);
 		return res;
 	}
 	public static double Inverse(Matrix mat1, int N, Matrix mat3){
-		Matrix res = new Matrix();
-		res.setPtr(InverseNative(mat1.getPtr()), N, mat3.getPtr());
+		double res = InverseNative(mat1.getPtr(), N, mat3.getPtr());
 		return res;
 	}
 	public static Matrix inv(Matrix mat){
@@ -374,39 +373,39 @@ public class MatrixCalculator{
 		return res;
 	}
 	public static double treat(Matrix mat){
-		double res = treatNative(mat.getPtr()));
+		double res = treatNative(mat.getPtr());
 		return res;
 	}
 	public static Matrix diag(Matrix mat){
 		Matrix res = new Matrix();
-		res = diagNative(mat.getPtr());
+		res.setPtr(diagNative(mat.getPtr()));
 		return res;
 	}
 	public static Matrix inverseDiag(Matrix mat){
 		Matrix res = new Matrix();
-		res = inverseDiagNative(mat.getPtr());
+		res.setPtr(inverseDiagNative(mat.getPtr()));
 		return res;
 	}
 	public static double evalInnerProductionByLongVector(Matrix alpha, Matrix target){
-		double res = evalInnerProductionByLongVectorNative(alpha.getPtr()), target.getPtr());
+		double res = evalInnerProductionByLongVectorNative(alpha.getPtr(), target.getPtr());
 		return res;
 	}
 	public static double evalCorrelationByLongVector(Matrix alpha, Matrix target){
-		double res = evalCorrelationByLongVectorNative(alpha.getPtr()), target.getPtr());
+		double res = evalCorrelationByLongVectorNative(alpha.getPtr(), target.getPtr());
 		return res;
 	}
 	public static Matrix evalBeta(Matrix alpha, Matrix target){
 		Matrix res = new Matrix();
-		res = evalBetaNative(alpha.getPtr(), target.getPtr());
+		res.setPtr(evalBetaNative(alpha.getPtr(), target.getPtr()));
 		return res;
 	}
 	public static Matrix cumSum(Matrix ts){
 		Matrix res = new Matrix();
-		res = cumSumNative(ts.getPt());
+		res.setPtr(cumSumNative(ts.getPtr()));
 		return res;
 	}
 	public static double evalBetaByLongVector(Matrix alpha, Matrix target){
-		double res = evalBetaByLongVectorNative(alpha.getPtr()), target.getPtr());
+		double res = evalBetaByLongVectorNative(alpha.getPtr(), target.getPtr());
 		return res;
 	}
 
@@ -432,7 +431,7 @@ public class MatrixCalculator{
 	}
 	public static Matrix mul(double val, Matrix mat, int num){
 		Matrix res = new Matrix();
-		res.setPtr(addNative(val, mat.getPtr(), num));
+		res.setPtr(mulNative(val, mat.getPtr(), num));
 		return res;
 	}
 	public static Matrix matrixMul(Matrix mat1, Matrix mat2, int num){
@@ -463,7 +462,7 @@ public class MatrixCalculator{
 	}
 	public static LogicMatrix bigger(Matrix mat1, double val, int num){
 		LogicMatrix res = new LogicMatrix();
-		res.setPtr(biggerrNative(mat1.getPtr(), val, num));
+		res.setPtr(biggerNative(mat1.getPtr(), val, num));
 		return res;
 	}
 	public static LogicMatrix smaller(Matrix mat1, double val, int num){
@@ -478,7 +477,7 @@ public class MatrixCalculator{
 	}
 	public static LogicMatrix equal(Matrix mat1, double val, int num){
 		LogicMatrix res = new LogicMatrix();
-		res.setPtr(equalrNative(mat1.getPtr(), val, num));
+		res.setPtr(equalNative(mat1.getPtr(), val, num));
 		return res;
 	}
 	public static LogicMatrix or(LogicMatrix mat1, LogicMatrix mat2, int num){
@@ -637,7 +636,7 @@ public class MatrixCalculator{
 		res.setPtr(tsCovNative(mat1.getPtr(), mat2.getPtr(), n, num));
 		return res;
 	}
-	public static Matrix tsCorr(Matrix mat1, Matrix mat2, int n){
+	public static Matrix tsCorr(Matrix mat1, Matrix mat2, int n, int num){
 		Matrix res = new Matrix();
 		res.setPtr(tsCorrNative(mat1.getPtr(), mat2.getPtr(), n, num));
 		return res;
@@ -682,19 +681,9 @@ public class MatrixCalculator{
 		res.setPtr(neutralizeNative(mat.getPtr(), num));
 		return res;
 	}
-	public static Matrix mean(Matrix mat, int num){
-		Matrix res = new Matrix();
-		res.setPtr(meanNative(mat.getPtr(), num));
-		return res;
-	}
 	public static Matrix unify(Matrix mat, int num){
 		Matrix res = new Matrix();
 		res.setPtr(unifyNative(mat.getPtr(), num));
-		return res;
-	}
-	public static Matrix unifyByL2(Matrix mat, int num){
-		Matrix res = new Matrix();
-		res.setPtr(unifyByL2Native(mat.getPtr(), num));
 		return res;
 	}
 
@@ -750,8 +739,8 @@ public class MatrixCalculator{
 	private static native long tsStdNative(long mat, int n);
 	private static native long tsSkewnessNative(long mat, int n);
 	private static native long tsKurtosisNative(long mat, int n);
-	private static native long tsCovNative(long mat, int n);
-	private static native long tsCorrNative(long mat, int n);
+	private static native long tsCovNative(long mat1, long mat2, int n);
+	private static native long tsCorrNative(long mat1, long mat2, int n);
 	private static native long tsCountNaNNative(long mat, int n);
 	private static native long tsCountTrueNative(long mat, int n);
 	private static native long tsCountConsecutiveTrueNative(long mat, int n);
@@ -764,6 +753,7 @@ public class MatrixCalculator{
 	private static native void activateNative(long mat, double threashold);
 
 	private static native long normalizeNative(long mat, double scale, double mean, double bound);
+	private static native void normalizeBySpecNative(long mat, double scale, double mean, double bound);
 	private static native long neutralizeNative(long mat);
 	private static native long meanNative(long mat);
 	private static native long unifyNative(long mat);
@@ -774,7 +764,7 @@ public class MatrixCalculator{
 	private static native long evalVarianceNative(long mat);
 	private static native long evalInnerProductionNative(long alpha, long target);
 	private static native long evalCovarianceNative(long alpha, long target);
-	private static native long evalCorrelationNatve(long alpha, long target);
+	private static native long evalCorrelationNative(long alpha, long target);
 
 	private static native double DetNative(long mat, int N);////REMINDER : N = mat.getNRow() - 1
 	private static native double InverseNative(long mat1, int N, long mat3);
@@ -839,8 +829,8 @@ public class MatrixCalculator{
 	private static native long tsStdNative(long mat, int n, int num);
 	private static native long tsSkewnessNative(long mat, int n, int num);
 	private static native long tsKurtosisNative(long mat, int n, int num);
-	private static native long tsCovNative(long mat, int n, int num);
-	private static native long tsCorrNative(long mat, int n, int num);
+	private static native long tsCovNative(long mat1, long mat2, int n, int num);
+	private static native long tsCorrNative(long mat1, long mat2, int n, int num);
 	private static native long tsCountNaNNative(long mat, int n, int num);
 	private static native long tsCountTrueNative(long mat, int n, int num);
 	private static native long tsCountConsecutiveTrueNative(long mat, int n, int num);
@@ -848,7 +838,7 @@ public class MatrixCalculator{
 	private static native long decayExponentialNative(long mat, int n, int num);
 	private static native long normalizeNative(long mat, double scale, double mean, double bound, int num);
 	private static native long neutralizeNative(long mat, int num);
-	
+	private static native long unifyNative(long mat, int num);
 
 
 }
