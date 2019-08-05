@@ -5,8 +5,11 @@
  * @Date 2019/7/30 5:55 PM
  * @Version 1.0
  **/
+
 package matrix;
+
 import matrix.*;
+
 public class MatrixTest {
     public static void main(String[] args){
 
@@ -39,308 +42,308 @@ public class MatrixTest {
         System.out.println("treat(a) : " + calculator.treat(a));
 
         res = calculator.Normalize(a, 2.0, 10.0, 1000.0);
-        compareMatrix.readCppMatrix("normalize.mat");
+        compareMatrix.readMatrix("normalize.mat");
         res.compareMat(compareMatrix);
         res.clear();
         
         calculator->smoothByDecayLinear(a, 5);
-        compareMatrix.readCppMatrix("smooth.mat");
+        compareMatrix.readMatrix("smooth.mat");
         a.compareMat(compareMatrix);
 
         res = calculator.add(a, b);
-        compareMatrix.readCppMatrix("add.mat");
+        compareMatrix.readMatrix("add.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.sub(a, b);
-        compareMatrix.readCppMatrix("sub.mat");
+        compareMatrix.readMatrix("sub.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.div(a, b);
-        compareMatrix.readCppMatrix("div.mat");
+        compareMatrix.readMatrix("div.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.mul(a, b);
-        compareMatrix.readCppMatrix("mul.mat");
+        compareMatrix.readMatrix("mul.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.matrixMul(a, b);
-        compareMatrix.readCppMatrix("matrixMul.mat");
+        compareMatrix.readMatrix("matrixMul.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.max(a, b);
-        compareMatrix.readCppMatrix("max.mat");
+        compareMatrix.readMatrix("max.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.min(a, b);
-        compareMatrix.readCppMatrix("min.mat");
+        compareMatrix.readMatrix("min.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         lres = calculator.bigger(a, b);
-        compareLogicMatrix.readCppMatrix("bigger.mat");
+        compareLogicMatrix.readMatrix("bigger.mat");
         lres.compareLogicMat(compareLogicMatrix);
         lres.clear();
 
         lres = calculator.smaller(a, b);
-        compareLogicMatrix.readCppMatrix("smaller.mat");
+        compareLogicMatrix.readMatrix("smaller.mat");
         lres.compareLogicMat(compareLogicMatrix);
         lres.clear();
 
 
         lres = calculator.equal(a, b);
-        compareLogicMatrix.readCppMatrix("equal.mat");
+        compareLogicMatrix.readMatrix("equal.mat");
         lres.compareLogicMat(compareLogicMatrix);
         lres.clear();
 
         lres = calculator.between(a, lowerBound, upperBound);
-        compareLogicMatrix.readCppMatrix("between.mat");
+        compareLogicMatrix.readMatrix("between.mat");
         lres.compareLogicMat(compareLogicMatrix);
         lres.clear();
 
         lres = calculator.and(la, lb);
-        compareLogicMatrix.readCppMatrix("matAnd.mat");
+        compareLogicMatrix.readMatrix("matAnd.mat");
         lres.compareLogicMat(compareLogicMatrix);
         lres.clear();
 
         lres = calculator.or(la, lb);
-        compareLogicMatrix.readCppMatrix("matOr.mat");
+        compareLogicMatrix.readMatrix("matOr.mat");
         lres.compareLogicMat(compareLogicMatrix);
         lres.clear();
 
         lres = calculator.not(la);
-        compareLogicMatrix.readCppMatrix("matNot.mat");
+        compareLogicMatrix.readMatrix("matNot.mat");
         lres.compareLogicMat(compareLogicMatrix);
         lres.clear();
 
         res = calculator.condition(la, a, b);
-        compareMatrix.readCppMatrix("condition.mat");
+        compareMatrix.readMatrix("condition.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.rank(a);
-        compareMatrix.readCppMatrix("rank.mat");
+        compareMatrix.readMatrix("rank.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.round(a);
-        compareMatrix.readCppMatrix("round.mat");
+        compareMatrix.readMatrix("round.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.floor(a);
-        compareMatrix.readCppMatrix("floor.mat");
+        compareMatrix.readMatrix("floor.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.abs(a);
-        compareMatrix.readCppMatrix("abs.mat");
+        compareMatrix.readMatrix("abs.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.minus(a);
-        compareMatrix.readCppMatrix("minus.mat");
+        compareMatrix.readMatrix("minus.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.sqrt(a);
-        compareMatrix.readCppMatrix("sqrt.mat");
+        compareMatrix.readMatrix("sqrt.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.log(a);
-        compareMatrix.readCppMatrix("log.mat");
+        compareMatrix.readMatrix("log.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.exp(a);
-        compareMatrix.readCppMatrix("exp.mat");
+        compareMatrix.readMatrix("exp.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.sign(a);
-        compareMatrix.readCppMatrix("sign.mat");
+        compareMatrix.readMatrix("sign.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.inverse(a);
-        compareMatrix.readCppMatrix("inverse.mat");
+        compareMatrix.readMatrix("inverse.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.signedpow(a, 2);
-        compareMatrix.readCppMatrix("signedpow.mat");
+        compareMatrix.readMatrix("signedpow.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.shift(a, stepSize);
-        compareMatrix.readCppMatrix("shift.mat");
+        compareMatrix.readMatrix("shift.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.delay(a, stepSize);
-        compareMatrix.readCppMatrix("delay.mat");
+        compareMatrix.readMatrix("delay.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.delta(a, stepSize);
-        compareMatrix.readCppMatrix("delta.mat");
+        compareMatrix.readMatrix("delta.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.ratio(a, stepSize);
-        compareMatrix.readCppMatrix("ratio.mat");
+        compareMatrix.readMatrix("ratio.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.sum(a, stepSize);
-        compareMatrix.readCppMatrix("sum.mat");
+        compareMatrix.readMatrix("sum.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.product(a, stepSize);
-        compareMatrix.readCppMatrix("product.mat");
+        compareMatrix.readMatrix("product.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
 
         res = calculator.tsmax(a, stepSize);
-        compareMatrix.readCppMatrix("tsmax.mat");
+        compareMatrix.readMatrix("tsmax.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tsmin(a, stepSize);
-        compareMatrix.readCppMatrix("tsmin.mat");
+        compareMatrix.readMatrix("tsmin.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tsargmax(a, stepSize);
-        compareMatrix.readCppMatrix("tsargmax.mat");
+        compareMatrix.readMatrix("tsargmax.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tsargmin(a, stepSize);
-        compareMatrix.readCppMatrix("tsargmin.mat");
+        compareMatrix.readMatrix("tsargmin.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tsrank(a, stepSize);
-        compareMatrix.readCppMatrix("tsrank.mat");
+        compareMatrix.readMatrix("tsrank.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tsmean(a, stepSize);
-        compareMatrix.readCppMatrix("tsmean.mat");
+        compareMatrix.readMatrix("tsmean.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tsstd(a, stepSize);
-        compareMatrix.readCppMatrix("tsstd.mat");
+        compareMatrix.readMatrix("tsstd.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tsskewness(a, stepSize);
-        compareMatrix.readCppMatrix("tsskewness.mat");
+        compareMatrix.readMatrix("tsskewness.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tskurtosis(a, stepSize);
-        compareMatrix.readCppMatrix("tskurtosis.mat");
+        compareMatrix.readMatrix("tskurtosis.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tscov(a, b, stepSize);
-        compareMatrix.readCppMatrix("tscov.mat");
+        compareMatrix.readMatrix("tscov.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tscorr(a, b, stepSize);
-        compareMatrix.readCppMatrix("tscorr.mat");
+        compareMatrix.readMatrix("tscorr.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tscounttrue(la, stepSize);
-        compareMatrix.readCppMatrix("tscounttrue.mat");
+        compareMatrix.readMatrix("tscounttrue.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.tscountconsecutivetrue(la, stepSize);
-        compareMatrix.readCppMatrix("tscountconsecutivetrue.mat");
+        compareMatrix.readMatrix("tscountconsecutivetrue.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.decaylinear(a, stepSize);
-        compareMatrix.readCppMatrix("decaylinear.mat");
+        compareMatrix.readMatrix("decaylinear.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.decayexponential(a, stepSize);
-        compareMatrix.readCppMatrix("decayexponential.mat");
+        compareMatrix.readMatrix("decayexponential.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.neutralize(a);
-        compareMatrix.readCppMatrix("neutralize.mat");
+        compareMatrix.readMatrix("neutralize.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         res = calculator.unify(a);
-        compareMatrix.readCppMatrix("unify.mat");
+        compareMatrix.readMatrix("unify.mat");
         res.compareMat(compareMatrix);
         res.clear();
 
         // res = calculator.evalValidPct(a);
-        // compareMatrix.readCppMatrix("evalvalidpct.mat");
+        // compareMatrix.readMatrix("evalvalidpct.mat");
         // res.compareMat(compareMatrix);
         // res.clear();
 
         // res = calculator.evalAbsSum(a);
-        // compareMatrix.readCppMatrix("evalabssum.mat");
+        // compareMatrix.readMatrix("evalabssum.mat");
         // res.compareMat(compareMatrix);
         // res.clear();
 
         // res = calculator.evalMean(a);
-        // compareMatrix.readCppMatrix("evalmean.mat");
+        // compareMatrix.readMatrix("evalmean.mat");
         // res.compareMat(compareMatrix);
         // res.clear();
 
         // res = calculator.evalVariance(a);
-        // compareMatrix.readCppMatrix("evalvariance.mat");
+        // compareMatrix.readMatrix("evalvariance.mat");
         // res.compareMat(compareMatrix);
         // res.clear();
 
         // res = calculator.evalInnerProduction(a, b);
-        // compareMatrix.readCppMatrix("evalinnerproduction.mat");
+        // compareMatrix.readMatrix("evalinnerproduction.mat");
         // res.compareMat(compareMatrix);
         // res.clear();
 
         // res = calculator.evalCovariance(a, b);
-        // compareMatrix.readCppMatrix("evalcovariance.mat");
+        // compareMatrix.readMatrix("evalcovariance.mat");
         // res.compareMat(compareMatrix);
         // res.clear();
 
         // res = calculator.evalCorrelation(a, b);
-        // compareMatrix.readCppMatrix("evalcorrelation.mat");
+        // compareMatrix.readMatrix("evalcorrelation.mat");
         // res.compareMat(compareMatrix);
         // res.clear();
 
         // res = calculator.evalBeta(a, b);
-        // compareMatrix.readCppMatrix("evalbeta.mat");
+        // compareMatrix.readMatrix("evalbeta.mat");
         // res.compareMat(compareMatrix);
         // res.clear();
 
         // res = calculator.diag(a);
-        // compareMatrix.readCppMatrix("diag.mat");
+        // compareMatrix.readMatrix("diag.mat");
         // res.compareMat(compareMatrix);
         // res.clear();
 
         // res = calculator.cumSum(a);
-        // compareMatrix.readCppMatrix("cumsum.mat");
+        // compareMatrix.readMatrix("cumsum.mat");
         // res.compareMat(compareMatrix);
         // res.clear();
 
