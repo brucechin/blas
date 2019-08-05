@@ -92,6 +92,8 @@ public class LogicMatrix implements AutoCloseable{
 	public void saveMatrix(String filename){saveMatrixNative(filename, ptr);}
 	
 	public void readMatrix(String filename){readMatrixNative(filename, ptr);}
+
+	public void compareLogicMat(LogicMatrix other){compareLogicMatrixNative(other.getPtr(), ptr);}
 	
 	public native void setElementNative(int i, int j, boolean x, long ptr);
 
@@ -115,30 +117,32 @@ public class LogicMatrix implements AutoCloseable{
 
 	public native long ccLogicMatrixNative(int n, int m);
 	
+	public native void compareLogicMatrixNative(long ptr1, long ptr2);
+
 	public static void main(String[] args){
 	
-		LogicMatrix a = new LogicMatrix(5, 5);
-		try(LogicMatrix b = new LogicMatrix(10, 10);
-			LogicMatrix c = new LogicMatrix(15, 15)){
+		// LogicMatrix a = new LogicMatrix(5, 5);
+		// try(LogicMatrix b = new LogicMatrix(10, 10);
+		// 	LogicMatrix c = new LogicMatrix(15, 15)){
 
-			a.print();
-			b.setElement(0, 0, false);
-			b.saveMatrix("test.mat");
-			a.readMatrix("test.mat");
-			a.print();
-			boolean t = a.getElement(1, 1);
-			System.out.println(t);
+		// 	a.print();
+		// 	b.setElement(0, 0, false);
+		// 	b.saveMatrix("test.mat");
+		// 	a.readMatrix("test.mat");
+		// 	a.print();
+		// 	boolean t = a.getElement(1, 1);
+		// 	System.out.println(t);
 			
-			LogicMatrix arow = a.getRowVector(1);
-			System.out.println("\n");
-			arow.print();
-			LogicMatrix acol = a.getColVector(2);
-			acol.print();
+		// 	LogicMatrix arow = a.getRowVector(1);
+		// 	System.out.println("\n");
+		// 	arow.print();
+		// 	LogicMatrix acol = a.getColVector(2);
+		// 	acol.print();
 			
-			}
-		catch(IOException e){
-			System.out.println("exception");
-		}
+		// 	}
+		// catch(IOException e){
+		// 	System.out.println("exception");
+		// }
 	
 	
 	}

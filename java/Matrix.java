@@ -5,7 +5,7 @@ public class Matrix implements AutoCloseable{
 	static{
 		System.loadLibrary("Matrix");
 	}
-	public long ptr;//pointing to the memory allocated to this Matrix
+	private long ptr;//pointing to the memory allocated to this Matrix
 	//public int nrow;
 	//public int ncol;
 	public Matrix(){
@@ -93,6 +93,8 @@ public class Matrix implements AutoCloseable{
 	
 	public void readMatrix(String filename){readMatrixNative(filename, ptr);}
 	
+	public void compareMat(Matrix other){compareMatrixNative(other.getPtr(), ptr);}
+
 	public native void setElementNative(int i, int j, double x, long ptr);
 
 	public native double getElementNative(int i, int j, long ptr);
@@ -115,31 +117,32 @@ public class Matrix implements AutoCloseable{
 
 	public native long ccMatrixNative(int n, int m);
 	
+	public native void compareMatrixNative(long ptr1, long ptr2);
+
 	public static void main(String[] args){
 	
-		Matrix a = new Matrix(5, 5);
-		try(Matrix b = new Matrix(10, 10);
-			Matrix c = new Matrix(15, 15)){
+		// Matrix a = new Matrix(5, 5);
+		// try(Matrix b = new Matrix(10, 10);
+		// 	Matrix c = new Matrix(15, 15)){
 
-			a.print();
-			b.setElement(0, 0, 0);
-			b.saveMatrix("test.mat");
-			a.readMatrix("test.mat");
-			a.print();
-			double t = a.getElement(1, 1);
-			System.out.println(t);
+		// 	a.print();
+		// 	b.setElement(0, 0, 0);
+		// 	b.saveMatrix("test.mat");
+		// 	a.readMatrix("test.mat");
+		// 	a.print();
+		// 	double t = a.getElement(1, 1);
+		// 	System.out.println(t);
 			
-			Matrix arow = a.getRowVector(1);
-			System.out.println("\n");
-			arow.print();
-			Matrix acol = a.getColVector(2);
-			acol.print();
+		// 	Matrix arow = a.getRowVector(1);
+		// 	System.out.println("\n");
+		// 	arow.print();
+		// 	Matrix acol = a.getColVector(2);
+		// 	acol.print();
 			
-			}
-		catch(IOException e){
-			System.out.println("exception");
-		}
-	
-	
+		// 	}
+		// catch(IOException e){
+		// 	System.out.println("exception");
+		// }
+		
 	}
 }
