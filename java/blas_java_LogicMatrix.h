@@ -95,6 +95,14 @@ JNIEXPORT void JNICALL Java_blas_java_LogicMatrix_readMatrixNative
 JNIEXPORT jlong JNICALL Java_blas_java_LogicMatrix_ccLogicMatrixNative
   (JNIEnv *, jobject, jint, jint);
 
+/*
+ * Class:     blas_java_LogicMatrix
+ * Method:    compareLogicMatrixNative
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_blas_java_LogicMatrix_compareLogicMatrixNative
+  (JNIEnv *, jobject, jlong, jlong);
+
 #ifdef __cplusplus
 }
 #endif
