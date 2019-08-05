@@ -89,10 +89,9 @@ JNIEXPORT void JNICALL Java_blas_java_Matrix_readMatrixNative(JNIEnv *env, jobje
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_Matrix_ccMatrixNative(JNIEnv *env, jobject jb, jint n, jint m){
-	jint size = n * m;
+	//jint size = n * m;
 	Matrix* mat = new Matrix(n, m);
-	mat->setValue(10);
-	std::cout << "C++ constructor done"<<std::endl;
+	//std::cout << "C++ constructor done"<<std::endl;
 	return (jlong) mat;
 
 
@@ -125,8 +124,14 @@ JNIEXPORT jlong JNICALL Java_blas_java_Matrix_ccMatrixNative(JNIEnv *env, jobjec
 	//env->SetDoubleArrayRegion(buffer, 0, size, res);
 	std::cout << "jdoubleArray written"<<std::endl;
 	//mat->print();
-	//mat->setValue(10);
+	//mat->setValue(10);a
 	//mat->print();
 	return (jlong) mat;
 */
+}
+
+JNIEXPORT void JNICALL Java_blas_java_Matrix_compareMatrixNative(JNIEnv* env, jobject obj, jlong ptr1, jlong ptr2){
+	Matrix* mat1 = (Matrix*)ptr1;
+	std::cout << mat1->compareMatrix((Matrix*)ptr2) << std::endl;
+
 }

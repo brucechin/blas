@@ -31,6 +31,10 @@ public class Matrix implements AutoCloseable{
 		System.out.println("deconstruct");
 	}
 
+	public void clear(){
+		clearNative(ptr);
+	}
+
 	public void close() throws IOException{
 		//REMINDER : all instances initialized in try block will be auto-released when try block ends;
 		//

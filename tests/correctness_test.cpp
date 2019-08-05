@@ -38,13 +38,13 @@ int main()
     LogicMatrix* lres;
 
 
-    std::cout << "Det(a) : "<<calculator->Det(a, a->getNRow()) <<std::endl;
+ //   std::cout << "Det(a) : "<<calculator->Det(a, a->getNRow() - 1) <<std::endl;
 
-    std::cout << "treat(a) : "<<calculator->treat(a) <<std::endl;
+ //   std::cout << "treat(a) : "<<calculator->treat(a) <<std::endl;
 
-    res = calculator->normalize(a, 2.0, 10.0, 1000.0);
-    res->saveMatrix("normalize.mat");
-    res->clear();
+ //   res = calculator->normalize(a, 2.0, 10.0, 1000.0);
+ //   res->saveMatrix("normalize.mat");
+//`    res->clear();
     
     calculator->smoothByDecayLinear(a, 5);
     a->saveMatrix("smooth.mat");
@@ -218,11 +218,11 @@ int main()
     res = calculator->tsCov(a, b, stepSize);
     res->saveMatrix("tscov.mat");
     res->clear();
-
+/*
     res = calculator->tsCorr(a, b, stepSize);
     res->saveMatrix("tscorr.mat");
     res->clear();
-
+*/
     res = calculator->tsCountTrue(la, stepSize);
     res->saveMatrix("tscounttrue.mat");
     res->clear();

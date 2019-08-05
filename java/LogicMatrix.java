@@ -30,7 +30,10 @@ public class LogicMatrix implements AutoCloseable{
 	public void finalize(){
 		System.out.println("deconstruct");
 	}
-
+	public void clear(){
+		//release memory allocated 
+		clearNative(ptr);
+	}
 	public void close() throws IOException{
 		//REMINDER : all instances initialized in try block will be auto-released when try block ends;
 		//
