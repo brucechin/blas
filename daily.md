@@ -251,3 +251,8 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 
 1. 开始利用AutoCloseable类写Matrix.java + JNI，目前readMatrix/writeMatrix还有构造和析构函数等都可用了，迈出了坚实的第一步（说明在C++这一层的内存访问正常且正常释放）
 2. 进一步实现了Matrix的getRow/Col Vector，set/getElement等API，目前Matrix.java类已经基本实现完成，下一步要实现MatrixCalculator类
+
+### 8.5
+
+1. 周末把MatrixCalculator.java和native层都写掉且跑通了
+2. 今天早上把MatrixCorrectenessTest.java跑通且都对了，除了tsCorr还有点问题会core dump。因为之前已经验证c++和原java的库结果是一致的，所以这次是JNI的和c++的做比较，由此可见提升代码复用性可以减少很多活。

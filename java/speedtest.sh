@@ -1,11 +1,3 @@
-#########################################################################
-# File Name: correctness.sh
-# Author: ma6174
-# mail: ma6174@163.com
-# Created Time: Mon Aug  5 10:53:20 2019
-#########################################################################
-#!/bin/bash
-
 cd ../tests
 sh correctness_test.sh
 cp *.mat ../java
@@ -21,7 +13,7 @@ sudo cp lib*.so /usr/lib/
 javac Matrix.java
 javac LogicMatrix.java
 javac MatrixCalculator.java
-javac MatrixCorrectnessTest.java
+javac MatrixSpeedTest.java
 
-java blas.java.MatrixCorrectnessTest
+java blas.java.MatrixSpeedTest
 rm *.mat
