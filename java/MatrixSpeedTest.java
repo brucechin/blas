@@ -18,13 +18,13 @@ public class MatrixSpeedTest {
 
         Matrix a = new Matrix(matrix_a);
         Matrix b = new Matrix(matrix_b);
-        ogicMatrix la = new LogicMatrix(logicMatrix_a);
-        ogicMatrix lb = new LogicMatrix(logicMatrix_b);
+        LogicMatrix la = new LogicMatrix(logicMatrix_a);
+        LogicMatrix lb = new LogicMatrix(logicMatrix_b);
 
         Matrix res;
-        ogicMatrix lres;
-        ong startTime;
-        ong endTime;
+        LogicMatrix lres;
+        long startTime;
+        long endTime;
         int times = 100;
         /*
          * System.out.println("Det(a) : " + MatrixCalculator.Det(a.value, a.getNRow() -
@@ -384,7 +384,6 @@ public class MatrixSpeedTest {
         }
         endTime = System.nanoTime(); // 获取结束时间
         System.out.println("tsCov : " + (endTime - startTime) / 1000 + "ms");
-        res.clear();
 
         // res = MatrixCalculator.tscorr(a, b, stepSize);
         //

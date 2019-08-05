@@ -1,8 +1,8 @@
-cd ../tests
-sh correctness_test.sh
-cp *.mat ../java
-rm *.mat
-cd ../java
+#cd ../tests
+#sh correctness_test.sh
+#cp *.mat ../java
+#rm *.mat
+#cd ../java
 
 g++ -std=c++11 -I /opt/Java/jdk/include -I /opt/Java/jdk/include/linux -shared -fPIC blas_java_Matrix.cc -o libMatrix.so 
 g++ -std=c++11 -I /opt/Java/jdk/include -I /opt/Java/jdk/include/linux -shared -fPIC blas_java_LogicMatrix.cc -o libLogicMatrix.so 
@@ -16,4 +16,4 @@ javac MatrixCalculator.java
 javac MatrixSpeedTest.java
 
 java blas.java.MatrixSpeedTest
-rm *.mat
+#rm *.mat

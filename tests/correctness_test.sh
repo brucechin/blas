@@ -7,5 +7,4 @@
 #!/bin/bash
 g++  correctness_test.cpp ../MatrixCalculator.cc -O3 -std=c++11 -o test -lpthread -lopenblas
 ./test
-rm test
-rm *.mat
+cp a.mat b.mat la.mat lb.mat ../java

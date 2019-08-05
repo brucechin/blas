@@ -7,7 +7,7 @@ using namespace std;
 
 int rangeMin = -10000;
 int rangeMax = 10000;
-int matSize = 10;
+int matSize = 10000;
 MatrixFactory* factory = new MatrixFactory();
 MatrixCalculator* calculator = new MatrixCalculator();
 string matrix_a = "a.mat";
@@ -58,11 +58,16 @@ TEST(MatrixCalculator, Mul){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res = calculator->mul(a, b);
-	//EXPECT_TRUE(a->compareMatrix(calculator->div(res, b))); //FIX this is not exactly the same because of precision issue.
+	
+	for(int i = 0; i < 1; i++){
+		Matrix* res = MatrixCalculator::mul(a, b);
+		a->value[i]++;
+		b->value[i]--;
+		res->clear();
+	}
 	a->clear();
 	b->clear();
-	res->clear();
+	//res->clear();
 }
 
 
@@ -73,7 +78,6 @@ TEST(MatrixCalculator, Div){
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
 	Matrix* res = calculator->div(a, b);
-	//EXPECT_TRUE(a->compareMatrix(calculator->mul(res, b))); //FIX this is not exactly the same because of precision issue.
 	a->clear();
 	b->clear();
 	res->clear();
@@ -85,12 +89,18 @@ TEST(MatrixCalculator, MatrixMul){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res = calculator->matrixMul(a, b);
+	for(int i = 0; i < 1; i++){
+		Matrix* res = MatrixCalculator::matrixMul(a, b);
+		a->value[i]++;
+		b->value[i]--;
+		res->clear();
+	}
 	a->clear();
 	b->clear();
-	res->clear();
+	//res->clear();
 }
 
+/*
 
 TEST(MatrixCalculator, Max){
 	
@@ -1108,7 +1118,7 @@ TEST(MatrixCalculator, EvalBeta){
 	res1->clear();
 	res2->clear();
 }
-
+*/
 int main()
 {	
     Matrix* a = factory->getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
@@ -1119,14 +1129,16 @@ int main()
 	la->saveMatrix(logicMatrix_a);
 	LogicMatrix* lb = factory->getInstanceOfRandomLogicMatrix(matSize, matSize);
 	lb->saveMatrix(logicMatrix_b);
+/*	
+	int times = 100;
 	
-//	double res1 = calculator->Det(a, 10);
-//	double res2 = calculator->Det(b, 10);
-//	a->print();
-//	std::cout << std::endl;
-//	std:;cout << res1 <<std::endl;
-//	std::cout << res2<<std::endl;
-	
+	for(int i = 0; i < times; i++)
+		Matrix* res1 = calculator->mul(a, b);
+
+	for(int i = 0; i < times; i++)
+		Matrix* res2 = calculator->matrixMul(a, b);
+*/
+
 	testing::InitGoogleTest();
 	RUN_ALL_TESTS();
     return 0;
