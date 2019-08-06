@@ -23,10 +23,27 @@ public class MatrixFactory{
 		return res;
 	}
 
+	public static Matrix getInstanceOfNaNMatrix(int size){
+		Matrix res = new Matrix();
+		res.setPtr(getInstanceOfNaNMatrixNative(size));
+		return res;
+	}
 
-	public static native long getInstanceOfEmptyMatrixNative(int size);
+
+	public static Matrix getInstanceOfRandomMatrix(int n, int m, int min, int max){
+		Matrix res = new Matrix();
+		res.setPtr(getInstanceOfRandomMatrixNative(n, m, min, max));
+		return res;
+	}
+
+	public static LogicMatrix getInstanceOfRandomLogicMatrix(int n, int m){
+		LogicMatrix res = new LogicMatrix();
+		res.setPtr(getInstanceOfRandomLogicMatrixNative(n, m));
+		return res;
+	}
+
+	public static native long getInstanceOfEmptyMatrixNative();
 	public static native long getInstanceOfNaNMatrixNative(int size);
-	public static native long getInstanceOfDiagMatrixNative(int size);
 	public static native long getInstanceOfRandomMatrixNative(int n, int m, int min, int max);
 	public static native long getInstanceOfRandomLogicMatrixNative(int n, int m);
 	

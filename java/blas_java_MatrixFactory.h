@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     blas_java_MatrixFactory
  * Method:    getInstanceOfEmptyMatrixNative
- * Signature: (I)J
+ * Signature: ()J
  */
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixFactory_getInstanceOfEmptyMatrixNative
-  (JNIEnv *, jclass, jint);
+  (JNIEnv *, jclass);
 
 /*
  * Class:     blas_java_MatrixFactory
@@ -21,14 +21,6 @@ JNIEXPORT jlong JNICALL Java_blas_java_MatrixFactory_getInstanceOfEmptyMatrixNat
  * Signature: (I)J
  */
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixFactory_getInstanceOfNaNMatrixNative
-  (JNIEnv *, jclass, jint);
-
-/*
- * Class:     blas_java_MatrixFactory
- * Method:    getInstanceOfDiagMatrixNative
- * Signature: (I)J
- */
-JNIEXPORT jlong JNICALL Java_blas_java_MatrixFactory_getInstanceOfDiagMatrixNative
   (JNIEnv *, jclass, jint);
 
 /*

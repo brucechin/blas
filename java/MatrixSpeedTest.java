@@ -15,12 +15,18 @@ public class MatrixSpeedTest {
         String matrix_b = "b.mat";
         String logicMatrix_a = "la.mat";
         String logicMatrix_b = "lb.mat";
-
+/*
         Matrix a = new Matrix(matrix_a);
         Matrix b = new Matrix(matrix_b);
         LogicMatrix la = new LogicMatrix(logicMatrix_a);
         LogicMatrix lb = new LogicMatrix(logicMatrix_b);
+*/
 
+
+		Matrix a = MatrixFactory.getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
+		Matrix b = MatrixFactory.getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
+		LogicMatrix la = MatrixFactory.getInstanceOfRandomLogicMatrix(matSize, matSize);
+		LogicMatrix lb = MatrixFactory.getInstanceOfRandomLogicMatrix(matSize, matSize);
         Matrix res;
         LogicMatrix lres;
         long startTime;
