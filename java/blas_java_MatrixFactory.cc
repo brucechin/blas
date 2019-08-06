@@ -29,3 +29,8 @@ JNIEXPORT jlong JNICALL Java_blas_java_MatrixFactory_getInstanceOfRandomLogicMat
     LogicMatrix* res = MatrixFactory::getInstanceOfRandomLogicMatrix(n, m);
     return (jlong)res;
 }
+
+JNIEXPORT jlong JNICALL Java_blas_java_MatrixFactory_getInstanceOfRandomMatrixWithAbnormalValueNative(JNIEnv * env, jclass obj, jint n, jint m, jint lower, jint upper, jint frequency){
+    Matrix* res = MatrixFactory::getInstanceOfRandomMatrixWithAbnormalValue(n, m, lower, upper, frequency);
+    return (jlong)res;
+}
