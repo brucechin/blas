@@ -1,5 +1,6 @@
 package blas.java;
 import blas.java.*;
+import java.util.*;
 public class MatrixCalculator{
 	
 	static{
@@ -12,6 +13,16 @@ public class MatrixCalculator{
 
 	public static void main(String[] args){
 	
+		Matrix mat = new Matrix(10, 10);
+		for(int i = 0; i < 10; i++){
+			for(int j = 0; j < 10; j++){
+				mat.setElement(i, j, (double)i);	
+			}
+		}
+		HashMap res = sumByRow(mat);
+		for(int i = 0; i < 10; i++){
+			System.out.println(res.get(i));
+		}
 		System.out.println("hello world!");
 	
 	}
@@ -690,7 +701,13 @@ public class MatrixCalculator{
 		return res;
 	}
 
-
+	public static HashMap sumByRow(Matrix mat){
+		Object obj = sumByRowNative(mat.getPtr());
+		HashMap res = (HashMap) obj;
+		return res;
+	}
+	
+	private static native HashMap sumByRowNative(long mat);
 
 	private static native long addNative(long mat1, long mat2);
 	private static native long subNative(long mat1, long mat2);

@@ -2,10 +2,46 @@
 #include<stdexcept>
 #include<unistd.h>
 #include<cstring>
+#include<string>
 #include"../Matrix.h"
 #include"../LogicMatrix.h"
 #include"../MatrixCalculator.h"
 #include"blas_java_MatrixCalculator.h"
+
+JNIEXPORT jobject JNICALL Java_blas_java_MatrixCalculator_sumByRowNative(JNIEnv * env, jclass obj, jlong p){
+    Matrix* mat = (Matrix*)p;
+	jclass class_hashmap = env->FindClass("java/util/HashMap");
+	jclass class_integer = env->FindClass("java/lang/Integer");
+	jclass class_double = env->FindClass("java/lang/Double");
+	if(class_hashmap == NULL) return NULL;
+	
+	jmethodID hashmapInit = env->GetMethodID(class_hashmap, "<init>", "()V");
+	jobject hashmap = env->NewObject(class_hashmap, hashmapInit);
+	//key and value can only be java/lang/Object, int/double have to be casted to Integer/Double instances
+	jmethodID hashmapPut = env->GetMethodID(class_hashmap, "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
+	jmethodID integerInit = env->GetMethodID(class_integer, "<init>", "(I)V");
+	jmethodID doubleInit = env->GetMethodID(class_double, "<init>", "(D)V");
+	int nrow = mat->getNRow();
+	int ncol = mat->getNCol();
+	double sum = 0;
+	for(int i = 0; i < nrow; i++){
+		sum = 0;
+		double* valPtr = mat->value;
+		for(int j = 0; j < ncol; j++){
+			sum += valPtr[i * ncol + j];
+		}
+		jobject key = env->NewObject(class_integer, integerInit, i);
+		std::cout << "key generated"<<std::endl;
+		jobject val = env->NewObject(class_double, doubleInit, sum);
+		std::cout << "val generated" <<std::endl;
+		env->CallObjectMethod(hashmap, hashmapPut, key, val);
+		env->DeleteLocalRef(key);
+		env->DeleteLocalRef(val);
+	}
+	jobject hashmapGlobal = static_cast<jobject>(env->NewGlobalRef(hashmap));
+    env->DeleteLocalRef(hashmap);
+	return hashmapGlobal;
+}
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_addNative__JJ(JNIEnv * env, jclass obj, jlong p1, jlong p2){

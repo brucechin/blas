@@ -23,5 +23,6 @@ javac LogicMatrix.java
 javac MatrixCalculator.java
 javac MatrixCorrectnessTest.java
 
-java blas.java.MatrixCorrectnessTest
+java -cp /home/liankeqin/ blas.java.MatrixCalculator
+#java blas.java.MatrixCorrectnessTest
 rm *.mat
