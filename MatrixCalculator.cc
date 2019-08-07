@@ -1492,8 +1492,8 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                 double val = mat->value[i * ncol + j - k];
                 if(!std::isnan(val))
                 {
-                    if(maxIsNaN){
-                        max = val;
+	                  if(maxIsNaN){
+		                    max = val;
                         maxIsNaN = false;
                     }else{
                         max = std::max(max, val);
@@ -4355,12 +4355,14 @@ Matrix* MatrixCalculator::product_op(Matrix* mat, int n)
     double* res_p = res->value;
     for (int i = 0; i < nrow; i++)
     {
+		//the following sliding window solution for timeseries max/min problem can be found on LeetCode.
+		//optimized to O(N^2) complexity
         int count = 0;
         deque<int> q;
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < ncol; j++)
         {
             double val = mat_p[i * ncol + j];
-            if(j <= n){
+            if(j < n){
                 if(!isnan(val)){
                     while(!q.empty() && val > mat_p[q.back() + i * ncol]){
                         q.pop_back();
@@ -4368,8 +4370,8 @@ Matrix* MatrixCalculator::product_op(Matrix* mat, int n)
                     q.push_back(j);
                 }
             }else{
-                if(!isnan(val)){
-                    while(!q.empty() && val > mat_p[q.back() + i * ncol]){
+				   if(!isnan(val)){
+					    while(!q.empty() && val > mat_p[q.back() + i * ncol]){
                         q.pop_back();
                     }
                     while(!q.empty() && q.front() <= j - n){
@@ -4404,10 +4406,10 @@ Matrix *MatrixCalculator::tsMin_op(Matrix* mat, int n)
     {
         int count = 0;
         deque<int> q;
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < ncol; j++)
         {
             double val = mat_p[i * ncol + j];
-            if(j <= n){
+            if(j < n){
                 if(!isnan(val)){
                     while(!q.empty() && val < mat_p[q.back() + i * ncol]){
                         q.pop_back();
@@ -4451,10 +4453,10 @@ Matrix *MatrixCalculator::tsArgmin_op(Matrix* mat, int n)
     {
         int count = 0;
         deque<int> q;
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < ncol; j++)
         {
             double val = mat_p[i * ncol + j];
-            if(j <= n){
+            if(j < n){
                 if(!isnan(val)){
                     while(!q.empty() && val < mat_p[q.back() + i * ncol]){
                         q.pop_back();
@@ -4498,18 +4500,18 @@ Matrix *MatrixCalculator::tsArgmax_op(Matrix* mat, int n)
     {
         int count = 0;
         deque<int> q;
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < ncol; j++)
         {
             double val = mat_p[i * ncol + j];
-            if(j <= n){
+            if(j < n){
                 if(!isnan(val)){
-                    while(!q.empty() && val > mat_p[q.back() + i * ncol]){
+	                   while(!q.empty() && val > mat_p[q.back() + i * ncol]){
                         q.pop_back();
                     }
                     q.push_back(j);
                 }
             }else{
-                if(!isnan(val)){
+		            if(!isnan(val)){
                     while(!q.empty() && val > mat_p[q.back() + i * ncol]){
                         q.pop_back();
                     }
@@ -4632,24 +4634,27 @@ Matrix *MatrixCalculator::tsCountConsecutiveTrue_op(LogicMatrix* mat, int n)
     Matrix *res = new Matrix(nrow, ncol);
     bool* mat_p = mat->value;
     double* res_p = res->value;
-    int *countTrueArr = new int[ncol + 1];
+    int *countTrueArr = new int[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        countTrueArr[ncol] = 0;
-        for(int j = ncol - 1; j >= 0; j--)
+        countTrueArr[0] = (mat_p[i * ncol] == true ? 1 : 0);
+        for(int j = 1; j < ncol; j++)
         {
             if(mat_p[i * ncol + j]){
-                countTrueArr[j] = countTrueArr[j + 1] + 1;
-                if(ncol - j > n){
-                    int prev = mat_p[i * ncol + j - n] ? 1 : 0;
-                    countTrueArr[j] -= prev;
+                countTrueArr[j] = countTrueArr[j - 1] + 1;
+                if(j > n && countTrueArr[j] == n + 1){
+                    //if all elements in the past sliding window are true, decrement 1
+					// [T T T T T] T
+					//                     ====>       the consecutive count is 6, but the first TRUE is out of sliding window now.
+					// T [T T T T T]      
+					countTrueArr[j] -= 1;
                 }
             }else{
                 countTrueArr[j] = 0;
             }
             
-        }
-        for (int j = 0; j < ncol; j++)
+		}
+		for (int j = 0; j < ncol; j++)
         {
             int numTrue = countTrueArr[j];
             int count;
