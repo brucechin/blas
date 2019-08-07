@@ -34,7 +34,7 @@ public class DynamicThreadPool<Job extends Runnable>{
     *
     * */
     public DynamicThreadPool(int minthread, int maxthread, int period, BlockingQueue queue){
-        bean = (com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+        bean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
         numProcessors = bean.getAvailableProcessors();
         procUtil = bean.getSystemCpuLoad();
         minThreads = minthread;
@@ -88,10 +88,24 @@ public class DynamicThreadPool<Job extends Runnable>{
         timer.cancel();
         threadPool.shutdown();
         System.out.println("Dynamic thread pool is shutting down, no more new tasks accepted.");
+        try {//wait for tasks in queue to complete
+            threadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Dynamic thread pool terminated, all tasks are executed");
+
     }
 
     public boolean isShutdown(){
         return threadPool.isShutdown();
+    }
+
+    public void shutdownNow(){
+        //reject new incoming tasks, also stop executing tasks in the queue
+        timer.cancel();
+        threadPool.shutdownNow();
+        System.out.println("Dynamic thread pool shutdowns forcefully ");
     }
 
     public int getMaxThreads(){
@@ -110,12 +124,7 @@ public class DynamicThreadPool<Job extends Runnable>{
         maxThreads = maxthreads;
     }
 
-    public void shutdownNow(){
-        //reject new incoming tasks, also stop executing tasks in the queue
-        timer.cancel();
-        threadPool.shutdownNow();
-        System.out.println("Dynamic thread pool shutdowns forcefully ");
-    }
+
     public class ThreadTask extends TimerTask{
         public ThreadTask(){
         }
