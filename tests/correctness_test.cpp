@@ -25,9 +25,9 @@ string logicMatrix_b = "lb.mat";
 
 int main()
 {	
-    Matrix* a = factory->getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
+    Matrix* a = factory->getInstanceOfRandomMatrixWithAbnormalValue(matSize, matSize, rangeMin, rangeMax);
 	a->saveMatrix(matrix_a);
-	Matrix* b = factory->getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
+	Matrix* b = factory->getInstanceOfRandomMatrixWithAbnormalValue(matSize, matSize, rangeMin, rangeMax);
 	b->saveMatrix(matrix_b);
 	LogicMatrix* la = factory->getInstanceOfRandomLogicMatrix(matSize, matSize);
 	la->saveMatrix(logicMatrix_a);

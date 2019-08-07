@@ -93,6 +93,7 @@ public:
         return res;
     }
 
+
     //TODO : slow implementation, how to accelarate it using BLAS??? mat.value should be set as public attribute?
     static Matrix* mergeMatrixHorizon(Matrix* mat1, Matrix* mat2){
         int nrow = mat1->getNRow();
@@ -298,6 +299,27 @@ public:
                 double m2 = (double)(rand()%(max - min + 1) + min);
                 m2 -= 1;
                 (*p++) = m1 + m2;
+            }
+        }
+        return res;
+    }
+
+    static Matrix* getInstanceOfRandomMatrixWithAbnormalValue(int n, int m, int min, int max, int frequency){
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        srand((unsigned)time(NULL));
+        Matrix* res = new Matrix(n, m);
+        double* p = &res->value[0];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                if(rand() % frequency == 0){
+                    (*p++) = ((rand() % 2 == 0) ? NAN : INFINITY);
+                }else{
+                    double m1 = (double)(rand()%101)/101.0;
+                    double m2 = (double)(rand()%(max - min + 1) + min);
+                    m2 -= 1;
+                    (*p++) = m1 + m2;
+                }
+                
             }
         }
         return res;
