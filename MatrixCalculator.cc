@@ -2420,7 +2420,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                 if (notNanArr[j - k])
                 {
                     count++;
-                }		
+                 }		
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
@@ -2432,7 +2432,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                 res->value[i * ncol + j] = NAN;
             }
         }
-		std::cout << std::endl;
+		std::cout<<std::endl;
     }
     delete[] notNanArr;
     return res;
@@ -3975,19 +3975,19 @@ double MatrixCalculator::Det(Matrix *aa, int N)//N为代数余子式的size
             y = (std::isnan(y) || std::isinf(y)) ? 0 : y;
             n++;
             sumx += x;
-            sumx += x * x;
+            sumxx += x * x;
             sumy += y;
             sumyy += y * y;
             sumxy += x * y;
         }
     }
-
     if (n > (double)len * VALIDITY_PERCENTAGE_REQUIREMENT)
     {
         double varx = (sumxx - sumx * sumx / n) / n;
         double vary = (sumyy - sumy * sumy / n) / n;
         double cov = (sumxy - sumx * sumy / n) / n;
-        corr = cov / std::sqrt(varx * vary);
+		std::cout << sumxx <<" ";
+		corr = cov / std::sqrt(varx * vary);
         corr = std::isnan(corr) ? 0 : corr;
         corr = (corr > 1) ? 1 : corr;
         corr = (corr < -1) ? -1 : corr;
@@ -4883,7 +4883,7 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
                 sumyy += y * y;
             }
             if(j >= n){
-                double xp = mat1->value[i * ncol + j - n];
+                double xp =	mat1->value[i * ncol + j - n];
                 double yp = mat2->value[i * ncol + j - n];
                 if(!std::isnan(xp) && !std::isinf(xp)){
                     yp = (!std::isnan(yp) && !std::isinf(yp)) ? yp : 0;
@@ -4896,9 +4896,10 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
                 }
             }
             if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
-                double varx = (sumxx - sumx * sumx / n) / n;
-                double vary = (sumyy - sumy * sumy / n) / n;
-                double cov = (sumxy - sumx * sumy / n) / n;
+                double varx = (sumxx - sumx * sumx / count) / count;
+				std::cout <<sumxx << " ";
+                double vary = (sumyy - sumy * sumy / count) / count;
+                double cov = (sumxy - sumx * sumy / count) / count;
                 double corr = cov / std::sqrt(varx * vary);
                 corr = std::isnan(corr) ? 0 : corr;
                 corr = (corr > 1) ? 1 : corr;
@@ -4909,6 +4910,7 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
             }
 
         }
+		std::cout <<std::endl;
     }
 	return res;
 }
