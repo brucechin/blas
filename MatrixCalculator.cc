@@ -4736,48 +4736,33 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
     int nrow = mat->getNRow();
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    int* tsNotNanCount = new int[ncol];
-    //count the number of not NAN in a sliding window
-
-    double* tsSumX = new double[ncol];
-    double* tsSumXSquare = new double[ncol];
-    double* tsSumXCube = new double[ncol];
-    //record the sum and square sum of the sliding window contents
 
     for(int i = 0; i < nrow; i++){
         double val = mat->value[i * ncol];
-        tsNotNanCount[0] = std::isnan(val) ? 0 : 1;
-        double sumx = std::isnan(val) ? 0 : val;
-        double sumxx = std::isnan(val) ? 0 : val * val;
-        double sumxxx = std::isnan(val) ? 0 : val * val * val;
-        tsSumX[0] = sumx;
-        tsSumXSquare[0] = sumxx;
-        tsSumXCube[0] = sumxxx;
+        double count = 0;
+        double sumx = 0;
+        double sumxx = 0;
+        double sumxxx = 0;
         for(int j = 1; j < ncol; j++){
-            double val = mat->value[i * ncol + j];
-            tsNotNanCount[j] = tsNotNanCount[j - 1] + (std::isnan(val) ? 0 : 1);
-            sumx += (std::isnan(val) ? 0 : val);
-            sumxx += (std::isnan(val) ? 0 : val * val);
-            sumxxx += std::isnan(val) ? 0 : val * val * val;
+            double x = mat->value[i * ncol + j];
+            if (!std::isnan(x) && !std::isinf(x))
+            {
+                count++;
+                sumx += x;
+                sumxx += x * x;
+                sumxxx += x * x * x;
+            }
             if(j >= n){
                 double tmp = mat->value[i * ncol + j - n];
-                tsNotNanCount[j] -= (std::isnan(tmp) ? 0 : 1);
+                count -= (std::isnan(tmp) ? 0 : 1);
                 sumx -= (std::isnan(tmp) ? 0 : tmp);
                 sumxx -= (std::isnan(tmp) ? 0 : tmp * tmp);
                 sumxxx -= (std::isnan(tmp) ? 0 : tmp * tmp * tmp);
-            }
-        
-            tsSumX[j] = (std::isnan(sumx) || std::isinf(sumx)) ? 0 : sumx;
-            tsSumXSquare[j] = (std::isnan(sumxx) || std::isinf(sumxx)) ? 0 : sumxx;
-            tsSumXCube[j] = (std::isnan(sumxxx) || std::isinf(sumxxx)) ? 0 : sumxxx;
-        }
-		
-        for(int j = 0; j < ncol; j++){
-            int count = tsNotNanCount[j];
+            }  
             if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
-                double u = tsSumX[j] / count;
-                double sigma = std::sqrt(tsSumXSquare[j] / count - u * u);
-                double ex3 = tsSumXCube[j] / count;
+                double u = sumx / count;
+                double sigma = std::sqrt(sumxx / count - u * u);
+                double ex3 = sumxxx / count;
                 double skewness = (ex3 - 3 * u * sigma * sigma - u * u * u) / (sigma * sigma * sigma);
                 skewness = (std::isnan(skewness) || std::isinf(skewness)) ? 0 : skewness;
                 res->value[i * ncol + j] = skewness;
@@ -4786,10 +4771,6 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
             }
         }
     }
-	delete[] tsNotNanCount;
-	delete[] tsSumX;
-    delete[] tsSumXSquare;
-    delete[] tsSumXCube;
 	return res;
 }
 
@@ -4871,6 +4852,112 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
                 res->value[i * ncol + j] = NAN;
             }
 
+        }
+    }
+	return res;
+}
+
+ Matrix *MatrixCalculator::tsCorr_op(Matrix* mat1, Matrix* mat2, int n)
+{
+    int nrow = mat1->getNRow();
+    int ncol = mat1->getNCol();
+    Matrix *res = new Matrix(nrow, ncol);
+
+    for(int i = 0; i < nrow; i++){
+        double sumx = 0;
+        double sumxy = 0;
+        double sumy = 0;
+        double sumxx = 0;
+        double sumyy = 0;
+        int count = 0;
+        for(int j = 0; j < ncol; j++){
+            double x = mat1->value[i * ncol + j];
+            double y = mat2->value[i * ncol + j];
+            if (!std::isnan(x) && !std::isinf(x))
+            {
+                y = (std::isnan(y) || std::isinf(y)) ? 0 : y;
+                count++;
+                sumx += x;
+                sumy += y;
+                sumxy += x * y;
+                sumxx += x * x;
+                sumyy += y * y;
+            }
+            if(j >= n){
+                double xp = mat1->value[i * ncol + j - n];
+                double yp = mat2->value[i * ncol + j - n];
+                if(!std::isnan(xp) && !std::isinf(xp)){
+                    yp = (!std::isnan(yp) && !std::isinf(yp)) ? yp : 0;
+                    sumx -= xp;
+                    sumy -= yp;
+                    sumxy -= xp * yp;
+                    sumxx -= xp * xp;
+                    sumyy -= yp * yp;
+                    count--;
+                }
+            }
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double varx = (sumxx - sumx * sumx / n) / n;
+                double vary = (sumyy - sumy * sumy / n) / n;
+                double cov = (sumxy - sumx * sumy / n) / n;
+                double corr = cov / std::sqrt(varx * vary);
+                corr = std::isnan(corr) ? 0 : corr;
+                corr = (corr > 1) ? 1 : corr;
+                corr = (corr < -1) ? -1 : corr;
+                res->value[i * ncol + j] = corr;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
+
+        }
+    }
+	return res;
+}
+
+static Matrix* tsKurtosis_op(Matrix* mat, int n){
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
+    Matrix *res = new Matrix(nrow, ncol);
+
+    for(int i = 0; i < nrow; i++){
+        double val = mat->value[i * ncol];
+        int count = 0;
+        double sumx = 0;
+        double sumxx = 0;
+        double sumxxx = 0;
+        double sumxxxx = 0;
+        for(int j = 1; j < ncol; j++){
+            double x = mat->value[i * ncol + j];
+            if (!std::isnan(x) && !std::isinf(x))
+            {
+                count++;
+                sumx += x;
+                sumxx += x * x;
+                sumxxx += x * x * x;
+                sumxxxx += x * x * x * x;
+            }
+            if(j >= n){
+                double tmp = mat->value[i * ncol + j - n];
+                if(!std::isnan(tmp) && !std::isinf(tmp))
+                count--;
+                sumx -= tmp;
+                sumxx -= tmp * tmp;
+                sumxxx -=  tmp * tmp * tmp;
+                sumxxxx -=  tmp * tmp * tmp * tmp;
+
+            }  
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double ex1 = sumx / count;
+                double ex2 = sumxx / count;
+                double ex3 = sumxxx / count;
+                double ex4 = sumxxxx / count;
+                double sigma2 = ex2 - ex1 * ex1;
+                double kurtosis = (ex4 - 4 * ex1 * ex3 + 6 * ex1 * ex1 * ex2 - 3 * ex1 * ex1 * ex1 * ex1) / (sigma2 * sigma2) - 3.0;
+                kurtosis = (std::isnan(kurtosis) || std::isinf(kurtosis)) ? 0 : kurtosis;
+                res->value[i * ncol + j] = kurtosis;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
         }
     }
 	return res;
