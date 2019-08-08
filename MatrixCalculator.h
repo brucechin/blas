@@ -106,7 +106,7 @@ public:
     static Matrix* abs(Matrix* mat, int num);
     static Matrix* minus(Matrix* mat);
     static Matrix* minus(Matrix* mat, int num);
-    // static double* minus(double* vec);//DELETE no need for this function
+    // static double* minus(double* vec);  //DELETE no need for this function
     static Matrix* sqrt(Matrix* mat);
     static Matrix* sqrt(Matrix* mat, int num);
     static Matrix* log(Matrix* mat);
@@ -133,7 +133,7 @@ public:
     static Matrix* product(Matrix* mat, int n);
     static Matrix* product(Matrix* mat, int n, int num);
     
-    //NOTE here are some optimized functions with "_op" suffix
+    //NOTE here are some optimized functions with "_op" suffix, their time complexities are all O(N^2), compared to O(N^3) in the original implementation 
     static Matrix* sum_op(Matrix* mat, int n);
     static Matrix* product_op(Matrix* mat, int n);
     static Matrix* tsMax_op(Matrix* mat, int n);
@@ -147,9 +147,10 @@ public:
     static Matrix* tsStd_op(Matrix* mat, int n);
     static Matrix* tsSkewness_op(Matrix* mat, int n);
     static Matrix* tsKurtosis_op(Matrix* mat, int n);
+    static Matrix* tsCov_op(Matrix* mat1, Matrix* mat2, int n);
+    static Matrix* tsCorr_op(Matrix* mat1, Matrix* mat2, int n);
+    static Matrix* tsRank_op(Matrix* mat, int n);
     //DELETE some of these timeseries functions are optimized above
-
-
 
     static Matrix* tsMax(Matrix* mat, int n);
     static Matrix* tsMax(Matrix* mat, int n, int num);

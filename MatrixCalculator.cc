@@ -4791,3 +4791,52 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
     delete[] tsSumXCube;
 	return res;
 }
+
+
+ Matrix *MatrixCalculator::tsRank_op(Matrix* mat, int n)
+{
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
+    Matrix *res = new Matrix(nrow, ncol);
+    int* tsNotNanCount = new int[ncol];//count the number of not NAN in a sliding window
+    double* tsSummaryRank = new double[ncol];
+    int biggerCount;
+    double first;
+    for(int i = 0; i < nrow; i++){
+        if(std::isnan(mat->value[i * ncol])){
+            tsNotNanCount[0] = 1;
+            tsSummaryRank[0] = 0;
+            biggerCount = 0;
+            first = mat->value[i * ncol];
+            for(int j = 1; j < ncol; j++){
+                double val = mat->value[i * ncol + j];
+                tsNotNanCount[j] = tsNotNanCount[j - 1] + (std::isnan(val) ? 0 : 1);
+                biggerCount += (val > first ? 1 : 0);
+                if(j >= n){
+                    double tmp = mat->value[i * ncol + j - n];
+                    tsNotNanCount[j] -= (std::isnan(tmp) ? 0 : 1);
+                    biggerCount -= (val > first ? 1 : 0);
+                }
+                if(tsNotNanCount[j] > n * VALIDITY_PERCENTAGE_REQUIREMENT){
+                    tsSummaryRank[j] = biggerCount / tsNotNanCount[j];
+                }
+            }
+            for(int j = 0; j < ncol; j++){
+                int count = tsNotNanCount[j];
+                if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                    res->value[i * ncol + j] = tsSummaryRank[j];
+                }else{
+                    res->value[i * ncol + j] = NAN;
+                }
+            }
+        }else{
+            for(int j = 0; j < ncol; j++){
+                res->value[i * ncol + j] = NAN;
+            }
+        }
+        
+    }
+	delete[] tsNotNanCount;
+	delete[] tsSummaryRank;
+	return res;
+}
