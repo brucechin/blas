@@ -120,7 +120,6 @@ public:
         }
     }
     //set all value to x
-    //TODO : optimize it using BLAS?
     void setValue(bool x){
         for(int i = 0; i < nrow; i++){
             for(int j = 0; j < ncol; j++){

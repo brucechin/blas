@@ -59,7 +59,6 @@ public:
     static Matrix* matrixMul(double* vec1, Matrix* mat2);
     static Matrix* matrixMul(Matrix* mat1, double* vec2);
     static Matrix* matrixMul(Matrix* mat1, Matrix* mat2);
-//TODO : unify all parameter types as Matrix*
 
     static Matrix* max(Matrix* mat1, Matrix* mat2);
     static Matrix* max(Matrix* mat1, Matrix* mat2, int num);
@@ -187,7 +186,6 @@ public:
     static void smoothByDecayLinear(Matrix* mat, int n);
     static void inputNaN(Matrix* mat, double val);
 
-//TODO these are not tested yet
     static void activate(Matrix* mat, double threshold);
     static Matrix* normalize(Matrix* mat, double scale, double mean, double bound);
     static Matrix* normalize(Matrix* mat, double scale, double mean, double bound, int num);

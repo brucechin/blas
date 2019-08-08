@@ -736,9 +736,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
 }
  double *MatrixCalculator::rank(double *vec, int n)
 {
-    //int n = sizeof(vec) / sizeof(double);
     double *res = MatrixFactory::getInstanceOfNaNVector(n);
-    //TODO
     list<int> idlist;
     for(int i = 0; i < n; i++){
         double val = vec[i];
@@ -793,7 +791,6 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
 }
  Matrix *MatrixCalculator::rank(Matrix* mat)
 {
-    //FIX core dump
     int nrow = mat->getNRow();
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
@@ -817,7 +814,6 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
 }
  Matrix *MatrixCalculator::rank(Matrix* mat, int num)
 {
-    //FIX 
     int nrow = mat->getNRow();
     int ncol = mat->getNCol();
     int colnum = std::min(num, ncol);
@@ -4591,7 +4587,6 @@ Matrix *MatrixCalculator::tsCountTrue_op(LogicMatrix* mat, int n)
 
 Matrix *MatrixCalculator::tsCountConsecutiveTrue_op(LogicMatrix* mat, int n)
 {
-    //FIX this implementation is different from original version
     int nrow = mat->getNRow();
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
@@ -4896,9 +4891,9 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
                 }
             }
             if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
-                double varx = (sumxx - sumx * sumx / n) / n;
-                double vary = (sumyy - sumy * sumy / n) / n;
-                double cov = (sumxy - sumx * sumy / n) / n;
+                double varx = (sumxx - sumx * sumx / count) / count;
+                double vary = (sumyy - sumy * sumy / count) / count;
+                double cov = (sumxy - sumx * sumy / count) / count;
                 double corr = cov / std::sqrt(varx * vary);
                 corr = std::isnan(corr) ? 0 : corr;
                 corr = (corr > 1) ? 1 : corr;
