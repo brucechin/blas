@@ -1,14 +1,14 @@
 #include "gtest/gtest.h"
-#include "cblas.h"
-#include "../MatrixCalculator.h"
 #include <fstream>
 #include<iostream>
+#include"../MatrixCalculator.h"
+#include"../MatrixFactory.h"
 using namespace std;
 
 int rangeMin = -10000;
 int rangeMax = 10000;
-int matSize = 100;
-int step = 50;
+int matSize = 10;
+int step = 5;
 MatrixFactory* factory = new MatrixFactory();
 MatrixCalculator* calculator = new MatrixCalculator();
 string matrix_a = "a.mat";
@@ -693,6 +693,12 @@ TEST(MatrixCalculator, TSMean){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsMean(a, step);
 	Matrix* res2 = calculator->tsMean(b ,step);
+	Matrix* res1_op = calculator->tsMean_op(a, step);
+	a->print();
+	std::cout << std::endl;
+	res1->print();
+	std::cout<<std::endl;
+	res1_op->print();
 	a->clear();
 	b->clear();
 	res1->clear();

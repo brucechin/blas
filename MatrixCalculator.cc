@@ -4604,8 +4604,8 @@ Matrix *MatrixCalculator::tsCountConsecutiveTrue_op(LogicMatrix* mat, int n)
         {
             if(mat_p[i * ncol + j]){
                 countTrueArr[j] = countTrueArr[j - 1] + 1;
-                if(j > n && countTrueArr[j] == n + 1){
-                    //if all elements in the past sliding window are true, decrement 1
+                if(j >= n && countTrueArr[j] == n + 1){
+		             //if all elements in the past sliding window are true, decrement 1
 					// [T T T T T] T
 					//                     ====>       the consecutive count is 6, but the first TRUE is out of sliding window now.
 					// T [T T T T T]      
@@ -4658,13 +4658,14 @@ Matrix* MatrixCalculator::tsMean_op(Matrix* mat, int n){
                 tsNotNanCount[j] -= (std::isnan(tmp) ? 0 : 1);
                 sumx -= (std::isnan(tmp) ? 0 : tmp);
             }
-
+			std::cout << sumx << " ";
             if(tsNotNanCount[j] > n * VALIDITY_PERCENTAGE_REQUIREMENT){
-                double meanx = sumx / tsNotNanCount[j];
+	            double meanx = sumx / tsNotNanCount[j];
                 tsSummaryMean[j] = (std::isnan(meanx) || std::isinf(meanx)) ? 0 : meanx;
             }
         }
-
+		std::cout <<std::endl;
+		
         for(int j = 0; j < ncol; j++){
             int count = tsNotNanCount[j];
             if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
@@ -4674,4 +4675,8 @@ Matrix* MatrixCalculator::tsMean_op(Matrix* mat, int n){
             }
         }
     }
+	std::cout<<std::endl;
+	delete[] tsNotNanCount;
+	delete[] tsSummaryMean;
+	return res;
 }

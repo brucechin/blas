@@ -4,6 +4,8 @@
  * @Last Modified by: lianke.qin@gmail.com
  * @Last Modified time: 2019-07-08 16:56:40
  */
+#ifndef _MATRIXFACTORY_H
+#define _MATRIXFACTORY_H
 
 #include<iostream>
 #include <cblas.h>
@@ -400,3 +402,5 @@ public:
 
 
 };
+
+#endif
