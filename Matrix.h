@@ -131,13 +131,20 @@ class Matrix{
 			double* a = value;
 			double* b = other->value;
 			int len = nrow * ncol;
-			double error_bound = 0.000001;
+			double error_bound = 0.00001;
 			for (int i = 0; i < len; i++) {
-				double v1 = a[i];
-				double v2 = b[i];
-				if (std::abs(std::abs(v1) - std::abs(v2)) > error_bound * std::abs(std::abs(v1) + std::abs(v2))){
-					std::cout<< i / ncol << " "<< i % ncol << std::endl;	
-					return false;
+				double v1 = std::abs(a[i]);
+				double v2 = std::abs(b[i]);
+				if(v1 > 1){
+					if (std::abs(v1 - v2) > error_bound * std::abs(v1 + v2)){
+						std::cout<< i / ncol << " "<< i % ncol << " "<< v1 << " " << v2 << std::endl;	
+						return false;
+					}
+				}else{
+					if (std::abs(v1 - v2) > error_bound){
+						std::cout<< i / ncol << " "<< i % ncol << " "<< v1 << " " << v2 << std::endl;	
+						return false;
+					}
 				}
 			}
 			return true;

@@ -4247,8 +4247,8 @@ Matrix* MatrixCalculator::sum_op(Matrix* mat, int n)
                 count++;
             }
             if(j >= n){
-                if(!std::isnan(mat_p[pos-n])){
-                    sum -= mat_p[pos-n];
+	               if(!std::isnan(mat_p[pos-n])){
+		                sum -= mat_p[pos-n];
                     count--;
                 }
             }
@@ -4419,15 +4419,15 @@ Matrix *MatrixCalculator::tsArgmin_op(Matrix* mat, int n)
         {
             double val = mat_p[i * ncol + j];
             if(j < n){
-                if(!isnan(val)){
-                    while(!q.empty() && val < mat_p[q.back() + i * ncol]){
+                if(!	isnan(val)){
+                    while(!q.empty() && val <= mat_p[q.back() + i * ncol]){
                         q.pop_back();
                     }
                     q.push_back(j);
                 }
             }else{
-                if(!isnan(val)){
-                    while(!q.empty() && val < mat_p[q.back() + i * ncol]){
+					if(!isnan(val)){
+                    while(!q.empty() && val <= mat_p[q.back() + i * ncol]){
                         q.pop_back();
                     }
                     while(!q.empty() && q.front() <= j - n){
@@ -4467,14 +4467,14 @@ Matrix *MatrixCalculator::tsArgmax_op(Matrix* mat, int n)
             double val = mat_p[i * ncol + j];
             if(j < n){
                 if(!isnan(val)){
-	                   while(!q.empty() && val > mat_p[q.back() + i * ncol]){
+	                   while(	!q.empty() && val >= mat_p[q.back() + i * ncol]){
                         q.pop_back();
                     }
-                    q.push_back(j);
-                }
+						q.push_back(j);
+                }	
             }else{
 		            if(!isnan(val)){
-                    while(!q.empty() && val > mat_p[q.back() + i * ncol]){
+                    while(!q.empty() && val >= mat_p[q.back() + i * ncol]){
                         q.pop_back();
                     }
                     while(!q.empty() && q.front() <= j - n){
