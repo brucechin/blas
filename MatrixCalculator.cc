@@ -4645,10 +4645,9 @@ Matrix* MatrixCalculator::tsMean_op(Matrix* mat, int n){
     double* tsSummaryMean = new double[ncol];
 
     for(int i = 0; i < nrow; i++){
-        Matrix *rowRefa = mat->getRowVector(i);
         tsNotNanCount[0] = std::isnan(mat->value[i * ncol]) ? 0 : 1;
         double sumx = std::isnan(mat->value[i * ncol]) ? 0 : mat->value[i * ncol];
-        
+        tsSummaryMean[0] = sumx;
         for(int j = 1; j < ncol; j++){
             double val = mat->value[i * ncol + j];
             tsNotNanCount[j] = tsNotNanCount[j - 1] + (std::isnan(val) ? 0 : 1);
@@ -4658,13 +4657,11 @@ Matrix* MatrixCalculator::tsMean_op(Matrix* mat, int n){
                 tsNotNanCount[j] -= (std::isnan(tmp) ? 0 : 1);
                 sumx -= (std::isnan(tmp) ? 0 : tmp);
             }
-			std::cout << sumx << " ";
             if(tsNotNanCount[j] > n * VALIDITY_PERCENTAGE_REQUIREMENT){
 	            double meanx = sumx / tsNotNanCount[j];
                 tsSummaryMean[j] = (std::isnan(meanx) || std::isinf(meanx)) ? 0 : meanx;
             }
         }
-		std::cout <<std::endl;
 		
         for(int j = 0; j < ncol; j++){
             int count = tsNotNanCount[j];
@@ -4675,8 +4672,60 @@ Matrix* MatrixCalculator::tsMean_op(Matrix* mat, int n){
             }
         }
     }
-	std::cout<<std::endl;
 	delete[] tsNotNanCount;
 	delete[] tsSummaryMean;
 	return res;
+}
+
+
+//Implement rolling variance algorithm to reduce computation complexity
+Matrix *MatrixCalculator::tsStd_op(Matrix* mat, int n)
+{
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
+    Matrix *res = new Matrix(nrow, ncol);
+    int* tsNotNanCount = new int[ncol];
+    //count the number of not NAN in a sliding window
+
+    double* tsSumX = new double[ncol];
+    double* tsSumXSquare = new double[ncol];
+    //record the sum and square sum of the sliding window contents
+
+    for(int i = 0; i < nrow; i++){
+        tsNotNanCount[0] = std::isnan(mat->value[i * ncol]) ? 0 : 1;
+        double sumx = std::isnan(mat->value[i * ncol]) ? 0 : mat->value[i * ncol];
+        double sumxx = std::isnan(mat->value[i * ncol]) ? 0 : mat->value[i * ncol] * mat->value[i * ncol];
+        tsSumX[0] = sumx;
+        tsSumXSquare[0] = sumxx;
+        for(int j = 1; j < ncol; j++){
+            double val = mat->value[i * ncol + j];
+            tsNotNanCount[j] = tsNotNanCount[j - 1] + (std::isnan(val) ? 0 : 1);
+            sumx += (std::isnan(val) ? 0 : val);
+            sumxx += (std::isnan(val) ? 0 : val * val);
+            if(j >= n){
+                double tmp = mat->value[i * ncol + j - n];
+                tsNotNanCount[j] -= (std::isnan(tmp) ? 0 : 1);
+                sumx -= (std::isnan(tmp) ? 0 : tmp);
+                sumxx -= (std::isnan(tmp) ? 0 : tmp * tmp);
+            }
+        
+            tsSumX[j] = (std::isnan(sumx) || std::isinf(sumx)) ? 0 : sumx;
+            tsSumXSquare[j] = (std::isnan(sumxx) || std::isinf(sumxx)) ? 0 : sumxx;
+        }
+		
+        for(int j = 0; j < ncol; j++){
+            int count = tsNotNanCount[j];
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double var = (tsSumXSquare[j] - tsSumX[j] * tsSumX[j] / count) / count;
+                res->value[i * ncol + j] = var;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
+        }
+    }
+	delete[] tsNotNanCount;
+	delete[] tsSumX;
+    delete[] tsSumXSquare;
+	return res;
+
 }

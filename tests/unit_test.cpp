@@ -175,17 +175,17 @@ TEST(MatrixCalculator, Condition){
 	res2->clear();
 }
 
-// TEST(MatrixCalculator, Rank){
+TEST(MatrixCalculator, Rank){
 	
-// 	Matrix* a = new Matrix();
-// 	a->readMatrix(matrix_a);
-// 	Matrix* b = new Matrix();
-// 	b->readMatrix(matrix_b);
-// 	Matrix* res1 = calculator->rank(a);
-// 	Matrix* res2 = calculator->rank(b);
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->rank(a);
+	Matrix* res2 = calculator->rank(b);
 	
-// }
-//FIX core dump detected
+}
+
 
 TEST(MatrixCalculator, Round){
 	
@@ -694,11 +694,7 @@ TEST(MatrixCalculator, TSMean){
 	Matrix* res1 = calculator->tsMean(a, step);
 	Matrix* res2 = calculator->tsMean(b ,step);
 	Matrix* res1_op = calculator->tsMean_op(a, step);
-	a->print();
-	std::cout << std::endl;
-	res1->print();
-	std::cout<<std::endl;
-	res1_op->print();
+
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -864,10 +860,6 @@ TEST(MatrixCalculator, TSCountConsecutiveTrue_Compare){
 	Matrix* res2_op = calculator->tsCountConsecutiveTrue_op(b ,step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	EXPECT_TRUE(res2->compareMatrix(res2_op));
-	a->print();
-	res1->print();
-	std::cout<<std::endl;
-	res1_op->print();
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -1045,19 +1037,19 @@ TEST(MatrixCalculator, EvalInnerProduction){
 	res2->clear();
 }
 
-// TEST(MatrixCalculator, Det){
+TEST(MatrixCalculator, Det){
 	
-// 	Matrix* a = new Matrix();
-// 	a->readMatrix(matrix_a);
-// 	Matrix* b = new Matrix();
-// 	b->readMatrix(matrix_b);
-// 	double res1 = calculator->Det(a, matSize);
-// 	double res2 = calculator->Det(b, matSize);
-// 	a->clear();
-// 	b->clear();
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	double res1 = calculator->Det(a, matSize - 1);
+	double res2 = calculator->Det(b, matSize - 1);
+	a->clear();
+	b->clear();
 
-// }
-//FIX core dump detected
+}
+
 
 
 TEST(MatrixCalculator, Treat){
@@ -1074,19 +1066,19 @@ TEST(MatrixCalculator, Treat){
 }
 
 //FIX segmentation fault detected
-// TEST(MatrixCalculator, Inv){
+TEST(MatrixCalculator, Inv){
 	
-// 	Matrix* a = new Matrix();
-// 	a->readMatrix(matrix_a);
-// 	Matrix* b = new Matrix();
-// 	b->readMatrix(matrix_b);
-// 	Matrix* res1 = calculator->inv(a);
-// 	Matrix* res2 = calculator->inv(b);
-// 	a->clear();
-// 	b->clear();
-// 	res1->clear();
-// 	res2->clear();
-// }
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->inv(a);
+	Matrix* res2 = calculator->inv(b);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+}
 
 TEST(MatrixCalculator, Diag){
 	
