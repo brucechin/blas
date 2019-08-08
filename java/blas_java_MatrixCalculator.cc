@@ -267,85 +267,85 @@ JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_productNative__JI(JNIEnv
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsMaxNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsMax((Matrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsMax_op((Matrix*) p1, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsMinNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsMin((Matrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsMin_op((Matrix*) p1, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsArgmaxNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsArgmax((Matrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsArgmax_op((Matrix*) p1, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsArgminNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsArgmin((Matrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsArgmin_op((Matrix*) p1, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsRankNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsRank((Matrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsRank_op((Matrix*) p1, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsMeanNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsMean((Matrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsMean_op((Matrix*) p1, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsStdNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsStd((Matrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsStd_op((Matrix*) p1, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsSkewnessNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsSkewness((Matrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsSkewness_op((Matrix*) p1, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsKurtosisNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsKurtosis((Matrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsKurtosis_op((Matrix*) p1, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsCovNative__JJI(JNIEnv * env, jclass obj, jlong p1, jlong p2, jint n){
-    Matrix* res = MatrixCalculator::tsCov((Matrix*) p1, (Matrix*) p2, n);
+    Matrix* res = MatrixCalculator::tsCov_op((Matrix*) p1, (Matrix*) p2, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsCorrNative__JJI(JNIEnv * env, jclass obj, jlong p1, jlong p2, jint n){
-    Matrix* res = MatrixCalculator::tsCorr((Matrix*) p1, (Matrix*) p2, n);
+    Matrix* res = MatrixCalculator::tsCorr_op((Matrix*) p1, (Matrix*) p2, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsCountNaNNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsCountNaN((Matrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsCountNaN_op((Matrix*) p1, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsCountTrueNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsCountTrue((LogicMatrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsCountTrue_op((LogicMatrix*) p1, n);
     return (jlong)res;
 }
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsCountConsecutiveTrueNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsCountConsecutiveTrue((LogicMatrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsCountConsecutiveTrue_op((LogicMatrix*) p1, n);
     return (jlong)res;
 }
 
