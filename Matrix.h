@@ -135,7 +135,10 @@ class Matrix{
 			for (int i = 0; i < len; i++) {
 				double v1 = a[i];
 				double v2 = b[i];
-				if (std::abs(std::abs(v1) - std::abs(v2)) > error_bound * std::abs(std::abs(v1) + std::abs(v2))) return false;
+				if (std::abs(std::abs(v1) - std::abs(v2)) > error_bound * std::abs(std::abs(v1) + std::abs(v2))){
+					std::cout<< i / ncol << " "<< i % ncol << std::endl;	
+					return false;
+				}
 			}
 			return true;
 		}

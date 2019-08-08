@@ -4763,7 +4763,7 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
                 tsNotNanCount[j] -= (std::isnan(tmp) ? 0 : 1);
                 sumx -= (std::isnan(tmp) ? 0 : tmp);
                 sumxx -= (std::isnan(tmp) ? 0 : tmp * tmp);
-                sumxx -= (std::isnan(tmp) ? 0 : tmp * tmp * tmp);
+                sumxxx -= (std::isnan(tmp) ? 0 : tmp * tmp * tmp);
             }
         
             tsSumX[j] = (std::isnan(sumx) || std::isinf(sumx)) ? 0 : sumx;
