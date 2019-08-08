@@ -143,17 +143,7 @@ public:
     static Matrix* tsCountNaN_op(Matrix* mat, int n);
     static Matrix* tsCountTrue_op(LogicMatrix* mat, int n);
     static Matrix* tsCountConsecutiveTrue_op(LogicMatrix* mat, int n);
-/*
-    TODO optimize these later
-    static Matrix* tsMax(Matrix* mat, int n, int num);
-    static Matrix* tsMin(Matrix* mat, int n, int num);
-    static Matrix* tsArgmax(Matrix* mat, int n, int num);
-    static Matrix* tsArgmin(Matrix* mat, int n, int num);
-    static Matrix* tsCountNaN(Matrix* mat, int n, int num);
-    static Matrix* tsCountTrue(LogicMatrix* mat, int n, int num);
-    static Matrix* tsCountConsecutiveTrue(LogicMatrix* mat, int n, int num);
-*/
-
+    static Matrix* tsMean_op(Matrix* mat, int n);
 
     //DELETE some of these timeseries functions are optimized above
     static Matrix* tsMax(Matrix* mat, int n);

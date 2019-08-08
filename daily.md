@@ -313,3 +313,10 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 1. 对随机生成的矩阵中含有NAN或者INF时进行正确性测试
 2. 支持自定义增加新接口？如java段传入一个hashmap，是在c++端计算出结果后传一个array回java再在java这边填满，还是在c++端填满后传回hashmap回java？？？
 3. 大矩阵下C++加速效果不明显。
+
+### 8.7
+
+1. 之前的关于native层写一个java hashmap然后传回java端已经实现，其中的坑主要是java hashmap的key和value必须是object，不能直接用jint和jdouble jboolean之类的。
+2. 之前的线程池shutdown之后会接着往下执行代码，增加了新功能是，必须要等queue里的tasks执行完之后才shutdown成功，接着往下执行其他代码。
+3. 接了一个新需求，需要把现实中的时间转换成trading time，这个是完全连续的，因为现实时间中不是一直在做交易，转换成连续的方便他们策略组跑模型吧
+4. 晚上把几个optimized timeseries的函数fix了，之后可以把更复杂的几个ts函数优化一下复杂度
