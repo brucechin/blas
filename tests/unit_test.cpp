@@ -7,8 +7,8 @@ using namespace std;
 
 int rangeMin = -10000;
 int rangeMax = 10000;
-int matSize = 10;
-int step = 5;
+int matSize = 2000;
+int step = 200;
 MatrixFactory* factory = new MatrixFactory();
 MatrixCalculator* calculator = new MatrixCalculator();
 string matrix_a = "a.mat";
@@ -671,7 +671,7 @@ TEST(MatrixCalculator, TSArgMin_Compare){
 }
 
 
-TEST(MatrixCalculator, TSRank){
+TEST(MatrixCalculator, TSRank_Compare){
 	
 	Matrix* a = new Matrix();
 	a->readMatrix(matrix_a);
@@ -679,6 +679,8 @@ TEST(MatrixCalculator, TSRank){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsRank(a, step);
 	Matrix* res2 = calculator->tsRank(b ,step);
+	Matrix* res1_op = calculator->tsRank_op(a, step);
+	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -732,9 +734,6 @@ TEST(MatrixCalculator, TSSkewness_Compare){
 	Matrix* res2 = calculator->tsSkewness(b ,step);
 	Matrix* res1_op = calculator->tsSkewness_op(a, step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
-	res1->print();
-	std::cout << std::endl;
-	res1_op->print();
 	a->clear();
 	b->clear();
 	res1->clear();
