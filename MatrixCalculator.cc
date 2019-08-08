@@ -2360,7 +2360,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     bool *notNanArr = new bool[ncol];
     for (int i = 0; i < nrow; i++)
     {
-        Matrix *rowRefa = mat2->getRowVector(i);
+        Matrix *rowRefa = mat1->getRowVector(i);
         Matrix *rowRefb = mat2->getRowVector(i);
         for (int j = histStart; j < ncol; j++)
         {
@@ -2406,7 +2406,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
     {
         Matrix *rowRefa = mat1->getRowVector(i);
         Matrix *rowRefb = mat2->getRowVector(i);
-        for (int j = 0; j < ncol; j++)
+		for (int j = 0; j < ncol; j++)
         {
             notNanArr[j] = !std::isnan(mat1->value[i * ncol + j]);
         }
@@ -2420,18 +2420,19 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = -1.0;
                 if (notNanArr[j - k])
                 {
                     count++;
-                }
+                }		
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 double val = summaryCorrelation(rowRefa, rowRefb, j, lowestIndex);
-                res->value[i * ncol + j] = val;
+				res->value[i * ncol + j] = val;
             }
             else
             {
                 res->value[i * ncol + j] = NAN;
             }
         }
+		std::cout << std::endl;
     }
     delete[] notNanArr;
     return res;
@@ -3965,7 +3966,7 @@ double MatrixCalculator::Det(Matrix *aa, int N)//N为代数余子式的size
     n = 0;
     double corr = NAN;
     int len = highIndex - lowIndex + 1;
-    for (int k = highIndex; k >= lowIndex; k++)
+	for (int k = highIndex; k >= lowIndex; k--)
     {
         x = ts1->value[k];
         y = ts2->value[k];
