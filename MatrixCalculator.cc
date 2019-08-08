@@ -4156,7 +4156,7 @@ double MatrixCalculator::Det(Matrix *aa, int N)//N为代数余子式的size
             y = (std::isnan(y) || std::isinf(y)) ? 0 : y;
             n++;
             sumx += x;
-            sumx += x * x;
+            sumxx += x * x;
             sumy += y;
             sumyy += y * y;
             sumxy += x * y;
@@ -4738,12 +4738,11 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
     Matrix *res = new Matrix(nrow, ncol);
 
     for(int i = 0; i < nrow; i++){
-        double val = mat->value[i * ncol];
         double count = 0;
         double sumx = 0;
         double sumxx = 0;
         double sumxxx = 0;
-        for(int j = 1; j < ncol; j++){
+        for(int j = 0; j < ncol; j++){
             double x = mat->value[i * ncol + j];
             if (!std::isnan(x) && !std::isinf(x))
             {
@@ -4914,7 +4913,8 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
 	return res;
 }
 
-static Matrix* tsKurtosis_op(Matrix* mat, int n){
+Matrix* MatrixCalculator::tsKurtosis_op(Matrix* mat, int n)
+{
     int nrow = mat->getNRow();
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
@@ -4926,7 +4926,7 @@ static Matrix* tsKurtosis_op(Matrix* mat, int n){
         double sumxx = 0;
         double sumxxx = 0;
         double sumxxxx = 0;
-        for(int j = 1; j < ncol; j++){
+        for(int j = 0; j < ncol; j++){
             double x = mat->value[i * ncol + j];
             if (!std::isnan(x) && !std::isinf(x))
             {
