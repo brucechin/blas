@@ -4798,33 +4798,23 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
     int nrow = mat->getNRow();
     int ncol = mat->getNCol();
     Matrix *res = new Matrix(nrow, ncol);
-    int* tsNotNanCount = new int[ncol];//count the number of not NAN in a sliding window
-    double* tsSummaryRank = new double[ncol];
-    int biggerCount;
-    double first;
     for(int i = 0; i < nrow; i++){
         if(std::isnan(mat->value[i * ncol])){
-            tsNotNanCount[0] = 1;
-            tsSummaryRank[0] = 0;
-            biggerCount = 0;
-            first = mat->value[i * ncol];
-            for(int j = 1; j < ncol; j++){
+            int biggerCount = 0;
+            int count = 0;
+            double first = mat->value[i * ncol];
+            for(int j = 0; j < ncol; j++){
                 double val = mat->value[i * ncol + j];
-                tsNotNanCount[j] = tsNotNanCount[j - 1] + (std::isnan(val) ? 0 : 1);
+                count += (std::isnan(val) ? 0 : 1);
                 biggerCount += (val > first ? 1 : 0);
                 if(j >= n){
                     double tmp = mat->value[i * ncol + j - n];
-                    tsNotNanCount[j] -= (std::isnan(tmp) ? 0 : 1);
+                    count -= (std::isnan(tmp) ? 0 : 1);
                     biggerCount -= (val > first ? 1 : 0);
                 }
-                if(tsNotNanCount[j] > n * VALIDITY_PERCENTAGE_REQUIREMENT){
-                    tsSummaryRank[j] = biggerCount / tsNotNanCount[j];
-                }
-            }
-            for(int j = 0; j < ncol; j++){
-                int count = tsNotNanCount[j];
+
                 if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
-                    res->value[i * ncol + j] = tsSummaryRank[j];
+                    res->value[i * ncol + j] = biggerCount / count;
                 }else{
                     res->value[i * ncol + j] = NAN;
                 }
@@ -4836,7 +4826,51 @@ Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
         }
         
     }
-	delete[] tsNotNanCount;
-	delete[] tsSummaryRank;
+	return res;
+}
+
+ Matrix *MatrixCalculator::tsCov_op(Matrix* mat1, Matrix* mat2, int n)
+{
+    int nrow = mat1->getNRow();
+    int ncol = mat1->getNCol();
+    Matrix *res = new Matrix(nrow, ncol);
+
+    for(int i = 0; i < nrow; i++){
+        double sumx = 0;
+        double sumxy = 0;
+        double sumy = 0;
+        int count = 0;
+        for(int j = 0; j < ncol; j++){
+            double x = mat1->value[i * ncol + j];
+            double y = mat2->value[i * ncol + j];
+            if (!std::isnan(x) && !std::isinf(x))
+            {
+                y = (std::isnan(y) || std::isinf(y)) ? 0 : y;
+                count++;
+                sumx += x;
+                sumy += y;
+                sumxy += x * y;
+            }
+            if(j >= n){
+                double xp = mat1->value[i * ncol + j - n];
+                double yp = mat2->value[i * ncol + j - n];
+                if(!std::isnan(xp) && !std::isinf(xp)){
+                    yp = (!std::isnan(yp) && !std::isinf(yp)) ? yp : 0;
+                    sumx -= xp;
+                    sumy -= yp;
+                    sumxy -= xp * yp;
+                    count--;
+                }
+            }
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double cov = (sumxy - sumx * sumy / count) / count;
+                cov = (std::isnan(cov) || std::isinf(cov)) ? 0 : cov;
+                res->value[i * ncol + j] = cov;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
+
+        }
+    }
 	return res;
 }
