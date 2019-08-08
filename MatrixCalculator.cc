@@ -4717,7 +4717,7 @@ Matrix *MatrixCalculator::tsStd_op(Matrix* mat, int n)
             int count = tsNotNanCount[j];
             if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
                 double var = (tsSumXSquare[j] - tsSumX[j] * tsSumX[j] / count) / count;
-                res->value[i * ncol + j] = var;
+                res->value[i * ncol + j] = std::sqrt(var);
             }else{
                 res->value[i * ncol + j] = NAN;
             }
@@ -4728,4 +4728,66 @@ Matrix *MatrixCalculator::tsStd_op(Matrix* mat, int n)
     delete[] tsSumXSquare;
 	return res;
 
+}
+
+Matrix *MatrixCalculator::tsSkewness_op(Matrix* mat, int n)
+{
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
+    Matrix *res = new Matrix(nrow, ncol);
+    int* tsNotNanCount = new int[ncol];
+    //count the number of not NAN in a sliding window
+
+    double* tsSumX = new double[ncol];
+    double* tsSumXSquare = new double[ncol];
+    double* tsSumXCube = new double[ncol];
+    //record the sum and square sum of the sliding window contents
+
+    for(int i = 0; i < nrow; i++){
+        double val = mat->value[i * ncol];
+        tsNotNanCount[0] = std::isnan(val) ? 0 : 1;
+        double sumx = std::isnan(val) ? 0 : val;
+        double sumxx = std::isnan(val) ? 0 : val * val;
+        double sumxxx = std::isnan(val) ? 0 : val * val * val;
+        tsSumX[0] = sumx;
+        tsSumXSquare[0] = sumxx;
+        tsSumXCube[0] = sumxxx;
+        for(int j = 1; j < ncol; j++){
+            double val = mat->value[i * ncol + j];
+            tsNotNanCount[j] = tsNotNanCount[j - 1] + (std::isnan(val) ? 0 : 1);
+            sumx += (std::isnan(val) ? 0 : val);
+            sumxx += (std::isnan(val) ? 0 : val * val);
+            sumxxx += std::isnan(val) ? 0 : val * val * val;
+            if(j >= n){
+                double tmp = mat->value[i * ncol + j - n];
+                tsNotNanCount[j] -= (std::isnan(tmp) ? 0 : 1);
+                sumx -= (std::isnan(tmp) ? 0 : tmp);
+                sumxx -= (std::isnan(tmp) ? 0 : tmp * tmp);
+                sumxx -= (std::isnan(tmp) ? 0 : tmp * tmp * tmp);
+            }
+        
+            tsSumX[j] = (std::isnan(sumx) || std::isinf(sumx)) ? 0 : sumx;
+            tsSumXSquare[j] = (std::isnan(sumxx) || std::isinf(sumxx)) ? 0 : sumxx;
+            tsSumXCube[j] = (std::isnan(sumxxx) || std::isinf(sumxxx)) ? 0 : sumxxx;
+        }
+		
+        for(int j = 0; j < ncol; j++){
+            int count = tsNotNanCount[j];
+            if(intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT){
+                double u = tsSumX[j] / count;
+                double sigma = std::sqrt(tsSumXSquare[j] / count - u * u);
+                double ex3 = tsSumXCube[j] / count;
+                double skewness = (ex3 - 3 * u * sigma * sigma - u * u * u) / (sigma * sigma * sigma);
+                skewness = (std::isnan(skewness) || std::isinf(skewness)) ? 0 : skewness;
+                res->value[i * ncol + j] = skewness;
+            }else{
+                res->value[i * ncol + j] = NAN;
+            }
+        }
+    }
+	delete[] tsNotNanCount;
+	delete[] tsSumX;
+    delete[] tsSumXSquare;
+    delete[] tsSumXCube;
+	return res;
 }

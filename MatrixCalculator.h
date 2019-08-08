@@ -145,7 +145,12 @@ public:
     static Matrix* tsCountConsecutiveTrue_op(LogicMatrix* mat, int n);
     static Matrix* tsMean_op(Matrix* mat, int n);
     static Matrix* tsStd_op(Matrix* mat, int n);
+    static Matrix* tsSkewness_op(Matrix* mat, int n);
+    static Matrix* tsKurtosis_op(Matrix* mat, int n);
     //DELETE some of these timeseries functions are optimized above
+
+
+
     static Matrix* tsMax(Matrix* mat, int n);
     static Matrix* tsMax(Matrix* mat, int n, int num);
     static Matrix* tsMin(Matrix* mat, int n);
