@@ -7,8 +7,8 @@ using namespace std;
 
 int rangeMin = -10000;
 int rangeMax = 10000;
-int matSize = 2000;
-int step = 200;
+int matSize = 10;
+int step = 5;
 MatrixFactory* factory = new MatrixFactory();
 MatrixCalculator* calculator = new MatrixCalculator();
 string matrix_a = "a.mat";
@@ -740,7 +740,7 @@ TEST(MatrixCalculator, TSSkewness_Compare){
 	res2->clear();
 }
 
-TEST(MatrixCalculator, TSKurtosis){
+TEST(MatrixCalculator, TSKurtosis_Compare){
 	
 	Matrix* a = new Matrix();
 	a->readMatrix(matrix_a);
@@ -748,6 +748,8 @@ TEST(MatrixCalculator, TSKurtosis){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsKurtosis(a, step);
 	Matrix* res2 = calculator->tsKurtosis(b ,step);
+	Matrix* res1_op = calculator->tsKurtosis_op(a, step);
+	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -762,12 +764,14 @@ TEST(MatrixCalculator, TSCov){
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsCov(a, b, step);
 	Matrix* res2 = calculator->tsCov(b, a, step);
+	Matrix* res1_op = calculator->tsCov_op(a, b, step);
+	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	a->clear();
 	b->clear();
 	res1->clear();
 	res2->clear();
 }
-/*
+
 TEST(MatrixCalculator, TSCorr){
 	
 	Matrix* a = new Matrix();
@@ -775,13 +779,13 @@ TEST(MatrixCalculator, TSCorr){
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
 	Matrix* res1 = calculator->tsCorr(a, b, step);
-	Matrix* res2 = calculator->tsCorr(b, a, step);
+	Matrix* res1_op = calculator->tsCorr_op(a, b, step);
+	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	a->clear();
 	b->clear();
 	res1->clear();
-	res2->clear();
 }
-*/
+
 TEST(MatrixCalculator, TSCountTrue){
 	
 	LogicMatrix* a = new LogicMatrix();
