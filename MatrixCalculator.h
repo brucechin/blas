@@ -150,22 +150,23 @@ public:
     static Matrix* tsCorr_op(Matrix* mat1, Matrix* mat2, int n);
     static Matrix* tsRank_op(Matrix* mat, int n);
 
-    static Matrix* sum_op(Matrix* mat, int n, int num);
-    static Matrix* product_op(Matrix* mat, int n, int num);
-    static Matrix* tsMax_op(Matrix* mat, int n, int num);
-    static Matrix* tsMin_op(Matrix* mat, int n, int num);
-    static Matrix* tsArgmax_op(Matrix* mat, int n, int num);
-    static Matrix* tsArgmin_op(Matrix* mat, int n, int num);
-    static Matrix* tsCountNaN_op(Matrix* mat, int n, int num);
-    static Matrix* tsCountTrue_op(LogicMatrix* mat, int n, int num);
-    static Matrix* tsCountConsecutiveTrue_op(LogicMatrix* mat, int n, int num);
-    static Matrix* tsMean_op(Matrix* mat, int n, int num);
-    static Matrix* tsStd_op(Matrix* mat, int n, int num);
-    static Matrix* tsSkewness_op(Matrix* mat, int n, int num);
-    static Matrix* tsKurtosis_op(Matrix* mat, int n, int num);
-    static Matrix* tsCov_op(Matrix* mat1, Matrix* mat2, int n, int num);
-    static Matrix* tsCorr_op(Matrix* mat1, Matrix* mat2, int n, int num);
-    static Matrix* tsRank_op(Matrix* mat, int n, int num);
+    // TODO implement these optimized version
+    // static Matrix* sum_op(Matrix* mat, int n, int num);
+    // static Matrix* product_op(Matrix* mat, int n, int num);
+    // static Matrix* tsMax_op(Matrix* mat, int n, int num);
+    // static Matrix* tsMin_op(Matrix* mat, int n, int num);
+    // static Matrix* tsArgmax_op(Matrix* mat, int n, int num);
+    // static Matrix* tsArgmin_op(Matrix* mat, int n, int num);
+    // static Matrix* tsCountNaN_op(Matrix* mat, int n, int num);
+    // static Matrix* tsCountTrue_op(LogicMatrix* mat, int n, int num);
+    // static Matrix* tsCountConsecutiveTrue_op(LogicMatrix* mat, int n, int num);
+    // static Matrix* tsMean_op(Matrix* mat, int n, int num);
+    // static Matrix* tsStd_op(Matrix* mat, int n, int num);
+    // static Matrix* tsSkewness_op(Matrix* mat, int n, int num);
+    // static Matrix* tsKurtosis_op(Matrix* mat, int n, int num);
+    // static Matrix* tsCov_op(Matrix* mat1, Matrix* mat2, int n, int num);
+    // static Matrix* tsCorr_op(Matrix* mat1, Matrix* mat2, int n, int num);
+    // static Matrix* tsRank_op(Matrix* mat, int n, int num);
 
     //DELETE some of these timeseries functions are optimized above
 

@@ -393,7 +393,7 @@ TEST(MatrixCalculator, Sum_OP){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->sum_op(a, step, num);
+	Matrix* res1 = calculator->sum_op(a, step);
 	Matrix* res2 = calculator->sum_op(b ,step);
 	a->clear();
 	b->clear();
@@ -407,8 +407,8 @@ TEST(MatrixCalculator, Sum_Compare){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->sum(a, step, num);
-	Matrix* res2 = calculator->sum_op(a, step, num);
+	Matrix* res1 = calculator->sum(a, step);
+	Matrix* res2 = calculator->sum_op(a, step);
 	EXPECT_TRUE(res1->compareMatrix(res2));
 	a->print();
 	std::cout << std::endl;
@@ -427,7 +427,7 @@ TEST(MatrixCalculator, Product){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->product(a, step, num);
+	Matrix* res1 = calculator->product(a, step);
 	Matrix* res2 = calculator->product(b ,step);
 	a->clear();
 	b->clear();
@@ -441,7 +441,7 @@ TEST(MatrixCalculator, Product_OP){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->product_op(a, step, num);
+	Matrix* res1 = calculator->product_op(a, step);
 	Matrix* res2 = calculator->product_op(b ,step);
 	a->clear();
 	b->clear();
@@ -455,9 +455,9 @@ TEST(MatrixCalculator, Product_Compare){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->product(a, step, num);
+	Matrix* res1 = calculator->product(a, step);
 	Matrix* res2 = calculator->product(b ,step);
-	Matrix* res1_op = calculator->product_op(a, step, num);
+	Matrix* res1_op = calculator->product_op(a, step);
 	Matrix* res2_op = calculator->product_op(b ,step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	EXPECT_TRUE(res2->compareMatrix(res2_op));
@@ -475,7 +475,7 @@ TEST(MatrixCalculator, TSMax){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsMax(a, step, num);
+	Matrix* res1 = calculator->tsMax(a, step);
 	Matrix* res2 = calculator->tsMax(b ,step);
 	a->clear();
 	b->clear();
@@ -489,7 +489,7 @@ TEST(MatrixCalculator, TSMax_OP){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsMax_op(a, step, num);
+	Matrix* res1 = calculator->tsMax_op(a, step);
 	Matrix* res2 = calculator->tsMax_op(b ,step);
 	a->clear();
 	b->clear();
@@ -503,9 +503,9 @@ TEST(MatrixCalculator, TSMax_Compare){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsMax(a, step, num);
+	Matrix* res1 = calculator->tsMax(a, step);
 	Matrix* res2 = calculator->tsMax(b ,step);
-	Matrix* res1_op = calculator->tsMax_op(a, step, num);
+	Matrix* res1_op = calculator->tsMax_op(a, step);
 	Matrix* res2_op = calculator->tsMax_op(b ,step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	EXPECT_TRUE(res2->compareMatrix(res2_op));
@@ -523,7 +523,7 @@ TEST(MatrixCalculator, TSMin){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsMin(a, step, num);
+	Matrix* res1 = calculator->tsMin(a, step);
 	Matrix* res2 = calculator->tsMin(b ,step);
 	a->clear();
 	b->clear();
@@ -537,7 +537,7 @@ TEST(MatrixCalculator, TSMin_OP){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsMin_op(a, step, num);
+	Matrix* res1 = calculator->tsMin_op(a, step);
 	Matrix* res2 = calculator->tsMin_op(b ,step);
 	a->clear();
 	b->clear();
@@ -551,9 +551,9 @@ TEST(MatrixCalculator, TSMin_Compare){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsMin(a, step, num);
+	Matrix* res1 = calculator->tsMin(a, step);
 	Matrix* res2 = calculator->tsMin(b ,step);
-	Matrix* res1_op = calculator->tsMin_op(a, step, num);
+	Matrix* res1_op = calculator->tsMin_op(a, step);
 	Matrix* res2_op = calculator->tsMin_op(b ,step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	EXPECT_TRUE(res2->compareMatrix(res2_op));
@@ -572,7 +572,7 @@ TEST(MatrixCalculator, TSArgMax){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsArgmax(a, step, num);
+	Matrix* res1 = calculator->tsArgmax(a, step);
 	Matrix* res2 = calculator->tsArgmax(b ,step);
 	a->clear();
 	b->clear();
@@ -586,7 +586,7 @@ TEST(MatrixCalculator, TSArgMax_OP){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsArgmax_op(a, step, num);
+	Matrix* res1 = calculator->tsArgmax_op(a, step);
 	Matrix* res2 = calculator->tsArgmax_op(b ,step);
 	a->clear();
 	b->clear();
@@ -600,9 +600,9 @@ TEST(MatrixCalculator, TSArgMax_Compare){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsArgmax(a, step, num);
+	Matrix* res1 = calculator->tsArgmax(a, step);
 	Matrix* res2 = calculator->tsArgmax(b ,step);
-	Matrix* res1_op = calculator->tsArgmax_op(a, step, num);
+	Matrix* res1_op = calculator->tsArgmax_op(a, step);
 	Matrix* res2_op = calculator->tsArgmax_op(b ,step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	EXPECT_TRUE(res2->compareMatrix(res2_op));
@@ -621,7 +621,7 @@ TEST(MatrixCalculator, TSArgMin){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsArgmin(a, step, num);
+	Matrix* res1 = calculator->tsArgmin(a, step);
 	Matrix* res2 = calculator->tsArgmin(b ,step);
 	a->clear();
 	b->clear();
@@ -635,7 +635,7 @@ TEST(MatrixCalculator, TSArgMin_OP){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsArgmin_op(a, step, num);
+	Matrix* res1 = calculator->tsArgmin_op(a, step);
 	Matrix* res2 = calculator->tsArgmin_op(b ,step);
 	a->clear();
 	b->clear();
@@ -649,9 +649,9 @@ TEST(MatrixCalculator, TSArgMin_Compare){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsArgmin(a, step, num);
+	Matrix* res1 = calculator->tsArgmin(a, step);
 	Matrix* res2 = calculator->tsArgmin(b ,step);
-	Matrix* res1_op = calculator->tsArgmin_op(a, step, num);
+	Matrix* res1_op = calculator->tsArgmin_op(a, step);
 	Matrix* res2_op = calculator->tsArgmin_op(b ,step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	EXPECT_TRUE(res2->compareMatrix(res2_op));
@@ -670,9 +670,9 @@ TEST(MatrixCalculator, TSRank_Compare){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsRank(a, step, num);
+	Matrix* res1 = calculator->tsRank(a, step);
 	Matrix* res2 = calculator->tsRank(b ,step);
-	Matrix* res1_op = calculator->tsRank_op(a, step, num);
+	Matrix* res1_op = calculator->tsRank_op(a, step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	a->clear();
 	b->clear();
@@ -686,9 +686,9 @@ TEST(MatrixCalculator, TSMean_Compare){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsMean(a, step, num);
+	Matrix* res1 = calculator->tsMean(a, step);
 	Matrix* res2 = calculator->tsMean(b ,step);
-	Matrix* res1_op = calculator->tsMean_op(a, step, num);
+	Matrix* res1_op = calculator->tsMean_op(a, step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	
 	a->clear();
@@ -703,10 +703,10 @@ TEST(MatrixCalculator, TSStd_Compare){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsStd(a, step, num);
+	Matrix* res1 = calculator->tsStd(a, step);
 	Matrix* res2 = calculator->tsStd(b ,step);
-	Matrix* res1_op = calculator->tsStd_op(a, step, num);
-	Matrix* res2_op = calculator->tsStd_op(b, step, num);
+	Matrix* res1_op = calculator->tsStd_op(a, step);
+	Matrix* res2_op = calculator->tsStd_op(b, step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	EXPECT_TRUE(res2->compareMatrix(res2_op));
 
@@ -723,9 +723,9 @@ TEST(MatrixCalculator, TSSkewness_Compare){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsSkewness(a, step, num);
+	Matrix* res1 = calculator->tsSkewness(a, step);
 	Matrix* res2 = calculator->tsSkewness(b ,step);
-	Matrix* res1_op = calculator->tsSkewness_op(a, step, num);
+	Matrix* res1_op = calculator->tsSkewness_op(a, step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	a->clear();
 	b->clear();
@@ -739,9 +739,9 @@ TEST(MatrixCalculator, TSKurtosis_Compare){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsKurtosis(a, step, num);
+	Matrix* res1 = calculator->tsKurtosis(a, step);
 	Matrix* res2 = calculator->tsKurtosis(b ,step);
-	Matrix* res1_op = calculator->tsKurtosis_op(a, step, num);
+	Matrix* res1_op = calculator->tsKurtosis_op(a, step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	a->clear();
 	b->clear();
@@ -755,9 +755,9 @@ TEST(MatrixCalculator, TSCov){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsCov(a, b, step, num);
-	Matrix* res2 = calculator->tsCov(b, a, step, num);
-	Matrix* res1_op = calculator->tsCov_op(a, b, step, num);
+	Matrix* res1 = calculator->tsCov(a, b, step);
+	Matrix* res2 = calculator->tsCov(b, a, step);
+	Matrix* res1_op = calculator->tsCov_op(a, b, step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	a->clear();
 	b->clear();
@@ -771,8 +771,8 @@ TEST(MatrixCalculator, TSCorr){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->tsCorr(a, b, step, num);
-	Matrix* res1_op = calculator->tsCorr_op(a, b, step, num);
+	Matrix* res1 = calculator->tsCorr(a, b, step);
+	Matrix* res1_op = calculator->tsCorr_op(a, b, step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	a->clear();
 	b->clear();
@@ -785,8 +785,8 @@ TEST(MatrixCalculator, TSCountTrue){
 	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
 	b->readMatrix(logicMatrix_b);
-	Matrix* res1 = calculator->tsCountTrue(a, step, num);
-	Matrix* res2 = calculator->tsCountTrue(b, step, num);
+	Matrix* res1 = calculator->tsCountTrue(a, step);
+	Matrix* res2 = calculator->tsCountTrue(b, step);
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -799,7 +799,7 @@ TEST(MatrixCalculator, TSCountTrue_OP){
 	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
 	b->readMatrix(logicMatrix_b);
-	Matrix* res1 = calculator->tsCountTrue_op(a, step, num);
+	Matrix* res1 = calculator->tsCountTrue_op(a, step);
 	Matrix* res2 = calculator->tsCountTrue_op(b ,step);
 	a->clear();
 	b->clear();
@@ -813,9 +813,9 @@ TEST(MatrixCalculator, TSCountTrue_Compare){
 	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
 	b->readMatrix(logicMatrix_b);
-	Matrix* res1 = calculator->tsCountTrue(a, step, num);
+	Matrix* res1 = calculator->tsCountTrue(a, step);
 	Matrix* res2 = calculator->tsCountTrue(b ,step);
-	Matrix* res1_op = calculator->tsCountTrue_op(a, step, num);
+	Matrix* res1_op = calculator->tsCountTrue_op(a, step);
 	Matrix* res2_op = calculator->tsCountTrue_op(b ,step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	EXPECT_TRUE(res2->compareMatrix(res2_op));
@@ -834,8 +834,8 @@ TEST(MatrixCalculator, TSCountConsecutiveTrue){
 	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
 	b->readMatrix(logicMatrix_b);
-	Matrix* res1 = calculator->tsCountConsecutiveTrue(a, step, num);
-	Matrix* res2 = calculator->tsCountConsecutiveTrue(b, step, num);
+	Matrix* res1 = calculator->tsCountConsecutiveTrue(a, step);
+	Matrix* res2 = calculator->tsCountConsecutiveTrue(b, step);
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -848,7 +848,7 @@ TEST(MatrixCalculator, TSCountConsecutiveTrue_OP){
 	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
 	b->readMatrix(logicMatrix_b);
-	Matrix* res1 = calculator->tsCountConsecutiveTrue_op(a, step, num);
+	Matrix* res1 = calculator->tsCountConsecutiveTrue_op(a, step);
 	Matrix* res2 = calculator->tsCountConsecutiveTrue_op(b ,step);
 	a->clear();
 	b->clear();
@@ -862,9 +862,9 @@ TEST(MatrixCalculator, TSCountConsecutiveTrue_Compare){
 	a->readMatrix(logicMatrix_a);
 	LogicMatrix* b = new LogicMatrix();
 	b->readMatrix(logicMatrix_b);
-	Matrix* res1 = calculator->tsCountConsecutiveTrue(a, step, num);
+	Matrix* res1 = calculator->tsCountConsecutiveTrue(a, step);
 	Matrix* res2 = calculator->tsCountConsecutiveTrue(b ,step);
-	Matrix* res1_op = calculator->tsCountConsecutiveTrue_op(a, step, num);
+	Matrix* res1_op = calculator->tsCountConsecutiveTrue_op(a, step);
 	Matrix* res2_op = calculator->tsCountConsecutiveTrue_op(b ,step);
 	EXPECT_TRUE(res1->compareMatrix(res1_op));
 	EXPECT_TRUE(res2->compareMatrix(res2_op));
@@ -882,8 +882,8 @@ TEST(MatrixCalculator, DecayLinear){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->decayLinear(a, step, num);
-	Matrix* res2 = calculator->decayLinear(b, step, num);
+	Matrix* res1 = calculator->decayLinear(a, step);
+	Matrix* res2 = calculator->decayLinear(b, step);
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -896,8 +896,8 @@ TEST(MatrixCalculator, DecayExp){
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	Matrix* res1 = calculator->decayExponential(a, step, num);
-	Matrix* res2 = calculator->decayExponential(b, step, num);
+	Matrix* res1 = calculator->decayExponential(a, step);
+	Matrix* res2 = calculator->decayExponential(b, step);
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -1045,19 +1045,19 @@ TEST(MatrixCalculator, EvalInnerProduction){
 	res2->clear();
 }
 
-// TEST(MatrixCalculator, Det){
+TEST(MatrixCalculator, Det){
 	
-// 	Matrix* a = new Matrix();
-// 	a->readMatrix(matrix_a);
-// 	Matrix* b = new Matrix();
-// 	b->readMatrix(matrix_b);
-// 	double res1 = calculator->Det(a, matSize);
-// 	double res2 = calculator->Det(b, matSize);
-// 	a->clear();
-// 	b->clear();
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	double res1 = calculator->Det(a, matSize - 1);
+	double res2 = calculator->Det(b, matSize - 1);
+	a->clear();
+	b->clear();
 
-// }
-//FIX core dump detected
+}
+
 
 
 TEST(MatrixCalculator, Treat){
@@ -1140,15 +1140,6 @@ int main()
 	la->saveMatrix(logicMatrix_a);
 	LogicMatrix* lb = factory->getInstanceOfRandomLogicMatrix(matSize, matSize);
 	lb->saveMatrix(logicMatrix_b);
-/*	
-	int times = step;
-	
-	for(int i = 0; i < times; i++)
-		Matrix* res1 = calculator->mul(a, b, num);
-
-	for(int i = 0; i < times; i++)
-		Matrix* res2 = calculator->matrixMul(a, b, num);
-*/
 
 	testing::InitGoogleTest();
 	RUN_ALL_TESTS();
