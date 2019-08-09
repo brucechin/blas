@@ -36,8 +36,9 @@ class Matrix{
 			value = new double[0];
 		}
 		~Matrix(){
+			std::cout << nrow << " "<<ncol <<std::endl;
 			delete[] value;
-	//		std::cout << "deconstruct"<<std::endl;
+			std::cout << "deconstruct"<<std::endl;
 		}
 
 		Matrix(int n, int m){
@@ -63,6 +64,13 @@ class Matrix{
 			std::memcpy(value, mat.value, nrow * ncol * sizeof(double));
 		}
 
+		Matrix(string filename){
+			nrow = 0;
+			ncol = 0;
+			value = new double[0];
+			readMatrix(filename);
+		}
+
 		//copy some rows or columns usingg memcpy
 		void setNCol(int m){
 			ncol = m;
@@ -72,9 +80,10 @@ class Matrix{
 			nrow = n;
 		}
 		void clear(){
-			nrow = 0;
-			ncol = 0;
 			delete[] value;
+			nrow = 0;
+			std::cout << "clear"<<std::endl;
+			ncol = 0;
 		}
 
 		int getNRow(){
@@ -200,7 +209,9 @@ class Matrix{
 				delete[] value;
 				value = new double[nrow * ncol];
 				file.read((char*)value, sizeof(double) * nrow * ncol);
+				std::cout << "success read"<<std::endl;
 				file.close();
+				std::cout<<"file closed"<<std::endl;
 			}
 			else {
 				cout << "file open failure" << endl;

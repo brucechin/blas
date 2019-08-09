@@ -14,7 +14,7 @@ int rangeMax = 10000;
 int matSize = 10;
 int lowerBound = -100;
 int upperBound = 100;
-int stepSize = 50; // used for shift/delta/delay/ratio/sum/product
+int stepSize = 5; // used for shift/delta/delay/ratio/sum/product
 MatrixFactory* factory = new MatrixFactory();
 MatrixCalculator* calculator = new MatrixCalculator();
 string matrix_a = "a.mat";
@@ -25,9 +25,9 @@ string logicMatrix_b = "lb.mat";
 
 int main()
 {	
-    Matrix* a = factory->getInstanceOfRandomMatrixWithAbnormalValue(matSize, matSize, rangeMin, rangeMax);
+    Matrix* a = factory->getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
 	a->saveMatrix(matrix_a);
-	Matrix* b = factory->getInstanceOfRandomMatrixWithAbnormalValue(matSize, matSize, rangeMin, rangeMax);
+	Matrix* b = factory->getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
 	b->saveMatrix(matrix_b);
 	LogicMatrix* la = factory->getInstanceOfRandomLogicMatrix(matSize, matSize);
 	la->saveMatrix(logicMatrix_a);
