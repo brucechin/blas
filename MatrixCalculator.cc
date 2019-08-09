@@ -54,7 +54,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] + mat2->value[i * ncol + j];
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] + mat2->value[i * ncol + j];
             colid++;
         }
     }
@@ -86,7 +86,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] - mat2->value[i * ncol + j];
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] - mat2->value[i * ncol + j];
             colid++;
         }
     }
@@ -126,7 +126,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] / mat2->value[i * ncol + j];
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] / mat2->value[i * ncol + j];
             colid++;
         }
     }
@@ -172,7 +172,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] * mat2->value[i * ncol + j];
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] * mat2->value[i * ncol + j];
             colid++;
         }
     }
@@ -202,7 +202,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = val1 * mat2->value[i * ncol + j];
+            res->value[i * colnum + colid] = val1 * mat2->value[i * ncol + j];
             colid++;
         }
     }
@@ -284,7 +284,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::max(mat1->value[i * ncol + j], mat2->value[i * ncol + j]);
+            res->value[i * colnum + colid] = std::max(mat1->value[i * ncol + j], mat2->value[i * ncol + j]);
             colid++;
         }
     }
@@ -321,7 +321,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::min(mat1->value[i * ncol + j], mat2->value[i * ncol + j]);
+            res->value[i * colnum + colid] = std::min(mat1->value[i * ncol + j], mat2->value[i * ncol + j]);
             colid++;
         }
     }
@@ -356,7 +356,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] > mat2->value[i * ncol + j];
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] > mat2->value[i * ncol + j];
             colid++;
         }
     }
@@ -389,7 +389,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] > val;
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] > val;
             colid++;
         }
     }
@@ -424,7 +424,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] < mat2->value[i * ncol + j];
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] < mat2->value[i * ncol + j];
             colid++;
         }
     }
@@ -457,7 +457,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] > val;
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] > val;
             colid++;
         }
     }
@@ -492,7 +492,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] == mat2->value[i * ncol + j];
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] == mat2->value[i * ncol + j];
             colid++;
         }
     }
@@ -524,7 +524,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] > val;
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] > val;
             colid++;
         }
     }
@@ -592,7 +592,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] && mat2->value[i * ncol + j];
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] && mat2->value[i * ncol + j];
             colid++;
         }
     }
@@ -626,7 +626,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = mat1->value[i * ncol + j] || mat2->value[i * ncol + j];
+            res->value[i * colnum + colid] = mat1->value[i * ncol + j] || mat2->value[i * ncol + j];
             colid++;
         }
     }
@@ -658,7 +658,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = !mat1->value[i * ncol + j];
+            res->value[i * colnum + colid] = !mat1->value[i * ncol + j];
             colid++;
         }
     }
@@ -697,7 +697,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         {
             int pos = i * ncol + j;
             double val = (!mat1->value[pos]) ? mat2->value[pos] : mat3->value[pos];
-            res->value[i * ncol + colid] = val;
+            res->value[i * colnum + colid] = val;
             colid++;
         }
     }
@@ -830,7 +830,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         double *curResult = rank(vec, nrow);
         for (int i = 0; i < nrow; i++)
         {
-            res->value[i * ncol + colid] = curResult[i];
+            res->value[i * colnum + colid] = curResult[i];
         }
         colid++;
         delete[] vec;
@@ -864,7 +864,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::round(mat->value[i * ncol + j]);
+            res->value[i * colnum + colid] = std::round(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -895,7 +895,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::floor(mat->value[i * ncol + j]);
+            res->value[i * colnum + colid] = std::floor(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -926,7 +926,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::abs(mat->value[i * ncol + j]);
+            res->value[i * colnum + colid] = std::abs(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -958,7 +958,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = -mat->value[i * ncol + j];
+            res->value[i * colnum + colid] = -mat->value[i * ncol + j];
             colid++;
         }
     }
@@ -997,7 +997,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::sqrt(mat->value[i * ncol + j]);
+            res->value[i * colnum + colid] = std::sqrt(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -1028,7 +1028,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::log(mat->value[i * ncol + j]);
+            res->value[i * colnum + colid] = std::log(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -1059,7 +1059,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = std::exp(mat->value[i * ncol + j]);
+            res->value[i * colnum + colid] = std::exp(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -1091,7 +1091,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = signum(mat->value[i * ncol + j]);
+            res->value[i * colnum + colid] = signum(mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -1122,7 +1122,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         int colid = 0;
         for (int j = colStart; j < ncol; j++)
         {
-            res->value[i * ncol + colid] = 1.0 / (mat->value[i * ncol + j]);
+            res->value[i * colnum + colid] = 1.0 / (mat->value[i * ncol + j]);
             colid++;
         }
     }
@@ -1156,7 +1156,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         for (int j = colStart; j < ncol; j++)
         {
             double val = mat->value[i * ncol + j];
-            res->value[i * ncol + colid] = signum(val) * pow(std::abs(val), index);
+            res->value[i * colnum + colid] = signum(val) * pow(std::abs(val), index);
             colid++;
         }
     }
@@ -1199,11 +1199,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         {
             if (j >= ncol - n)
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             else
             {
-                res->value[i * ncol + colid] = mat->value[i * ncol + j + n];
+                res->value[i * colnum + colid] = mat->value[i * ncol + j + n];
             }
             colid++;
         }
@@ -1246,11 +1246,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         {
             if (j < n)
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             else
             {
-                res->value[i * ncol + colid] = mat->value[i * ncol + j - n];
+                res->value[i * colnum + colid] = mat->value[i * ncol + j - n];
             }
             colid++;
         }
@@ -1292,11 +1292,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         {
             if (j < n)
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             else
             {
-                res->value[i * ncol + colid] = mat->value[i * ncol + j] - mat->value[i * ncol + j - n];
+                res->value[i * colnum + colid] = mat->value[i * ncol + j] - mat->value[i * ncol + j - n];
             }
             colid++;
         }
@@ -1340,11 +1340,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
         {
             if (j < n)
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             else
             {
-                res->value[i * ncol + colid] = mat->value[i * ncol + j] / mat->value[i * ncol + j - n];
+                res->value[i * colnum + colid] = mat->value[i * ncol + j] / mat->value[i * ncol + j - n];
             }
             colid++;
         }
@@ -1413,11 +1413,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + colid] = sum;
+                res->value[i * colnum + colid] = sum;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -1484,11 +1484,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + colid] = prod;
+                res->value[i * colnum + colid] = prod;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -1576,11 +1576,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + colid] = max;
+                res->value[i * colnum + colid] = max;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -1673,11 +1673,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + colid] = min;
+                res->value[i * colnum + colid] = min;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -1779,11 +1779,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + colid] = idmax;
+                res->value[i * colnum + colid] = idmax;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -1885,11 +1885,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + colid] = idmin;
+                res->value[i * colnum + colid] = idmin;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -1971,11 +1971,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 double val = rankFirst(rowRefa, j, lowestIndex);
-                res->value[i * ncol + colid] = val;
+                res->value[i * colnum + colid] = val;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -2060,11 +2060,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 double val = summaryMean(rowRefa, j, lowestIndex);
-                res->value[i * ncol + colid] = val;
+                res->value[i * colnum + colid] = val;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -2146,11 +2146,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 double val = std::sqrt(summaryVariance(rowRefa, j, lowestIndex));
-                res->value[i * ncol + colid] = val;
+                res->value[i * colnum + colid] = val;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -2232,11 +2232,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 double val = summarySkewness(rowRefa, j, lowestIndex);
-                res->value[i * ncol + colid] = val;
+                res->value[i * colnum + colid] = val;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -2318,11 +2318,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 double val = summaryKurtosis(rowRefa, j, lowestIndex);
-                res->value[i * ncol + colid] = val;
+                res->value[i * colnum + colid] = val;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -2406,11 +2406,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 double val = summaryCovariance(rowRefa, rowRefb, j, lowestIndex);
-                res->value[i * ncol + colid] = val;
+                res->value[i * colnum + colid] = val;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -2494,11 +2494,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
                 double val = summaryCorrelation(rowRefa, rowRefb, j, lowestIndex);
-                res->value[i * ncol + colid] = val;
+                res->value[i * colnum + colid] = val;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -2573,11 +2573,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + colid] = intDoubleDivide(numOfNan, count);
+                res->value[i * colnum + colid] = intDoubleDivide(numOfNan, count);
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -2643,11 +2643,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + colid] = intDoubleDivide(numOfTrue, count);
+                res->value[i * colnum + colid] = intDoubleDivide(numOfTrue, count);
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -2726,11 +2726,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + colid] = intDoubleDivide(numOfTrue, count);
+                res->value[i * colnum + colid] = intDoubleDivide(numOfTrue, count);
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -2818,11 +2818,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
             }
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + colid] = sum / sumWeight;
+                res->value[i * colnum + colid] = sum / sumWeight;
             }
             else
             {
-                res->value[i * ncol + colid] = NAN;
+                res->value[i * colnum + colid] = NAN;
             }
             colid++;
         }
@@ -2912,11 +2912,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
             if(j >= colStart){
                 if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
                 {
-                    res->value[i * ncol + colid] = currewma;
+                    res->value[i * colnum + colid] = currewma;
                 }
                 else
                 {
-                    res->value[i * ncol + colid] = NAN;
+                    res->value[i * colnum + colid] = NAN;
                 }
                 colid++;
             }
@@ -3037,11 +3037,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
                 double val = currValue - mean;
                 val = std::abs(val) > bound ? signum(val) * bound : val;
                 val = val / scale;
-                res->value[i * ncol + colid] = val;
+                res->value[i * colnum + colid] = val;
             }
             else
             {
-                res->value[i * ncol + colid] = 0.0;
+                res->value[i * colnum + colid] = 0.0;
             }
             colid++;
         }
