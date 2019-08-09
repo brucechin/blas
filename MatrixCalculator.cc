@@ -1185,6 +1185,32 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
     }
     return res;
 }
+ Matrix* MatrixCalculator::shift(Matrix* mat, int n, int num)
+{
+    int nrow = mat->getNRow();
+    int ncol = mat->getNCol();
+    int colnum = std::min(num, ncol);
+    int colStart = std::max(0, ncol - num);
+    Matrix *res = new Matrix(nrow, colnum);
+    for (int i = 0; i < nrow; i++)
+    {
+        int colid = 0;
+        for (int j = colStart; j < ncol; j++)
+        {
+            if (j >= ncol - n)
+            {
+                res->value[i * ncol + colid] = NAN;
+            }
+            else
+            {
+                res->value[i * ncol + colid] = mat->value[i * ncol + j + n];
+            }
+            colid++;
+        }
+    }
+    return res;
+}
+
  Matrix* MatrixCalculator::delay(Matrix* mat, int n)
 {
     int nrow = mat->getNRow();
@@ -1387,11 +1413,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + j] = sum;
+                res->value[i * ncol + colid] = sum;
             }
             else
             {
-                res->value[i * ncol + j] = NAN;
+                res->value[i * ncol + colid] = NAN;
             }
             colid++;
         }
@@ -1458,11 +1484,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.0;
 
             if (intDoubleDivide(count, n) > VALIDITY_PERCENTAGE_REQUIREMENT)
             {
-                res->value[i * ncol + j] = prod;
+                res->value[i * ncol + colid] = prod;
             }
             else
             {
-                res->value[i * ncol + j] = NAN;
+                res->value[i * ncol + colid] = NAN;
             }
             colid++;
         }
