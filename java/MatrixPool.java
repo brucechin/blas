@@ -1,6 +1,8 @@
 package blas.java;
 
 import java.util.*;
+import java.util.concurrent.locks.*;
+
 import blas.java.*;
 import java.lang.*;
 
@@ -11,23 +13,17 @@ public class MatrixPool {
     private boolean _isOn;
     private LinkedList<PooledMatrix> _freeMatrixList;
     private LinkedList<PooledMatrix> _usedMatrixList;
+    final Lock lock = new ReentrantLock();
 
     public static void main(String[] args) throws InterruptedException {
-        // MatrixPool pool = new MatrixPool(50, 2000, 2000);
-        // for (int i = 0; i < 200; i++) {
-        // Thread.sleep(500);
-        // PooledMatrix mat1 = pool.get(2000, 2000);
-        // mat1.readMatrix("a.mat");
-        // PooledMatrix mat2 = pool.get(2000, 2000);
-        // mat2.readMatrix("b.mat");
-        // pool.release(mat1);
-        // pool.release(mat2);
-        // System.out.println("releasing");
-        // if (i == 100) {
-        // pool.shutDown();
-        // }
+        int nrow = 2000;
+        int ncol = 2000;
+        int poolsize = 50;
+        MatrixPool pool = new MatrixPool(poolsize, nrow, ncol);
+        for (int i = 0; i < poolsize; i++) {
+            new Thread(new Consumer(pool, nrow, ncol), "Thread " + String.valueOf(i)).start();
+        }
 
-        // }
     }
 
     public MatrixPool(int poolsize, int nrow, int ncol) {
@@ -44,36 +40,53 @@ public class MatrixPool {
 
     }
 
-    public synchronized PooledMatrix get(int nrow, int ncol) {
+    public PooledMatrix get(int nrow, int ncol) {
         PooledMatrix res;
-
-        if (_isOn) {
-            if (_freeMatrixList.size() > 0 && _ncol == ncol && _nrow == nrow) {
-                res = _freeMatrixList.getFirst();
-                _freeMatrixList.remove();
-                _usedMatrixList.add(res);
+        lock.lock();
+        try {
+            if (_isOn) {
+                if (_freeMatrixList.size() > 0 && _ncol == ncol && _nrow == nrow) {
+                    res = _freeMatrixList.getFirst();
+                    _freeMatrixList.remove();
+                    _usedMatrixList.add(res);
+                } else {
+                    System.out.println("allocating extra memory");
+                    res = new PooledMatrix(nrow, ncol);
+                }
+                System.out.println(
+                        Thread.currentThread().getName() + " --get-- free matrix num : " + _freeMatrixList.size());
+                return res;
             } else {
-                System.out.println("allocating new space");
-                res = new PooledMatrix(nrow, ncol);
+                // what shall we return in get() after the pool is down
+                res = new PooledMatrix();
+                return res;
             }
-            System.out.println(_freeMatrixList.size());
-            return res;
-        } else {
-            res = new PooledMatrix();
-            return res;
+
+        } finally {
+            lock.unlock();
         }
 
     }
 
-    public synchronized boolean release(PooledMatrix mat) {
-        if (_usedMatrixList.contains(mat)) {
-            _usedMatrixList.remove(mat);
-            _freeMatrixList.add(mat);
-            return true;
-        } else if (!_freeMatrixList.contains(mat) && mat.getNCol() == _ncol && mat.getNRow() == _nrow) {
-            _freeMatrixList.add(mat);
-            _size++;
-            return true;
+    public boolean release(PooledMatrix mat) {
+        lock.lock();
+        try {
+            if (_usedMatrixList.contains(mat)) {
+                _usedMatrixList.remove(mat);
+                _freeMatrixList.add(mat);
+                System.out.println(
+                        Thread.currentThread().getName() + " --release-- free matrix num : " + _freeMatrixList.size());
+                return true;
+            } else if (!_freeMatrixList.contains(mat) && mat.getNCol() == _ncol && mat.getNRow() == _nrow) {
+                _freeMatrixList.add(mat);
+                _size++;
+                System.out.println(
+                        Thread.currentThread().getName() + " --release-- free matrix num : " + _freeMatrixList.size());
+                return true;
+            }
+
+        } finally {
+            lock.unlock();
         }
 
         return false;
@@ -85,13 +98,11 @@ public class MatrixPool {
     // return true;
     // }
 
-    public synchronized boolean shutDown() throws InterruptedException {
-        // TODO implement it later
+    public boolean shutDown() throws InterruptedException {
         _isOn = false;
-        System.out.println("Start shutting down the matrix pool");
-        while (_usedMatrixList.size() != 0) {
-            Thread.sleep(1000);
-        }
+        _freeMatrixList.clear();
+        _usedMatrixList.clear();
+        _size = 0;
         System.out.println("Matrix pool shuts down completely");
         return true;
     }
