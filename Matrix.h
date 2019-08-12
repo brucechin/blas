@@ -82,7 +82,6 @@ class Matrix{
 		void clear(){
 			delete[] value;
 			nrow = 0;
-			std::cout << "clear"<<std::endl;
 			ncol = 0;
 		}
 

@@ -11,7 +11,7 @@ using namespace std;
 
 int rangeMin = -10000;
 int rangeMax = 10000;
-int matSize = 10;
+int matSize = 2000;
 int lowerBound = -100;
 int upperBound = 100;
 int stepSize = 5; // used for shift/delta/delay/ratio/sum/product

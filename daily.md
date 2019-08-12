@@ -332,3 +332,4 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 ### 8.9
 
 1. 发现在函数参数带num的API实现中有重大错误是在写res的时候越界了。主要是res和mat1 mat2的size是不一样的，没调用setElement裸写内存访问的时候写错了。。
+2. 又接了一个新活是写一个MatrixPool类似ThreadPool

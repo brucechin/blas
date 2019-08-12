@@ -1,6 +1,6 @@
 package blas.java;
 
-import bals.java.*;
+import blas.java.*;
 
 public class PooledMatrix extends Matrix {
     public PooledMatrix() {
