@@ -4,12 +4,12 @@ import blas.java.*;
 import java.lang.*;
 
 public class Consumer implements Runnable {
-    private MatrixPool _pool;
+    private MatrixPoolManager _manager;
     private int _ncol;
     private int _nrow;
 
-    public Consumer(MatrixPool pool, int nrow, int ncol) {
-        _pool = pool;
+    public Consumer(int nrow, int ncol) {
+        _manager = MatrixPoolManager.getMatrixPoolManager();
         _nrow = nrow;
         _ncol = ncol;
     }
@@ -19,10 +19,10 @@ public class Consumer implements Runnable {
 
             try {
                 Thread.sleep(501 + (int) (Math.random() * 500));
-                PooledMatrix mat = _pool.get(_nrow, _ncol);
-                mat.readMatrix("a.mat");
+                Matrix mat = _manager.get(_nrow, _ncol);
+                // mat.readMatrix("a.mat");
                 Thread.sleep(2001 + (int) (Math.random() * 2000));
-                _pool.release(mat);
+                _manager.release(mat);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

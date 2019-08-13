@@ -9,27 +9,29 @@ import java.lang.*;
 public class MatrixPoolManager {
 
     // fixed min/max pool size
-    private int _minPoolSize = 10;
+    private int _minPoolSize = 5;
     private int _maxPoolSize = 30;
     private ConcurrentHashMap<String, MatrixPool> _poolMap;// key is a string "nrow+ncol"
 
     private static MatrixPoolManager manager;
 
     public static void main(String[] args) {
-        MatrixPoolManager m = MatrixPoolManager.getMatrixPoolManager();
-        Matrix res = m.get(100, 100);
+        int threadNum = 100;
+        for (int i = 0; i < threadNum; i++) {
+            new Thread(new Consumer((i % 5 + 1) * 100, (i % 5 + 1) * 100), "Thread " + String.valueOf(i)).start();
+        }
     }
 
     public Matrix get(int nrow, int ncol) {
         Matrix res = null;
         String key = String.valueOf(nrow) + "+" + String.valueOf(ncol);
 
-        if (!poolMap.containsKey(key)) {
+        if (!_poolMap.containsKey(key)) {
             // allocate new matrix pool for this (nrow, ncol)
-            poolMap.put(key, new MatrixPool(_minPoolSize, _maxPoolSize, nrow, ncol));
+            _poolMap.put(key, new MatrixPool(_minPoolSize, _maxPoolSize, nrow, ncol));
         }
 
-        res = poolMap.get(key).get(nrow, ncol);
+        res = _poolMap.get(key).get(nrow, ncol);
 
         return res;
     }

@@ -19,11 +19,8 @@ public class MatrixPool {
     public static void main(String[] args) throws InterruptedException {
         int nrow = 2000;
         int ncol = 2000;
-        int minsize = 10;
-        int maxsize = 30;
-        MatrixPool pool = new MatrixPool(minsize, maxsize, nrow, ncol);
         for (int i = 0; i < maxsize; i++) {
-            new Thread(new Consumer(pool, nrow, ncol), "Thread " + String.valueOf(i)).start();
+            new Thread(new Consumer(nrow, ncol), "Thread " + String.valueOf(i)).start();
         }
 
     }
