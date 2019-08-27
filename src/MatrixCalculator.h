@@ -40,7 +40,7 @@ public:
         //         }else{
         //             doubleIntDivideArr[i * 100 + j] = (double)j / (double)i;
         //         }
-        //     }
+        //     
         // }
     }
     const static double VALIDITY_PERCENTAGE_REQUIREMENT;
