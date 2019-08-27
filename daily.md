@@ -332,4 +332,32 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 ### 8.9
 
 1. 发现在函数参数带num的API实现中有重大错误是在写res的时候越界了。主要是res和mat1 mat2的size是不一样的，没调用setElement裸写内存访问的时候写错了。。
-2. 又接了一个新活是写一个MatrixPool类似ThreadPool
+2. 接了一个新需求要写一个matrix pool，减少在复杂大矩阵预算过程中，内存反复allocate、release的overhead（因为MatrixCalculator里面的API都是先为res分配好内存再往上填）
+
+### 8.12
+
+1. 找到了合适的C++ CSV文件处理库，准备开始写TradingCalendar了
+2. 把之前写的matrix pool添加了多线程Lock()，并撰写了多线程的测试代码。
+
+### 8.15
+
+1. 前两天calendar写好了，在debug遇到以下问题：
+
+   1. # [error: passing xxx as 'this' argument of xxx discards qualifiers](https://stackoverflow.com/questions/5973427/error-passing-xxx-as-this-argument-of-xxx-discards-qualifiers)
+   
+2. 今天完全debug完成了，明天主要写一些单元测试，测一下各个函数的情况
+
+### 8.16
+
+1. 今天跑单元测试，发现生成大的随机数也是一件需要考量的事情
+2. 无法跟py代码作比较测正确性，估计要手算以下了。。
+
+### 8.21
+
+1. 摸了两天🐟之后终于又安排了新的活，主要是XML文件的解析，要有三个功能，一个是分析多个xml文件的公共部分，一个是多个xml文件随机挑一个base文件，比较base与其他文件的diff，最后一个是将delta文件作为base文件update的参照，输出新的output.xml
+2. 忙了半个下午发现这活还挺棘手的，因为xml文件的tag tree中每个tag都可能有attribute，不方便把tag tree转换成一个唯一识别符
+
+### 8.22
+
+1. 把xml文件里每一个line沿途的path上的tag和attribute转变成他unique key，然后用这个单层的词典进行diff和求相同line的操作，但是merge的时候发现难以把这个四不像dict转回xml了
+2. 最后解决办法是用ElementTree把xml文件转成一个tree结构，然后对两个tree进行merge然后再转成xml格式写回到文件
