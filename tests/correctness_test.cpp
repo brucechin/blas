@@ -1,7 +1,7 @@
 
 //#include "gtest/gtest.h"
 #include "cblas.h"
-#include "../MatrixCalculator.h"
+#include "../src/MatrixCalculator.h"
 #include <fstream>
 #include<iostream>
 using namespace std;

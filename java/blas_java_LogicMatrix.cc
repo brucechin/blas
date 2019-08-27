@@ -1,4 +1,4 @@
-#include "../LogicMatrix.h"
+#include "../src/LogicMatrix.h"
 #include "blas_java_LogicMatrix.h"
 #include<iostream>
 #include<stdexcept>

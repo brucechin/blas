@@ -3,9 +3,9 @@
 #include<unistd.h>
 #include<cstring>
 #include<string>
-#include"../Matrix.h"
-#include"../LogicMatrix.h"
-#include"../MatrixCalculator.h"
+#include"../src/Matrix.h"
+#include"../src/LogicMatrix.h"
+#include"../src/MatrixCalculator.h"
 #include"blas_java_MatrixCalculator.h"
 
 JNIEXPORT jobject JNICALL Java_blas_java_MatrixCalculator_sumByRowNative(JNIEnv * env, jclass obj, jlong p){

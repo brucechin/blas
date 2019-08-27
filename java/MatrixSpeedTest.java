@@ -15,23 +15,21 @@ public class MatrixSpeedTest {
         String matrix_b = "b.mat";
         String logicMatrix_a = "la.mat";
         String logicMatrix_b = "lb.mat";
-/*
-        Matrix a = new Matrix(matrix_a);
-        Matrix b = new Matrix(matrix_b);
-        LogicMatrix la = new LogicMatrix(logicMatrix_a);
-        LogicMatrix lb = new LogicMatrix(logicMatrix_b);
-*/
+        /*
+         * Matrix a = new Matrix(matrix_a); Matrix b = new Matrix(matrix_b); LogicMatrix
+         * la = new LogicMatrix(logicMatrix_a); LogicMatrix lb = new
+         * LogicMatrix(logicMatrix_b);
+         */
 
-
-		Matrix a = MatrixFactory.getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
-		Matrix b = MatrixFactory.getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
-		LogicMatrix la = MatrixFactory.getInstanceOfRandomLogicMatrix(matSize, matSize);
-		LogicMatrix lb = MatrixFactory.getInstanceOfRandomLogicMatrix(matSize, matSize);
+        Matrix a = MatrixFactory.getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
+        Matrix b = MatrixFactory.getInstanceOfRandomMatrix(matSize, matSize, rangeMin, rangeMax);
+        LogicMatrix la = MatrixFactory.getInstanceOfRandomLogicMatrix(matSize, matSize);
+        LogicMatrix lb = MatrixFactory.getInstanceOfRandomLogicMatrix(matSize, matSize);
         Matrix res;
         LogicMatrix lres;
         long startTime;
         long endTime;
-        int times = 100;
+        int times = 10;
         /*
          * System.out.println("Det(a) : " + MatrixCalculator.Det(a.value, a.getNRow() -
          * 1));
@@ -46,7 +44,7 @@ public class MatrixSpeedTest {
             MatrixCalculator.smoothByDecayLinear(a, 5);
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("smooth : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("smooth : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -54,7 +52,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("add : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("add : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -62,7 +60,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("sub : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("sub : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -70,7 +68,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("div : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("div : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -78,7 +76,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("mul : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("mul : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -86,7 +84,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("matrixMul : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("matrixMul : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -94,7 +92,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("max : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("max : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -102,7 +100,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("min : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("min : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -111,7 +109,7 @@ public class MatrixSpeedTest {
         }
 
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("bigger : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("bigger : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -120,7 +118,7 @@ public class MatrixSpeedTest {
         }
 
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("smaller : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("smaller : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -129,7 +127,7 @@ public class MatrixSpeedTest {
         }
 
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("equal : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("equal : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -138,7 +136,7 @@ public class MatrixSpeedTest {
         }
 
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("between : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("between : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -147,7 +145,7 @@ public class MatrixSpeedTest {
         }
 
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("and : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("and : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -156,7 +154,7 @@ public class MatrixSpeedTest {
         }
 
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("or : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("or : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -165,7 +163,7 @@ public class MatrixSpeedTest {
         }
 
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("not : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("not : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -173,7 +171,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("condition : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("condition : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -181,7 +179,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("rank : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("rank : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -189,7 +187,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("round : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("round : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -197,7 +195,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("floor : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("floor : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -205,7 +203,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("abs : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("abs : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -213,7 +211,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("minus : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("minus : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -221,7 +219,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("sqrt : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("sqrt : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -229,7 +227,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("log : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("log : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -237,7 +235,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("exp : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("exp : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -245,7 +243,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("sign : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("sign : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -253,7 +251,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("inverse : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("inverse : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -261,7 +259,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("signedpow : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("signedpow : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -269,7 +267,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("shift : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("shift : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -277,7 +275,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("delay : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("delay : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -285,7 +283,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("delta : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("delta : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -293,7 +291,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("ratio : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("ratio : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -301,7 +299,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("sum : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("sum : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -309,7 +307,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("product : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("product : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -317,7 +315,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsMax : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsMax : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -325,7 +323,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsMin : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsMin : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -333,7 +331,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsArgmax : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsArgmax : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -341,7 +339,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsArgmin : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsArgmin : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -349,7 +347,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsRank : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsRank : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -357,7 +355,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsMean : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsMean : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -365,7 +363,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsStd : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsStd : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -373,7 +371,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsSkewness : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsSkewness : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -381,7 +379,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsKurtosis : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsKurtosis : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -389,7 +387,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsCov : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsCov : " + (endTime - startTime) / 1000000 + "ms");
 
         // res = MatrixCalculator.tscorr(a, b, stepSize);
         //
@@ -399,7 +397,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsCountTrue : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsCountTrue : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -407,7 +405,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("tsCountConsecutiveTrue : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("tsCountConsecutiveTrue : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -415,7 +413,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("decayLinear : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("decayLinear : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -423,7 +421,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("decayExponential : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("decayExponential : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -431,7 +429,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("neutralize : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("neutralize : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -439,7 +437,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("unify : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("unify : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -447,7 +445,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("evalValidPct : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("evalValidPct : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -455,7 +453,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("evalAbsSum : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("evalAbsSum : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -463,7 +461,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("evalMean : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("evalMean : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -471,7 +469,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("evalVariance : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("evalVariance : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -479,7 +477,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("evalInnerProduction : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("evalInnerProduction : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -487,7 +485,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("evalCovariance : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("evalCovariance : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -495,7 +493,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("evalCorrelation : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("evalCorrelation : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -503,7 +501,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("evalBeta : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("evalBeta : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -511,7 +509,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("diag : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("diag : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -519,7 +517,7 @@ public class MatrixSpeedTest {
             res.clear();
         }
         endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("cumSum : " + (endTime - startTime) / 1000 + "ms");
+        System.out.println("cumSum : " + (endTime - startTime) / 1000000 + "ms");
 
     }
 }

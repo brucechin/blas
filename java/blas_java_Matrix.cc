@@ -1,4 +1,4 @@
-#include "../Matrix.h"
+#include "../src/Matrix.h"
 #include "blas_java_Matrix.h"
 #include<iostream>
 #include<stdexcept>

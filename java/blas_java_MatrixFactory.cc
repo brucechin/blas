@@ -1,7 +1,7 @@
-#include "../Matrix.h"
+#include "../src/Matrix.h"
 #include "blas_java_MatrixFactory.h"
-#include "../LogicMatrix.h"
-#include "../MatrixFactory.h"
+#include "../src/LogicMatrix.h"
+#include "../src/MatrixFactory.h"
 #include<iostream>
 #include<stdexcept>
 #include<unistd.h>

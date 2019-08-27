@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
 #include <fstream>
 #include<iostream>
-#include"../MatrixCalculator.h"
-#include"../MatrixFactory.h"
+#include"../src/MatrixCalculator.h"
+#include"../src/MatrixFactory.h"
 using namespace std;
 
 int rangeMin = -10000;
