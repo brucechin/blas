@@ -371,4 +371,5 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 
 1. 项目从本机WSL上移植到hftdev上还是有各种小问题，自己在开发机上啥权限都没有非常烦躁，装个pip包不行，把so文件或者.h文件放在lib或者include文件夹下也不行，难受的一批.
 2. 发现旧MatrixCalculator版本有个问题是当matrix size过大时，里面的int2Double等转换函数就出界了.
-3. 发现一个问题：C++ matrix speedtest时相比Java(backend c++)版本要快的，这是native层带来的额外开销导致的，
+3. 发现一个问题：C++ matrix speedtest时相比Java(backend c++)版本要快的(用时少10-60%不等)，这是native层带来的额外开销导致的，但是在开发机上测试native层带来的overhead的时候发现又没有那么多了，很是奇怪。
+4. 在开发机上同时跑两种实现的JAVA MatrixCalculator的时候，C++ backend的还是总体快一些，尤其是在优化过的TS系列函数上，想优化最好的办法还是优化算法啊。

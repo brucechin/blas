@@ -154,7 +154,7 @@ int main(){
 
     start = system_clock::now();
     for(int i = 0; i < times; i++){
-        res = MatrixCalculator::tsMax(a, step);
+        res = MatrixCalculator::tsMax_op(a, step);
         delete res;
     }
     end   = system_clock::now();
@@ -163,7 +163,7 @@ int main(){
 
         start = system_clock::now();
     for(int i = 0; i < times; i++){
-        res = MatrixCalculator::tsRank(a, step);
+        res = MatrixCalculator::tsRank_op(a, step);
         delete res;
     }
     end   = system_clock::now();
@@ -172,7 +172,7 @@ int main(){
 
     start = system_clock::now();
     for(int i = 0; i < times; i++){
-        res = MatrixCalculator::tsStd(a, step);
+        res = MatrixCalculator::tsStd_op(a, step);
         delete res;
     }
     end   = system_clock::now();
@@ -182,7 +182,7 @@ int main(){
 
     start = system_clock::now();
     for(int i = 0; i < times; i++){
-        res = MatrixCalculator::tsMean(a, step);
+        res = MatrixCalculator::tsMean_op(a, step);
         delete res;
     }
     end   = system_clock::now();
@@ -191,7 +191,7 @@ int main(){
 
     start = system_clock::now();
     for(int i = 0; i < times; i++){
-        res = MatrixCalculator::tsCov(a, b, step);
+        res = MatrixCalculator::tsCov_op(a, b, step);
         delete res;
     }
     end   = system_clock::now();
@@ -200,7 +200,7 @@ int main(){
 
     start = system_clock::now();
     for(int i = 0; i < times; i++){
-        res = MatrixCalculator::tsSkewness(a, step);
+        res = MatrixCalculator::tsSkewness_op(a, step);
         delete res;
     }
     end   = system_clock::now();
@@ -209,7 +209,7 @@ int main(){
 
     start = system_clock::now();
     for(int i = 0; i < times; i++){
-        res = MatrixCalculator::tsKurtosis(a, step);
+        res = MatrixCalculator::tsKurtosis_op(a, step);
         delete res;
     }
     end   = system_clock::now();
