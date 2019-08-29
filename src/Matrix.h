@@ -191,7 +191,7 @@ class Matrix{
 				file.close();
 			}
 			else {
-				cout << "file open failure" << endl;
+				cout << "file open failure : " << filename << endl;
 			}
 
 			return ;

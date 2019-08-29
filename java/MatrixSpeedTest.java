@@ -7,7 +7,7 @@ public class MatrixSpeedTest {
 
         int rangeMin = -10000;
         int rangeMax = 10000;
-        int matSize = 1000;
+        int matSize = 3000;
         int lowerBound = -100;
         int upperBound = 100;
         int stepSize = 50; // used for shift/delta/delay/ratio/sum/product and timeseries functions
@@ -38,13 +38,6 @@ public class MatrixSpeedTest {
          * MatrixCalculator.Normalize(a, 2.0, 10.0, 1000.0);
          * 
          */
-
-        startTime = System.nanoTime(); // 获取开始时间
-        for (int i = 0; i < times; i++) {
-            MatrixCalculator.smoothByDecayLinear(a, 5);
-        }
-        endTime = System.nanoTime(); // 获取结束时间
-        System.out.println("smooth : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
         for (int i = 0; i < times; i++) {
@@ -174,10 +167,10 @@ public class MatrixSpeedTest {
         System.out.println("condition : " + (endTime - startTime) / 1000000 + "ms");
 
         startTime = System.nanoTime(); // 获取开始时间
-        for (int i = 0; i < times; i++) {
-            res = MatrixCalculator.rank(a);
-            res.clear();
-        }
+        // for (int i = 0; i < times; i++) {
+        // res = MatrixCalculator.rank(a);
+        // res.clear();
+        // }
         endTime = System.nanoTime(); // 获取结束时间
         System.out.println("rank : " + (endTime - startTime) / 1000000 + "ms");
 

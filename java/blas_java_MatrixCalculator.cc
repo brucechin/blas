@@ -31,9 +31,9 @@ JNIEXPORT jobject JNICALL Java_blas_java_MatrixCalculator_sumByRowNative(JNIEnv 
 			sum += valPtr[i * ncol + j];
 		}
 		jobject key = env->NewObject(class_integer, integerInit, i);
-		std::cout << "key generated"<<std::endl;
+		//std::cout << "key generated"<<std::endl;
 		jobject val = env->NewObject(class_double, doubleInit, sum);
-		std::cout << "val generated" <<std::endl;
+		//std::cout << "val generated" <<std::endl;
 		env->CallObjectMethod(hashmap, hashmapPut, key, val);
 		env->DeleteLocalRef(key);
 		env->DeleteLocalRef(val);
@@ -339,7 +339,7 @@ JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsCountNaNNative__JI(JNI
 
 
 JNIEXPORT jlong JNICALL Java_blas_java_MatrixCalculator_tsCountTrueNative__JI(JNIEnv * env, jclass obj, jlong p1, jint n){
-    Matrix* res = MatrixCalculator::tsCountTrue_op((LogicMatrix*) p1, n);
+    Matrix* res = MatrixCalculator::tsCountTrue((LogicMatrix*) p1, n);
     return (jlong)res;
 }
 

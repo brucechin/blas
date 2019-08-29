@@ -11,7 +11,7 @@ using namespace std;
 
 int rangeMin = -10000;
 int rangeMax = 10000;
-int matSize = 2000;
+int matSize = 1000;
 int lowerBound = -100;
 int upperBound = 100;
 int stepSize = 5; // used for shift/delta/delay/ratio/sum/product
@@ -46,8 +46,6 @@ int main()
  //   res->saveMatrix("normalize.mat");
 //`    res->clear();
     
-    calculator->smoothByDecayLinear(a, 5);
-    a->saveMatrix("smooth.mat");
 
     res = calculator->add(a, b);
     res->saveMatrix("add.mat");
@@ -218,11 +216,11 @@ int main()
     res = calculator->tsCov(a, b, stepSize);
     res->saveMatrix("tscov.mat");
     res->clear();
-/*
+
     res = calculator->tsCorr(a, b, stepSize);
     res->saveMatrix("tscorr.mat");
     res->clear();
-*/
+
     res = calculator->tsCountTrue(la, stepSize);
     res->saveMatrix("tscounttrue.mat");
     res->clear();

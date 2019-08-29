@@ -75,7 +75,6 @@ JNIEXPORT void JNICALL Java_blas_java_LogicMatrix_readMatrixNative(JNIEnv *env, 
 JNIEXPORT jlong JNICALL Java_blas_java_LogicMatrix_ccLogicMatrixNative(JNIEnv *env, jobject jb, jint n, jint m){
 	//jint size = n * m;
 	LogicMatrix* mat = new LogicMatrix(n, m);
-	//std::cout << "C++ constructor done"<<std::endl;
 	return (jlong) mat;
 
 }
@@ -83,6 +82,6 @@ JNIEXPORT jlong JNICALL Java_blas_java_LogicMatrix_ccLogicMatrixNative(JNIEnv *e
 
 JNIEXPORT void JNICALL Java_blas_java_LogicMatrix_compareLogicMatrixNative(JNIEnv* env, jobject obj, jlong ptr1, jlong ptr2){
 	LogicMatrix* mat1 = (LogicMatrix*)ptr1;
-	std::cout << mat1->compareMatrix((LogicMatrix*)ptr2)<<std::endl;
+	//std::cout << mat1->compareMatrix((LogicMatrix*)ptr2)<<std::endl;
 
 }

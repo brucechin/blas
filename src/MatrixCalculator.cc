@@ -34,9 +34,20 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
-    Matrix *res = new Matrix(*mat2);
+    // Matrix *res = new Matrix(*mat2);
 
-    cblas_daxpy(nrow * ncol, 1.0, mat1->value, 1, res->value, 1);
+    // cblas_daxpy(nrow * ncol, 1.0, mat1->value, 1, res->value, 1);
+    Matrix* res = new Matrix(nrow, ncol);
+    double *v1 = mat1->value;
+    double *v2 = mat2->value;
+    double *r = res->value;
+    for (int i = 0; i < nrow; i++)
+    {
+        for (int j = 0; j < ncol; j++)
+        {
+            *r++ = (*v1++) + (*v2++); 
+        }
+    }
 
     return res;
 }
@@ -66,9 +77,20 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
 {
     int nrow = mat1->getNRow();
     int ncol = mat1->getNCol();
-    Matrix *res = new Matrix(*mat1);
+    Matrix* res = new Matrix(nrow, ncol);
+    double *v1 = mat1->value;
+    double *v2 = mat2->value;
+    double *r = res->value;
+    for (int i = 0; i < nrow; i++)
+    {
+        for (int j = 0; j < ncol; j++)
+        {
+            *r++ = (*v1++) - (*v2++); 
+        }
+    }
+    // Matrix *res = new Matrix(*mat1);
 
-    cblas_daxpy(nrow * ncol, -1.0, mat2->value, 1, res->value, 1);
+    // cblas_daxpy(nrow * ncol, -1.0, mat2->value, 1, res->value, 1);
 
     return res;
 }
@@ -3189,9 +3211,7 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
             }
         }
         delete[] label_validity;
-        std::cout << "row " << i << std::endl;
     }
-    std::cout << "finish" <<std::endl;
     return res;
 }
  Matrix *MatrixCalculator::unify(Matrix* mat)

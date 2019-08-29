@@ -132,6 +132,6 @@ JNIEXPORT jlong JNICALL Java_blas_java_Matrix_ccMatrixNative(JNIEnv *env, jobjec
 
 JNIEXPORT void JNICALL Java_blas_java_Matrix_compareMatrixNative(JNIEnv* env, jobject obj, jlong ptr1, jlong ptr2){
 	Matrix* mat1 = (Matrix*)ptr1;
-	std::cout << mat1->compareMatrix((Matrix*)ptr2) << std::endl;
+	//std::cout << mat1->compareMatrix((Matrix*)ptr2) << std::endl;
 
 }

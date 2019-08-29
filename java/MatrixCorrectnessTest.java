@@ -41,242 +41,284 @@ public class MatrixCorrectnessTest {
                  * 
                  * System.out.println("treat(a) : " + MatrixCalculator.treat(a));
                  * 
-                 * res = MatrixCalculator.Normalize(a, 2.0, 10.0, 1000.0);
-                 * compareMatrix.readMatrix("normalize.mat"); res.compareMat(compareMatrix);
-                 * res.clear();
                  */
-                MatrixCalculator.smoothByDecayLinear(a, 5);
-                compareMatrix.readMatrix("smooth.mat");
-                a.compareMat(compareMatrix);
+                int i = 0;
 
                 res = MatrixCalculator.add(a, b);
                 compareMatrix.readMatrix("add.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.sub(a, b);
                 compareMatrix.readMatrix("sub.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.div(a, b);
                 compareMatrix.readMatrix("div.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.mul(a, b);
                 compareMatrix.readMatrix("mul.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.matrixMul(a, b);
                 compareMatrix.readMatrix("matrixMul.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.max(a, b);
                 compareMatrix.readMatrix("max.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.min(a, b);
                 compareMatrix.readMatrix("min.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 lres = MatrixCalculator.bigger(a, b);
                 compareLogicMatrix.readMatrix("bigger.mat");
                 lres.compareLogicMat(compareLogicMatrix);
                 lres.clear();
+                System.out.println(i++);
 
                 lres = MatrixCalculator.smaller(a, b);
                 compareLogicMatrix.readMatrix("smaller.mat");
                 lres.compareLogicMat(compareLogicMatrix);
                 lres.clear();
+                System.out.println(i++);
 
                 lres = MatrixCalculator.equal(a, b);
                 compareLogicMatrix.readMatrix("equal.mat");
                 lres.compareLogicMat(compareLogicMatrix);
                 lres.clear();
+                System.out.println(i++);
 
                 lres = MatrixCalculator.between(a, lowerBound, upperBound);
                 compareLogicMatrix.readMatrix("between.mat");
                 lres.compareLogicMat(compareLogicMatrix);
                 lres.clear();
+                System.out.println(i++);
 
                 lres = MatrixCalculator.and(la, lb);
                 compareLogicMatrix.readMatrix("matAnd.mat");
                 lres.compareLogicMat(compareLogicMatrix);
                 lres.clear();
+                System.out.println(i++);
 
                 lres = MatrixCalculator.or(la, lb);
                 compareLogicMatrix.readMatrix("matOr.mat");
                 lres.compareLogicMat(compareLogicMatrix);
                 lres.clear();
+                System.out.println(i++);
 
                 lres = MatrixCalculator.not(la);
                 compareLogicMatrix.readMatrix("matNot.mat");
                 lres.compareLogicMat(compareLogicMatrix);
                 lres.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.condition(la, a, b);
                 compareMatrix.readMatrix("condition.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.rank(a);
                 compareMatrix.readMatrix("rank.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.round(a);
                 compareMatrix.readMatrix("round.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.floor(a);
                 compareMatrix.readMatrix("floor.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.abs(a);
                 compareMatrix.readMatrix("abs.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.minus(a);
                 compareMatrix.readMatrix("minus.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.sqrt(a);
                 compareMatrix.readMatrix("sqrt.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.log(a);
                 compareMatrix.readMatrix("log.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.exp(a);
                 compareMatrix.readMatrix("exp.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.sign(a);
                 compareMatrix.readMatrix("sign.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.inverse(a);
                 compareMatrix.readMatrix("inverse.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.signedpow(a, 2);
                 compareMatrix.readMatrix("signedpow.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.shift(a, stepSize);
                 compareMatrix.readMatrix("shift.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.delay(a, stepSize);
                 compareMatrix.readMatrix("delay.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.delta(a, stepSize);
                 compareMatrix.readMatrix("delta.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.ratio(a, stepSize);
                 compareMatrix.readMatrix("ratio.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.sum(a, stepSize);
                 compareMatrix.readMatrix("sum.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.product(a, stepSize);
                 compareMatrix.readMatrix("product.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.tsMax(a, stepSize);
                 compareMatrix.readMatrix("tsmax.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.tsMin(a, stepSize);
                 compareMatrix.readMatrix("tsmin.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.tsArgmax(a, stepSize);
                 compareMatrix.readMatrix("tsargmax.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.tsArgmin(a, stepSize);
                 compareMatrix.readMatrix("tsargmin.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.tsRank(a, stepSize);
                 compareMatrix.readMatrix("tsrank.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.tsMean(a, stepSize);
                 compareMatrix.readMatrix("tsmean.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.tsStd(a, stepSize);
                 compareMatrix.readMatrix("tsstd.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.tsSkewness(a, stepSize);
                 compareMatrix.readMatrix("tsskewness.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.tsKurtosis(a, stepSize);
                 compareMatrix.readMatrix("tskurtosis.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.tsCov(a, b, stepSize);
                 compareMatrix.readMatrix("tscov.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
-                /*
-                 * res = MatrixCalculator.tscorr(a, b, stepSize);
-                 * compareMatrix.readMatrix("tscorr.mat"); res.compareMat(compareMatrix);
-                 * res.clear();
-                 */
+                System.out.println(i++);
+
+                res = MatrixCalculator.tsCorr(a, b, stepSize);
+                compareMatrix.readMatrix("tscorr.mat");
+                res.compareMat(compareMatrix);
+                res.clear();
+                System.out.println(i++);
+
                 res = MatrixCalculator.tsCountTrue(la, stepSize);
                 compareMatrix.readMatrix("tscounttrue.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.tsCountConsecutiveTrue(la, stepSize);
                 compareMatrix.readMatrix("tscountconsecutivetrue.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.decayLinear(a, stepSize);
                 compareMatrix.readMatrix("decaylinear.mat");
                 res.compareMat(compareMatrix);
                 res.clear();
+                System.out.println(i++);
 
                 res = MatrixCalculator.decayExponential(a, stepSize);
                 compareMatrix.readMatrix("decayexponential.mat");
