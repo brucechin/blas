@@ -7,7 +7,7 @@ using namespace std;
 
 int rangeMin = -10000;
 int rangeMax = 10000;
-int matSize = 10;
+int matSize = 20;
 int step = 5;
 int num = 2;
 MatrixFactory* factory = new MatrixFactory();
@@ -27,7 +27,6 @@ TEST(Matrix, MatrixIO) {
 }
 
 
-//TODO all functions with "num" parameter are not tested here
 
 TEST(MatrixCalculator, Add) {
 	Matrix* a = new Matrix();
@@ -41,16 +40,11 @@ TEST(MatrixCalculator, Add) {
 }
 
 TEST(MatrixCalculator, Sub){
-	//std::cout << "start reading"<<std::endl;
 	Matrix* a = new Matrix();
-	//std::cout << "memory allocated"<<std::endl;
 	a->readMatrix(matrix_a);
-	//std::cout << "a readed"<<std::endl;
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
-	//std::cout << "a b readed"<<std::endl;
 	Matrix* res = calculator->sub(a, b, num);
-	//std::cout << "res calculated"<<std::endl;
 	a->clear();
 	b->clear();
 	res->clear();
@@ -410,11 +404,7 @@ TEST(MatrixCalculator, Sum_Compare){
 	Matrix* res1 = calculator->sum(a, step);
 	Matrix* res2 = calculator->sum_op(a, step);
 	EXPECT_TRUE(res1->compareMatrix(res2));
-	a->print();
-	std::cout << std::endl;
-	res1->print();
-	std::cout << std::endl;
-	res2->print();
+
 	a->clear();
 	b->clear();
 	res1->clear();
@@ -918,20 +908,20 @@ TEST(MatrixCalculator, Neutralize){
 	res2->clear();
 }
 
-//FIX segmentation fault detected
-// TEST(MatrixCalculator, Mean){
+TEST(MatrixCalculator, Mean){
 	
-// 	Matrix* a = new Matrix();
-// 	a->readMatrix(matrix_a);
-// 	Matrix* b = new Matrix();
-// 	b->readMatrix(matrix_b);
-// 	Matrix* res1 = calculator->mean(a);
-// 	Matrix* res2 = calculator->mean(b);
-// 	a->clear();
-// 	b->clear();
-// 	res1->clear();
-// 	res2->clear();
-// }
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->mean(a);
+	Matrix* res2 = calculator->mean(b);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+
+}
 
 TEST(MatrixCalculator, Unify){
 	
@@ -1046,13 +1036,12 @@ TEST(MatrixCalculator, EvalInnerProduction){
 }
 
 TEST(MatrixCalculator, Det){
-	
+	//This operation can take a very long time to complete
 	Matrix* a = new Matrix();
 	a->readMatrix(matrix_a);
 	Matrix* b = new Matrix();
 	b->readMatrix(matrix_b);
 	double res1 = calculator->Det(a, matSize - 1);
-	double res2 = calculator->Det(b, matSize - 1);
 	a->clear();
 	b->clear();
 
@@ -1074,19 +1063,19 @@ TEST(MatrixCalculator, Treat){
 }
 
 //FIX segmentation fault detected
-// TEST(MatrixCalculator, Inv){
+TEST(MatrixCalculator, Inv){
 	
-// 	Matrix* a = new Matrix();
-// 	a->readMatrix(matrix_a);
-// 	Matrix* b = new Matrix();
-// 	b->readMatrix(matrix_b);
-// 	Matrix* res1 = calculator->inv(a);
-// 	Matrix* res2 = calculator->inv(b);
-// 	a->clear();
-// 	b->clear();
-// 	res1->clear();
-// 	res2->clear();
-// }
+	Matrix* a = new Matrix();
+	a->readMatrix(matrix_a);
+	Matrix* b = new Matrix();
+	b->readMatrix(matrix_b);
+	Matrix* res1 = calculator->inv(a);
+	Matrix* res2 = calculator->inv(b);
+	a->clear();
+	b->clear();
+	res1->clear();
+	res2->clear();
+}
 
 TEST(MatrixCalculator, Diag){
 	

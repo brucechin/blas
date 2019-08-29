@@ -8,7 +8,6 @@
 #define MATRIX_H
 
 #include<iostream>
-//#include<sys/time.h>
 #include <cblas.h>
 #include<vector>
 #include<cstdlib>
@@ -208,9 +207,7 @@ class Matrix{
 				delete[] value;
 				value = new double[nrow * ncol];
 				file.read((char*)value, sizeof(double) * nrow * ncol);
-				std::cout << "success read"<<std::endl;
 				file.close();
-				std::cout<<"file closed"<<std::endl;
 			}
 			else {
 				cout << "file open failure" << endl;

@@ -56,9 +56,12 @@ public:
     static Matrix* mul(double val1, Matrix* mat2);
     static Matrix* mul(double val1, Matrix* mat2, int num);
     static double* mul(double val1, double* vec2);
+    static Matrix* matrixMul(Matrix* mat1, Matrix* mat2);
+
+    //these two API should be depreciated
     static Matrix* matrixMul(double* vec1, Matrix* mat2);
     static Matrix* matrixMul(Matrix* mat1, double* vec2);
-    static Matrix* matrixMul(Matrix* mat1, Matrix* mat2);
+    
 
     static Matrix* max(Matrix* mat1, Matrix* mat2);
     static Matrix* max(Matrix* mat1, Matrix* mat2, int num);

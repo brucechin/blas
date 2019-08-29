@@ -3188,7 +3188,11 @@ const double MatrixCalculator::VALIDITY_PERCENTAGE_REQUIREMENT = 0.3;
                 res->value[k * ncol + i] = 0.0;
             }
         }
+        delete[] label_validity;
+        std::cout << "row " << i << std::endl;
     }
+    std::cout << "finish" <<std::endl;
+    return res;
 }
  Matrix *MatrixCalculator::unify(Matrix* mat)
 {
@@ -4263,8 +4267,6 @@ double MatrixCalculator::Det(Matrix *aa, int N)//N为代数余子式的size
 
 
 
-
-
 Matrix* MatrixCalculator::sum_op(Matrix* mat, int n)
 {
     int nrow = mat->getNRow();
@@ -4289,7 +4291,7 @@ Matrix* MatrixCalculator::sum_op(Matrix* mat, int n)
             if(j >= n){
 	               if(!std::isnan(mat_p[pos-n])){
 		                sum -= mat_p[pos-n];
-                    count--;
+                        count--;
                 }
             }
 

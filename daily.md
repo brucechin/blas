@@ -361,3 +361,7 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 
 1. 把xml文件里每一个line沿途的path上的tag和attribute转变成他unique key，然后用这个单层的词典进行diff和求相同line的操作，但是merge的时候发现难以把这个四不像dict转回xml了
 2. 最后解决办法是用ElementTree把xml文件转成一个tree结构，然后对两个tree进行merge然后再转成xml格式写回到文件
+
+### 8.26
+
+1. 优化了项目结构，增加一些代码注释
