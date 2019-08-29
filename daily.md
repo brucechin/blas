@@ -373,3 +373,11 @@ openblas api文档阅读与测试高频使用的api与裸写的矩阵操作之�
 2. 发现旧MatrixCalculator版本有个问题是当matrix size过大时，里面的int2Double等转换函数就出界了.
 3. 发现一个问题：C++ matrix speedtest时相比Java(backend c++)版本要快的(用时少10-60%不等)，这是native层带来的额外开销导致的，但是在开发机上测试native层带来的overhead的时候发现又没有那么多了，很是奇怪。
 4. 在开发机上同时跑两种实现的JAVA MatrixCalculator的时候，C++ backend的还是总体快一些，尤其是在优化过的TS系列函数上，想优化最好的办法还是优化算法啊。
+
+在1000*1000size的矩阵测试中，C++后端的Java native实现与原来的普通java实现耗时对比(每个函数均测试100次求总用时)
+
+![](C:\Users\10261\Desktop\blas\perf-compare-1k-1k-100times.PNG)
+
+在2000*2000size的矩阵测试中，测试结果如下：
+
+![](C:\Users\10261\Desktop\blas\perf-compare-2k-2k-100times.PNG)
